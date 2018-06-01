@@ -1,0 +1,19 @@
+{
+    "project_type": "javascript",
+    "debugMode": 1,
+    "showFPS": true,
+    "frameRate": 60,
+    "noCache": false,
+    "id": "permeateMainCanvas",
+    "renderMode": 0,
+    "engineDir": "frameworks/cocos2d-html5",
+    "modules": [
+        "webhtml"
+    ],
+    "jsList": [
+        "src/interface.js",
+        "src/resource.js",
+        "src/team.js",
+        "src/app.js"
+    ]
+}
