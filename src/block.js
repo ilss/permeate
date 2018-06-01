@@ -2,20 +2,23 @@
  * @Author: Liang Liang
  * @Date: 2018-05-30 09:09:39
  * @LastEditors: Liang Liang
- * @LastEditTime: 2018-05-31 15:10:04
+ * @LastEditTime: 2018-06-01 18:10:04
  * @Description: 
  */
 var Block_class = cc.Node.extend({
     _options: {
         action_time_interchanger_small: .5
     },
+    //3个蓝色pc配置
     _block_pc: {
         icon: MAIN_PERMEATE_SCENE.res.sp_block_pc,
-        pos: [
-            cc.p(105, 5),
-            cc.p(51, 36),
-            cc.p(0, 66)
-        ]
+        up: {
+            pos: [
+                cc.p(105, 5),
+                cc.p(51, 36),
+                cc.p(0, 66)
+            ]
+        }
     },
 
     _block_server: {
@@ -76,7 +79,7 @@ var Block_class = cc.Node.extend({
             _txt_name = null,
             _obj_server_direction = this._block_server[obj["direction"]];
 
-        this._block_pc.pos.forEach(function (pos) {
+        this._block_pc[obj["direction"]].pos.forEach(function (pos) {
             _sp = new cc.Sprite(MAIN_PERMEATE_SCENE.res.sp_block_pc);
             _sp.setPosition(pos);
             _this.addChild(_sp, 1);
@@ -114,6 +117,5 @@ var Block_class = cc.Node.extend({
     },
     getServerPos: function (num) {
         return this._server_obj_array[num].convertToWorldSpace(cc.p(11, 18));
-        // cc.log(this._server_obj_array[num].convertToWorldSpace(cc.p(0, 0)));
     }
 })
