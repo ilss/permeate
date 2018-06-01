@@ -1,6 +1,6 @@
 /*
  * @Author: Liang Liang
- * @Date: 2018-05-21 15:09:39
+ * @Date: 2018-05-30 09:09:39
  * @LastEditors: Liang Liang
  * @LastEditTime: 2018-05-31 15:10:04
  * @Description: 
@@ -9,51 +9,11 @@ MAIN_PERMEATE_SCENE.Permeate_main_layer = cc.Layer.extend({
     _opactions: {
         _default_action_time: 4
     },
-    block_pc: {
-        icon: MAIN_PERMEATE_SCENE.res.sp_block_pc,
-        pos: [
-            cc.p(277, 111),
-            cc.p(225, 140),
-            cc.p(174, 170)
-        ]
-    },
-    block_server: {
-        icon: [
-            MAIN_PERMEATE_SCENE.res.sp_block_server_0,
-            MAIN_PERMEATE_SCENE.res.sp_block_server_1
-        ],
-        up: {
-            txt_name: {
-                pos: cc.p(116, 58),
-                rotation: 30
-            },
-            1: [
-                cc.p(160, 52)
-            ],
-            2: [
-                cc.p(140, 114),
-                cc.p(190, 79)
-            ],
-            3: [
-                cc.p(140, 114),
-                cc.p(190, 79)
-            ],
-            4: [
-                cc.p(140, 114),
-                cc.p(190, 79)
-            ],
-            5: [
-                cc.p(140, 114),
-                cc.p(190, 79)
-            ],
-            6: [
-                cc.p(135, 135),
-                cc.p(182, 110),
-                cc.p(230, 80),
-                cc.p(94, 105),
-                cc.p(188, 50),
-                cc.p(140, 80)
-            ],
+    //几个区的不同布局
+    block_server_num: {
+        1: {
+            block_pos: cc.p(330, 260),
+            block_scale: 1.25
         }
     },
     _sp_cloud: null,
@@ -85,6 +45,7 @@ MAIN_PERMEATE_SCENE.Permeate_main_layer = cc.Layer.extend({
 
         this.addBg();
         var _json = {
+            block_num: 1,
             num: 6,
             direction: 'up',
             name: '管理区'
@@ -122,42 +83,30 @@ MAIN_PERMEATE_SCENE.Permeate_main_layer = cc.Layer.extend({
         _line.setAnchorPoint(1, .5);
         _line.setRotation(-30);
         // _line.setScaleX(75.5);
-        _line.runAction(cc.scaleBy(1, 75.5, 1));
+        _line.runAction(cc.scaleBy(1, 102, 1));
 
     },
     initBlock: function (obj) {
-        var _block = new cc.Sprite(MAIN_PERMEATE_SCENE.res.bg_block),
-            _sp = null,
-            _txt_name = null,
-            _obj_server = this.block_server;
-        _block.x = 444;
-        _block.y = 326;
+        var _obj = this.block_server_num[obj.block_num],
+            _block = new Block_class(obj);
+        _block.setPosition(_obj["block_pos"]);
         this.addChild(_block, 2);
 
-        this.block_pc.pos.forEach(function (pos) {
-            _sp = new cc.Sprite(MAIN_PERMEATE_SCENE.res.sp_block_pc);
-            _sp.setPosition(pos);
-            _block.addChild(_sp, 1);
-        });
+        _block.setScale(_obj["block_scale"]);
 
-        _obj_server[obj["direction"]][obj.num].forEach(function (pos) {
-            _sp = new cc.Sprite(_obj_server.icon[0]);
-            _sp.setPosition(pos);
-            _block.addChild(_sp, 1);
-        });
+        //入场动画
+        _block.setCascadeOpacityEnabled(true);
+        _block.opacity = 0;
 
-        _txt_name = new cc.LabelTTF(obj.name, 10);
-        _txt_name.setFontFillColor(cc.color(255, 187, 0));
+        _block.runAction(cc.fadeIn(.5));
 
-        _txt_name.setPosition(_obj_server[obj["direction"]].txt_name.pos)
-        _txt_name.setRotation(_obj_server[obj["direction"]].txt_name.rotation);
-        _block.addChild(_txt_name, 1);
+        _block.hitServer(0);
+        var _pos = _block.getServerPos(1);
 
-        // _block.setRotation(90);
-        var _sp_interchanger_small = new cc.Sprite(MAIN_PERMEATE_SCENE.res.sp_interchanger_small);
-        _sp_interchanger_small.x = 200;
-        _sp_interchanger_small.y = 188;
-        _block.addChild(_sp_interchanger_small, 9);
+        var _sp = new cc.Sprite(MAIN_PERMEATE_SCENE.res.sp_interchanger_small);
+
+        _sp.setPosition(_pos);
+        this.addChild(_sp, 10);
     },
 
     drawLine: function () {

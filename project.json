@@ -13,7 +13,7 @@
     "jsList": [
         "src/interface.js",
         "src/resource.js",
-        "src/team.js",
+        "src/block.js",
         "src/app.js"
     ]
 }
