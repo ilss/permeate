@@ -60,7 +60,7 @@ MAIN_PERMEATE_SCENE.Permeate_main_layer = cc.Layer.extend({
             name: '管理区'
         };
         this.initBlock(_json);
-        this.drawLine(2);
+        this.drawLine(_json["block_num"]);
 
         var _bg_color = new cc.LayerColor(cc.color(0, 0, 0), this._winSize.width, this._winSize.height);
         this.addChild(_bg_color);
