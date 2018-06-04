@@ -23,6 +23,23 @@ MAIN_PERMEATE_SCENE.Permeate_main_layer = cc.Layer.extend({
                 cc.p(710, 200)
             ],
             block_scale: 1
+        },
+        3: {
+            block_pos: [
+                cc.p(186, 344),
+                cc.p(480, 162),
+                cc.p(1026, 266)
+            ],
+            block_scale: 1
+        },
+        4: {
+            block_pos: [
+                cc.p(186, 344),
+                cc.p(480, 162),
+                cc.p(1026, 266),
+                cc.p(371, 667)
+            ],
+            block_scale: 1
         }
     },
     _sp_cloud: null,
@@ -30,37 +47,114 @@ MAIN_PERMEATE_SCENE.Permeate_main_layer = cc.Layer.extend({
     _sp_firewall: null,
     _sp_interchanger: null,
     _winSize: null,
-    _color_action: null,
-    _webgl: true,
-    _target: null,
-    _streak: null,
-    _item_index: 0,
-    _dt: 0,
     _team_array: [],
-    _team_change_index: 0,
-    _pos_start_array: [
-
-    ],
-    _pos_end_array: [
-
-    ],
     onEnter: function () {
         this._super();
-
+        var _json = [
+            {
+                id: '000001',
+                name: '管理区',
+                server: [
+                    {
+                        id: 's00001'
+                    },
+                    {
+                        id: 's00001'
+                    },
+                    {
+                        id: 's00001'
+                    },
+                    {
+                        id: 's00001'
+                    },
+                    {
+                        id: 's00001'
+                    },
+                    {
+                        id: 's00001'
+                    }
+                ]
+            },
+            {
+                id: '000002',
+                name: '管理区',
+                server: [
+                    {
+                        id: 's00001'
+                    },
+                    {
+                        id: 's00001'
+                    },
+                    {
+                        id: 's00001'
+                    },
+                    {
+                        id: 's00001'
+                    },
+                    {
+                        id: 's00001'
+                    },
+                    {
+                        id: 's00001'
+                    }
+                ]
+            },
+            {
+                id: '000003',
+                name: '管理区',
+                server: [
+                    {
+                        id: 's00001'
+                    },
+                    {
+                        id: 's00001'
+                    },
+                    {
+                        id: 's00001'
+                    },
+                    {
+                        id: 's00001'
+                    },
+                    {
+                        id: 's00001'
+                    },
+                    {
+                        id: 's00001'
+                    }
+                ]
+            },
+            {
+                id: '000004',
+                name: '管理区',
+                server: [
+                    {
+                        id: 's00001'
+                    },
+                    {
+                        id: 's00001'
+                    },
+                    {
+                        id: 's00001'
+                    },
+                    {
+                        id: 's00001'
+                    },
+                    {
+                        id: 's00001'
+                    },
+                    {
+                        id: 's00001'
+                    }
+                ]
+            }
+        ];
         MAIN_PERMEATE_SCENE._EFFECTS_MAIN_LAYER = this;
         this._winSize = cc.director.getWinSize();
 
-        this._webgl = 'opengl' in cc.sys.capabilities && cc._renderType === cc.game.RENDER_TYPE_WEBGL;
-
         this.addBg();
-        var _json = {
-            block_num: 2,
-            num: 6,
-            direction: 'up',
-            name: '管理区'
-        };
+
         this.initBlock(_json);
-        this.drawLine(_json["block_num"]);
+        this.drawLine(_json.length);
 
         var _bg_color = new cc.LayerColor(cc.color(0, 0, 0), this._winSize.width, this._winSize.height);
         this.addChild(_bg_color);
@@ -91,11 +185,11 @@ MAIN_PERMEATE_SCENE.Permeate_main_layer = cc.Layer.extend({
         this.addChild(this._layer_line_yellow, 1);
     },
     initBlock: function (obj) {
-        for (var index = 0; index < obj.block_num; index++) {
-            var _obj = this._block_server_num[obj.block_num],
-                _block = new Block_class(obj);
+        for (var index = 0, _len = obj.length; index < _len; index++) {
+            var _obj = this._block_server_num[_len],
+                _block = new Block_class(obj[index], index + 1);
             _block.setPosition(_obj["block_pos"][index]);
-            this.addChild(_block, 2);
+            this.addChild(_block, 4);
 
             _block.setScale(_obj["block_scale"]);
 
