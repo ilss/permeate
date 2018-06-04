@@ -28,7 +28,7 @@ MAIN_PERMEATE_SCENE.Permeate_main_layer = cc.Layer.extend({
             block_pos: [
                 cc.p(186, 344),
                 cc.p(480, 162),
-                cc.p(1026, 266)
+                cc.p(1028, 266)
             ],
             block_scale: 1
         },
@@ -36,8 +36,8 @@ MAIN_PERMEATE_SCENE.Permeate_main_layer = cc.Layer.extend({
             block_pos: [
                 cc.p(186, 344),
                 cc.p(480, 162),
-                cc.p(1026, 266),
-                cc.p(371, 667)
+                cc.p(1028, 266),
+                cc.p(370, 667)
             ],
             block_scale: 1
         }
@@ -156,8 +156,8 @@ MAIN_PERMEATE_SCENE.Permeate_main_layer = cc.Layer.extend({
         this.initBlock(_json);
         this.drawLine(_json.length);
 
-        var _bg_color = new cc.LayerColor(cc.color(0, 0, 0), this._winSize.width, this._winSize.height);
-        this.addChild(_bg_color);
+        // var _bg_color = new cc.LayerColor(cc.color(0, 0, 0), this._winSize.width, this._winSize.height);
+        // this.addChild(_bg_color);
     },
     addBg: function () {
         this._sp_cloud = new cc.Sprite(MAIN_PERMEATE_SCENE.res.sp_cloud);
