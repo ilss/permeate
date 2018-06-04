@@ -52,8 +52,6 @@
  *
  */
 
-
-
 cc.game.onStart = function () {
     var sys = cc.sys;
     // if (!sys.isNative && document.getElementById("cocosLoading")) //If referenced loading.js, please remove it

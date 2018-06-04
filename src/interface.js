@@ -24,6 +24,20 @@
                     break;
             }
         },
+
+        getRotate: function (pos1, pos2) {
+            var o = pos1.x - pos2.x,
+                a = pos1.y - pos2.y,
+                _at = Math.atan(o / a) * 180 / Math.PI;
+            if (a < 0) {
+                if (o < 0)
+                    _at = 180 + Math.abs(_at);
+                else
+                    _at = 180 - Math.abs(_at);
+            }
+            _at -= 90;
+            return Math.round(_at);
+        }
     }
 
     // window["ATTCAKING_ACTION"] = attackingAction;

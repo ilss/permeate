@@ -10,10 +10,19 @@ MAIN_PERMEATE_SCENE.Permeate_main_layer = cc.Layer.extend({
         _default_action_time: 4
     },
     //几个区的不同布局
-    block_server_num: {
+    _block_server_num: {
         1: {
-            block_pos: cc.p(330, 260),
+            block_pos: [
+                cc.p(330, 260)
+            ],
             block_scale: 1.25
+        },
+        2: {
+            block_pos: [
+                cc.p(276, 474),
+                cc.p(710, 200)
+            ],
+            block_scale: 1
         }
     },
     _sp_cloud: null,
@@ -45,12 +54,13 @@ MAIN_PERMEATE_SCENE.Permeate_main_layer = cc.Layer.extend({
 
         this.addBg();
         var _json = {
-            block_num: 1,
+            block_num: 2,
             num: 6,
             direction: 'up',
             name: '管理区'
         };
         this.initBlock(_json);
+        this.drawLine(2);
 
         var _bg_color = new cc.LayerColor(cc.color(0, 0, 0), this._winSize.width, this._winSize.height);
         this.addChild(_bg_color);
@@ -75,42 +85,32 @@ MAIN_PERMEATE_SCENE.Permeate_main_layer = cc.Layer.extend({
         this._sp_interchanger.x = 706;
         this._sp_interchanger.y = 478;
         this.addChild(this._sp_interchanger, 2);
-
-        var _line = new cc.Sprite(MAIN_PERMEATE_SCENE.res.sp_line_yellow);
-        _line.x = 792;
-        _line.y = 523;
-        this.addChild(_line, 1);
-        _line.setAnchorPoint(1, .5);
-        _line.setRotation(-30);
-        // _line.setScaleX(75.5);
-        _line.runAction(cc.scaleBy(1, 102, 1));
-
+    },
+    drawLine: function (num) {
+        this._layer_line_yellow = new Draw_line_class(num);
+        this.addChild(this._layer_line_yellow, 1);
     },
     initBlock: function (obj) {
-        var _obj = this.block_server_num[obj.block_num],
-            _block = new Block_class(obj);
-        _block.setPosition(_obj["block_pos"]);
-        this.addChild(_block, 2);
+        for (var index = 0; index < obj.block_num; index++) {
+            var _obj = this._block_server_num[obj.block_num],
+                _block = new Block_class(obj);
+            _block.setPosition(_obj["block_pos"][index]);
+            this.addChild(_block, 2);
 
-        _block.setScale(_obj["block_scale"]);
+            _block.setScale(_obj["block_scale"]);
 
-        //入场动画
-        _block.setCascadeOpacityEnabled(true);
-        _block.opacity = 0;
+            //入场动画
+            _block.setCascadeOpacityEnabled(true);
+            _block.opacity = 0;
 
-        _block.runAction(cc.fadeIn(.5));
+            _block.runAction(cc.fadeIn(.5));
+        }
 
         _block.hitServer(0);
-        var _pos = _block.getServerPos(1);
-
-        var _sp = new cc.Sprite(MAIN_PERMEATE_SCENE.res.sp_interchanger_small);
-
-        _sp.setPosition(_pos);
-        this.addChild(_sp, 10);
-    },
-
-    drawLine: function () {
-
+        // var _pos = _block.getServerPos(1);
+        // var _sp = new cc.Sprite(MAIN_PERMEATE_SCENE.res.sp_interchanger_small);
+        // _sp.setPosition(_pos);
+        // this.addChild(_sp, 10);
     },
 
     update: function (dt) {
