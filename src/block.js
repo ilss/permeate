@@ -6,7 +6,6 @@
  * @Description: 
  */
 var Block_class = cc.Node.extend({
-    _block_id: null,
     _options: {
         //小蓝块变色动画时间
         action_time_interchanger_small: .5
@@ -166,12 +165,14 @@ var Block_class = cc.Node.extend({
         }
 
     },
+    _block_id: null,
     //缓存server obj
-    _server_obj_array: [],
+    _server_obj_array: null,
 
     ctor: function (obj, direction) {
         this._super();
         this._block_id = obj["id"];
+        this._server_obj_array = [];
         // cc.log(obj);
         var _sp = new cc.Sprite(MAIN_PERMEATE_SCENE.res.bg_block);
         _sp.x = 0;
@@ -204,7 +205,7 @@ var Block_class = cc.Node.extend({
             _this._server_obj_array.push(_sp);
         });
 
-        // _txt_name = new cc.LabelTTF(obj.name, 10);
+        // _txt_name = new cc.LabelTTF(obj.id, 10);
         // _txt_name.setFontFillColor(cc.color(255, 187, 0));
         // _txt_name.setPosition(_obj_server_direction.txt_name.pos)
         // _txt_name.setRotation(_obj_server_direction.txt_name.rotation);
@@ -216,6 +217,7 @@ var Block_class = cc.Node.extend({
 
         _sp_interchanger_small.opacity = 0;
         _sp_interchanger_small.runAction(cc.sequence(cc.delayTime(.5), cc.fadeIn(this._options.action_time_interchanger_small)));
+
     },
     hitServer: function (num) {
         var _action = cc.sequence(cc.fadeOut(.3), cc.fadeIn(.3)).repeat(3);

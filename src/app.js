@@ -165,8 +165,8 @@ MAIN_PERMEATE_SCENE.Permeate_main_layer = cc.Layer.extend({
         this.initBlock(_json);
         this.drawLine(_json.length);
 
-        var _bg_color = new cc.LayerColor(cc.color(0, 0, 0), this._winSize.width, this._winSize.height);
-        this.addChild(_bg_color);
+        // var _bg_color = new cc.LayerColor(cc.color(0, 0, 0), this._winSize.width, this._winSize.height);
+        // this.addChild(_bg_color);
     },
     addBg: function () {
         this._sp_cloud = new cc.Sprite(MAIN_PERMEATE_SCENE.res.sp_cloud);
@@ -202,22 +202,24 @@ MAIN_PERMEATE_SCENE.Permeate_main_layer = cc.Layer.extend({
     },
 
     addBlock: function (obj, pos_obj, index) {
-        var _block = new Block_class(obj, index + 1)
-        cc.log(pos_obj["block_pos"][index])
+        var _block = new Block_class(obj, index + 1);
+
         _block.setPosition(pos_obj["block_pos"][index]);
         this.addChild(_block, 4);
 
         _block.setScale(pos_obj["block_scale"]);
-
         //入场动画
         _block.setCascadeOpacityEnabled(true);
         _block.opacity = 0;
 
         _block.runAction(cc.fadeIn(this._opactions._add_block_fadeout_action_time));
-        this._block_array.push(_block);
+
 
         //击中效果
         _block.hitServer(0);
+
+        this._block_array.push(_block);
+
     },
     addNewBlock: function (block_data) {
         var _index = 0,
@@ -247,8 +249,6 @@ MAIN_PERMEATE_SCENE.Permeate_main_layer = cc.Layer.extend({
         this._layer_line_yellow.runAction(cc.fadeOut(.25));
 
         setTimeout(function () {
-            // cc.log(this._block_server_num[this._block_array.length + 1]);
-
             this.addBlock(block_data, this._block_server_num[_len_block_array + 1], _len_block_array);
 
             this._layer_line_yellow.removeFromParent();
