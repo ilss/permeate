@@ -14,6 +14,7 @@
         "src/interface.js",
         "src/resource.js",
         "src/block.js",
+        "src/team.js",
         "src/drawLine.js",
         "src/app.js"
     ]

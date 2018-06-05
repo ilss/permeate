@@ -93,7 +93,7 @@
 <body>
   <div id="actionEffect">
     <canvas id="permeateMainCanvas" width="1300" height="860"></canvas>
-    <!-- <button onclick='ATTCAKING_ACTION(3)' style="width: 300px; height: 60px; margin: 0px auto 0px -300px; z-index: 9; position: absolute; bottom: 0;">攻 击</button> -->
+    <button id="add_block_btn" style="width: 300px; height: 60px; margin: 0px auto 0px -300px; z-index: 9; position: absolute; bottom: 0;">添加大区</button>
     <!-- <button id="change_team_btn" name="aaa" style="width: 300px; height: 60px; margin: 0px auto 0px 50px; z-index: 9; position: absolute; bottom: 0;">换 队</button> -->
   </div>
   <!-- <script src="res/loading.js"></script> -->
@@ -101,10 +101,33 @@
   <script cocos src="main.js"></script>
   <script>
     // setInterval(function () { ATTCAKING_ACTION(3); }, 100);
-    var btn = document.querySelector("#change_team_btn");
-    // btn.onclick = function () {
-    //   CHANGE_TEAM({ team_id: '0001', team_img: 'res/img/team_bg.png', team_name: '战队 B' });
-    // }
+    var btn = document.querySelector("#add_block_btn");
+    btn.onclick = function () {
+      PERMEATE_ADD_BLOCK({
+        id: '000001',
+        name: '管理区',
+        server: [
+          {
+            id: 's00001'
+          },
+          {
+            id: 's00001'
+          },
+          {
+            id: 's00001'
+          },
+          {
+            id: 's00001'
+          },
+          {
+            id: 's00001'
+          },
+          {
+            id: 's00001'
+          }
+        ]
+      });
+    }
   </script>
 
 </body>

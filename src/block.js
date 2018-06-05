@@ -6,6 +6,7 @@
  * @Description: 
  */
 var Block_class = cc.Node.extend({
+    _block_id: null,
     _options: {
         //小蓝块变色动画时间
         action_time_interchanger_small: .5
@@ -170,6 +171,8 @@ var Block_class = cc.Node.extend({
 
     ctor: function (obj, direction) {
         this._super();
+        this._block_id = obj["id"];
+        // cc.log(obj);
         var _sp = new cc.Sprite(MAIN_PERMEATE_SCENE.res.bg_block);
         _sp.x = 0;
         _sp.y = 0;
@@ -183,13 +186,12 @@ var Block_class = cc.Node.extend({
             _block_direction = this._block_direction[direction],
             _obj_server_direction = this._block_server[_block_direction];
 
-        cc.log(this._block_pc[_block_direction])
         this._block_pc[_block_direction].pos.forEach(function (pos) {
             _sp = new cc.Sprite(MAIN_PERMEATE_SCENE.res.sp_block_pc);
             _sp.setPosition(pos);
             _this.addChild(_sp, 1);
         });
-
+        // cc.log(obj["server"]);
         _obj_server_direction[obj["server"].length].forEach(function (pos) {
             //添加底层红色图片
             _sp = new cc.Sprite(_this._block_server.icon[1]);

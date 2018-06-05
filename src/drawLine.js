@@ -48,7 +48,7 @@ var Draw_line_class = cc.Layer.extend({
         4: [
             //每个数组包含 一个起点与一个终点
             [
-                [cc.p(792, 523), cc.p(455, 327)],
+                [cc.p(792, 523), cc.p(455, 325)],
                 [cc.p(668, 493), cc.p(954, 325)],
                 [cc.p(736, 457), cc.p(459, 619)]
             ],
@@ -87,7 +87,6 @@ var Draw_line_class = cc.Layer.extend({
 
                 _action_time += 0.2;
                 this._draw_line_delay_time += _action_time;
-                cc.log(index + ' / ' + _action_time);
 
             } else {
                 _line_start_pos = _obj[index][0];
@@ -99,7 +98,6 @@ var Draw_line_class = cc.Layer.extend({
                 this._draw_line_delay_time += _action_time;
             }
         }
-
     },
     /**
      * @desc 画线方法

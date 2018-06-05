@@ -15,13 +15,10 @@
             switch (arguments.length) {
                 case 1:
                     return parseInt(Math.random() * minNum + 1, 10);
-                    break;
                 case 2:
                     return parseInt(Math.random() * (maxNum - minNum + 1) + minNum, 10);
-                    break;
                 default:
                     return 0;
-                    break;
             }
         },
 
@@ -40,6 +37,10 @@
         }
     }
 
-    // window["ATTCAKING_ACTION"] = attackingAction;
+    function addBlock (block_data) {
+        MAIN_PERMEATE_SCENE._EFFECTS_MAIN_LAYER.addNewBlock(block_data);
+    }
+
+    window["PERMEATE_ADD_BLOCK"] = addBlock;
     // window["CHANGE_TEAM"] = changeTeam;
 }(window));
