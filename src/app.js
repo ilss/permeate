@@ -164,7 +164,6 @@ MAIN_PERMEATE_SCENE.Permeate_main_layer = cc.Layer.extend({
 
         this.initBlock(_json);
         this.drawLine(_json.length);
-
         // var _bg_color = new cc.LayerColor(cc.color(0, 0, 0), this._winSize.width, this._winSize.height);
         // this.addChild(_bg_color);
     },

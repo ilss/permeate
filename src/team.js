@@ -42,7 +42,7 @@ var Team_class = cc.Node.extend({
             _this.addChild(_sp, 1);
         });
 
-        _obj_server_direction[obj["server"].length].forEach(function (pos) {
+        _obj_server_direction[obj.server.length].forEach(function (pos) {
             //添加底层红色图片
             _sp = new cc.Sprite(_this._block_server.icon[1]);
             _sp.setPosition(pos);

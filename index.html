@@ -104,7 +104,7 @@
     var btn = document.querySelector("#add_block_btn");
     btn.onclick = function () {
       PERMEATE_ADD_BLOCK({
-        id: '006801',
+        id: '000' + Math.round(Math.random() * 1000),
         name: '管理区',
         server: [
           {
