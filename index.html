@@ -104,35 +104,86 @@
     var btn = document.querySelector("#add_block_btn");
     var atk_btn = document.querySelector("#team_attack_btn");
     atk_btn.onclick = function () {
-      var _data = { id: '000333', name: '战队445', icon: '', attack_block_id: '000001', attack_server_id: 's00001' };
+      var _data = { id: '000333', name: '战队445', icon: '', attack_block_id: '000555', attack_server_id: 's00001' };
       TEAM_ATTACK_SERVER(_data);
     }
 
+    var add_block_array = [{
+      id: '000111',
+      name: '管理区',
+      server: [
+        {
+          id: 's00001'
+        },
+        {
+          id: 's00001'
+        },
+        {
+          id: 's00001'
+        },
+        {
+          id: 's00001'
+        },
+        {
+          id: 's00001'
+        },
+        {
+          id: 's00001'
+        }
+      ]
+    },
+    {
+      id: '000222',
+      name: '管理区',
+      server: [
+        {
+          id: 's00001'
+        },
+        {
+          id: 's00001'
+        },
+        {
+          id: 's00001'
+        },
+        {
+          id: 's00001'
+        },
+        {
+          id: 's00001'
+        },
+        {
+          id: 's00001'
+        }
+      ]
+    },
+    {
+      id: '000555',
+      name: '管理区',
+      server: [
+        {
+          id: 's00001'
+        },
+        {
+          id: 's00001'
+        },
+        {
+          id: 's00001'
+        },
+        {
+          id: 's00001'
+        },
+        {
+          id: 's00001'
+        },
+        {
+          id: 's00001'
+        }
+      ]
+    }];
+    var add_block_index = 0;
     btn.onclick = function () {
-      PERMEATE_ADD_BLOCK({
-        id: '000' + Math.round(Math.random() * 1000),
-        name: '管理区',
-        server: [
-          {
-            id: 's00001'
-          },
-          {
-            id: 's00001'
-          },
-          {
-            id: 's00001'
-          },
-          {
-            id: 's00001'
-          },
-          {
-            id: 's00001'
-          },
-          {
-            id: 's00001'
-          }
-        ]
-      });
+      PERMEATE_ADD_BLOCK(add_block_array[add_block_index]);
+      add_block_index++;
     }
   </script>
 

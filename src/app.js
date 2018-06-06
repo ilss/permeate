@@ -5,6 +5,60 @@
  * @LastEditTime: 2018-06-01 18:10:04
  * @Description: 
  */
+
+MAIN_PERMEATE_SCENE.path_pos_array = {
+    1: [
+        [cc.p(706, 473), cc.p(438, 320)]
+    ],
+    2: [
+        //每个数组包含 一个起点与一个终点
+        [cc.p(706, 473), cc.p(609, 418)],
+        [
+            //表示同时画N段线
+            [cc.p(609, 418), cc.p(403, 546)],
+            [cc.p(609, 418), cc.p(842, 275)],
+        ],
+        [
+            [cc.p(403, 546), cc.p(363, 522)],
+            [cc.p(842, 275), cc.p(797, 246)]
+        ]
+    ],
+    3: [
+        //每个数组包含 一个起点与一个终点
+        [
+            [cc.p(706, 473), cc.p(455, 327)],
+            [cc.p(706, 473), cc.p(954, 325)]
+        ],
+        [
+            //表示同时画N段线
+            [cc.p(455, 327), cc.p(313, 413)],
+            [cc.p(455, 327), cc.p(606, 231)],
+        ],
+        [
+            [cc.p(314, 415), cc.p(274, 392)],
+            [cc.p(606, 231), cc.p(568, 209)]
+        ]
+    ],
+    4: [
+        //每个数组包含 一个起点与一个终点
+        [
+            [cc.p(706, 473), cc.p(455, 325)],
+            [cc.p(706, 473), cc.p(954, 325)],
+            [cc.p(706, 473), cc.p(457, 619)]
+        ],
+        [
+            //表示同时画N段线
+            [cc.p(455, 327), cc.p(313, 413)],
+            [cc.p(455, 327), cc.p(606, 231)],
+        ],
+        [
+            [cc.p(314, 415), cc.p(274, 392)],
+            [cc.p(606, 231), cc.p(568, 209)]
+        ]
+    ],
+}
+
+
 MAIN_PERMEATE_SCENE.Permeate_main_layer = cc.Layer.extend({
     _opactions: {
         _team_num_max: 10,
@@ -52,6 +106,28 @@ MAIN_PERMEATE_SCENE.Permeate_main_layer = cc.Layer.extend({
     _team_array: null,
     _is_action: false,  //动画中不响应   Draw_line_class 里重置
     _team_move_path: {
+        1: [
+            [MAIN_PERMEATE_SCENE.path_pos_array["1"][0][1]]
+        ],
+        2: [
+            [
+                MAIN_PERMEATE_SCENE.path_pos_array["2"][1][0][0], MAIN_PERMEATE_SCENE.path_pos_array["2"][1][0][1], MAIN_PERMEATE_SCENE.path_pos_array["2"][2][0][1]
+            ],
+            [
+                MAIN_PERMEATE_SCENE.path_pos_array["2"][1][1][0], MAIN_PERMEATE_SCENE.path_pos_array["2"][1][1][1], MAIN_PERMEATE_SCENE.path_pos_array["2"][2][1][1]
+            ]
+        ],
+        3: [
+            [
+                MAIN_PERMEATE_SCENE.path_pos_array["3"][1][0][0], MAIN_PERMEATE_SCENE.path_pos_array["3"][1][0][1], MAIN_PERMEATE_SCENE.path_pos_array["3"][2][0][1]
+            ],
+            [
+                MAIN_PERMEATE_SCENE.path_pos_array["3"][1][1][0], MAIN_PERMEATE_SCENE.path_pos_array["3"][1][1][1], MAIN_PERMEATE_SCENE.path_pos_array["3"][2][1][1]
+            ],
+            [
+                MAIN_PERMEATE_SCENE.path_pos_array["3"][0][1][0], MAIN_PERMEATE_SCENE.path_pos_array["3"][0][1][1]
+            ]
+        ],
         4: [
             [cc.p(445, 325), cc.p(312, 420), cc.p(273, 390)],
             [cc.p(445, 325), cc.p(606, 236), cc.p(568, 208)],
@@ -169,8 +245,8 @@ MAIN_PERMEATE_SCENE.Permeate_main_layer = cc.Layer.extend({
 
         this.initBlock(_json);
         this.drawLine(_json.length);
-        // var _bg_color = new cc.LayerColor(cc.color(0, 0, 0), this._winSize.width, this._winSize.height);
-        // this.addChild(_bg_color);
+        var _bg_color = new cc.LayerColor(cc.color(0, 0, 0), this._winSize.width, this._winSize.height);
+        this.addChild(_bg_color);
     },
     addBg: function () {
         this._sp_cloud = new cc.Sprite(MAIN_PERMEATE_SCENE.res.sp_cloud);
@@ -233,11 +309,6 @@ MAIN_PERMEATE_SCENE.Permeate_main_layer = cc.Layer.extend({
         }
 
         this._is_action = true;
-        // 淡出
-        // for (; _index < _len_block_array; _index++) {
-        //     _block = this._block_array[_index];
-        //     _block.runAction(cc.fadeOut(this._opactions._add_block_fadeout_action_time));
-        // }
 
         //重置现有区的坐标和缩放
         if (_len_block_array < 3) {
@@ -262,22 +333,21 @@ MAIN_PERMEATE_SCENE.Permeate_main_layer = cc.Layer.extend({
     /**
      * @func 
      * @desc 队伍入场
-     * @param {*} obj
+     * @param {object} obj  
      */
     addTeam: function (obj) {
         obj = obj || { id: '000333', name: '战队445', icon: '', attack_block_id: '000001', attack_server_id: 's00001' };
         var _result = null,
             _team = null;
-        _result = this._team_array.findIndex(function (team) {
-            return team._team_id == obj.id;
-        });
+
+        _result = MAIN_PERMEATE_SCENE.findObjFromArray(obj, "id", this._team_array, "_team_id");
         if (_result === -1) {
             // cc.log('新队伍');
-
             _team = new Team_class(obj);
-            _team.setPosition(cc.pAdd(this._sp_firewall.getPosition(), cc.p(-10, -20)));
+            _team.setPosition(cc.pAdd(MAIN_PERMEATE_SCENE.path_pos_array["1"][0][0], cc.p(0, 30)));
             this.addChild(_team, 10);
             this._team_array.push(_team);
+            this.teamMoveToBlock(_team, obj);
         } else {
             cc.log('队伍已存在    ' + _result);
             // this._team_array[_result].destroy();
@@ -285,8 +355,41 @@ MAIN_PERMEATE_SCENE.Permeate_main_layer = cc.Layer.extend({
             // cc.log(this._team_array);
         }
     },
-    newTeam: function (obj) {
+    teamMoveToBlock: function (team, obj) {
+        var _line_start_pos = team.getPosition(),
+            _block_index = null,
+            _path_array = null,
+            _line_end_pos = null,
+            _distance = null,
+            _action_time = null,
+            _action = [cc.delayTime(.5)];
 
+        _block_index = MAIN_PERMEATE_SCENE.findObjFromArray(obj, "attack_block_id", this._block_array, "_block_id");
+
+        if (_block_index < 0) {
+            cc.log("此block不存在");
+            return;
+        }
+        _path_array = this._team_move_path[this._block_array.length][_block_index];
+        for (var _index = 0, _len = _path_array.length; _index < _len; _index++) {
+            _line_end_pos = _path_array[_index];
+            _distance = cc.pDistance(_line_start_pos, _line_end_pos);
+            _action_time = _distance / team._options.team_move_action_distance;
+            _action.push(cc.moveTo(_action_time, cc.pAdd(_line_end_pos, cc.p(0, 30))));
+            _line_start_pos = _line_end_pos;
+        }
+
+        //移动到攻击的 具体server的上
+        // _line_end_pos = this._block_array[_block_index].getServerPos();
+        // _distance = cc.pDistance(_line_start_pos, _line_end_pos);
+        // _action_time = _distance / team._options.team_move_action_distance;
+        // _action.push(cc.moveTo(_action_time, cc.pAdd(_line_end_pos, cc.p(0, 30))));
+
+        _action.push(cc.callFunc(function (team) {
+            // team.removeFromParent();
+            // _this._block_array[_block_index].addTeam(team, team.convertToNodeSpaceAR(team.getPosition()));
+        }));
+        team.runAction(cc.sequence(_action));
     }
 });
 

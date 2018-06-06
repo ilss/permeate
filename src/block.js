@@ -86,8 +86,8 @@ var Block_class = cc.Node.extend({
         left: {
             interchanger_pos: cc.p(-112, 88),
             txt_name: {
-                pos: cc.p(-58, -42),
-                rotation: 30
+                pos: cc.p(65, -42),
+                rotation: -30
             },
             1: [
                 cc.p(11, 5)
@@ -127,7 +127,7 @@ var Block_class = cc.Node.extend({
             interchanger_pos: cc.p(133, -73),
             txt_name: {
                 pos: cc.p(-66, 51),
-                rotation: 30
+                rotation: -30
             },
             1: [
                 cc.p(-21, 19)
@@ -202,14 +202,15 @@ var Block_class = cc.Node.extend({
             _sp = new cc.Sprite(_this._block_server.icon[0]);
             _sp.setPosition(pos);
             _this.addChild(_sp, 2);
+            _sp.server_id = obj["server"]["id"];
             _this._server_obj_array.push(_sp);
         });
 
-        // _txt_name = new cc.LabelTTF(obj.id, 10);
-        // _txt_name.setFontFillColor(cc.color(255, 187, 0));
-        // _txt_name.setPosition(_obj_server_direction.txt_name.pos)
-        // _txt_name.setRotation(_obj_server_direction.txt_name.rotation);
-        // this.addChild(_txt_name, 1);
+        _txt_name = new cc.LabelTTF(obj.id, 10);
+        _txt_name.setFontFillColor(cc.color(255, 187, 0));
+        _txt_name.setPosition(_obj_server_direction.txt_name.pos)
+        _txt_name.setRotation(_obj_server_direction.txt_name.rotation);
+        this.addChild(_txt_name, 1);
 
         var _sp_interchanger_small = new cc.Sprite(MAIN_PERMEATE_SCENE.res.sp_interchanger_small);
         _sp_interchanger_small.setPosition(_obj_server_direction.interchanger_pos);
@@ -223,7 +224,8 @@ var Block_class = cc.Node.extend({
         var _action = cc.sequence(cc.fadeOut(.3), cc.fadeIn(.3)).repeat(3);
         this._server_obj_array[num].runAction(_action);
     },
-    getServerPos: function (num) {
-        return this._server_obj_array[num].convertToWorldSpace(cc.p(11, 18));
+    getServerPos: function (server_id) {
+
+        // return this._server_obj_array[num].convertToWorldSpace(cc.p(11, 18));
     }
 })

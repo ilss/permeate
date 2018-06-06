@@ -34,6 +34,12 @@
             }
             _at -= 90;
             return Math.round(_at);
+        },
+
+        findObjFromArray: function (obj, obj_key, array, array_key) {
+            return array.findIndex(function (item) {
+                return item[array_key] === obj[obj_key];
+            });
         }
     }
 

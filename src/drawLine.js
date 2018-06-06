@@ -12,63 +12,13 @@ var Draw_line_class = cc.Layer.extend({
     },
     //每一段的间隔
     _draw_line_delay_time: 0,
-    _line_pos_array: {
-        1: [
-            [cc.p(792, 523), cc.p(438, 320)]
-        ],
-        2: [
-            //每个数组包含 一个起点与一个终点
-            [cc.p(792, 523), cc.p(609, 418)],
-            [
-                //表示同时画N段线
-                [cc.p(609, 418), cc.p(403, 546)],
-                [cc.p(609, 418), cc.p(842, 275)],
-            ],
-            [
-                [cc.p(403, 546), cc.p(363, 522)],
-                [cc.p(842, 275), cc.p(797, 246)]
-            ]
-        ],
-        3: [
-            //每个数组包含 一个起点与一个终点
-            [
-                [cc.p(792, 523), cc.p(455, 327)],
-                [cc.p(668, 493), cc.p(954, 325)]
-            ],
-            [
-                //表示同时画N段线
-                [cc.p(455, 327), cc.p(313, 413)],
-                [cc.p(455, 327), cc.p(606, 231)],
-            ],
-            [
-                [cc.p(314, 415), cc.p(274, 392)],
-                [cc.p(606, 231), cc.p(568, 209)]
-            ]
-        ],
-        4: [
-            //每个数组包含 一个起点与一个终点
-            [
-                [cc.p(792, 523), cc.p(455, 325)],
-                [cc.p(668, 493), cc.p(954, 325)],
-                [cc.p(736, 457), cc.p(459, 619)]
-            ],
-            [
-                //表示同时画N段线
-                [cc.p(455, 327), cc.p(313, 413)],
-                [cc.p(455, 327), cc.p(606, 231)],
-            ],
-            [
-                [cc.p(314, 415), cc.p(274, 392)],
-                [cc.p(606, 231), cc.p(568, 209)]
-            ]
-        ],
-    },
+
     ctor: function (num) {
         this._super();
 
         var _distance = null,
             _action_time = null,
-            _obj = this._line_pos_array[num],
+            _obj = MAIN_PERMEATE_SCENE.path_pos_array[num],
             _len = _obj.length,
             _line_start_pos = _obj[0][0],
             _line_end_pos = _obj[0][1];
@@ -87,7 +37,6 @@ var Draw_line_class = cc.Layer.extend({
 
                 _action_time += 0.2;
                 this._draw_line_delay_time += _action_time;
-
             } else {
                 _line_start_pos = _obj[index][0];
                 _line_end_pos = _obj[index][1];
