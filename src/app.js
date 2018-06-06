@@ -2,101 +2,16 @@
  * @Author: Liang Liang
  * @Date: 2018-05-30 09:09:39
  * @LastEditors: Liang Liang
- * @LastEditTime: 2018-06-01 18:10:04
+ * @LastEditTime: 2018-06-06 18:10:04
  * @Description: 
  */
 
-MAIN_PERMEATE_SCENE.path_pos_array = {
-    1: [
-        [cc.p(706, 473), cc.p(438, 320)]
-    ],
-    2: [
-        //每个数组包含 一个起点与一个终点
-        [cc.p(706, 473), cc.p(609, 418)],
-        [
-            //表示同时画N段线
-            [cc.p(609, 418), cc.p(403, 546)],
-            [cc.p(609, 418), cc.p(842, 275)],
-        ],
-        [
-            [cc.p(403, 546), cc.p(363, 522)],
-            [cc.p(842, 275), cc.p(797, 246)]
-        ]
-    ],
-    3: [
-        //每个数组包含 一个起点与一个终点
-        [
-            [cc.p(706, 473), cc.p(455, 327)],
-            [cc.p(706, 473), cc.p(954, 325)]
-        ],
-        [
-            //表示同时画N段线
-            [cc.p(455, 327), cc.p(313, 413)],
-            [cc.p(455, 327), cc.p(606, 231)],
-        ],
-        [
-            [cc.p(314, 415), cc.p(274, 392)],
-            [cc.p(606, 231), cc.p(568, 209)]
-        ]
-    ],
-    4: [
-        //每个数组包含 一个起点与一个终点
-        [
-            [cc.p(706, 473), cc.p(455, 325)],
-            [cc.p(706, 473), cc.p(954, 325)],
-            [cc.p(706, 473), cc.p(457, 619)]
-        ],
-        [
-            //表示同时画N段线
-            [cc.p(455, 327), cc.p(313, 413)],
-            [cc.p(455, 327), cc.p(606, 231)],
-        ],
-        [
-            [cc.p(314, 415), cc.p(274, 392)],
-            [cc.p(606, 231), cc.p(568, 209)]
-        ]
-    ],
-}
-
-
 MAIN_PERMEATE_SCENE.Permeate_main_layer = cc.Layer.extend({
     _opactions: {
-        _team_num_max: 10,
+        _team_show_num_max: 10,
         _add_block_fadeout_action_time: .5
     },
-    //几个区的不同布局
-    _block_server_num: {
-        1: {
-            block_pos: [
-                cc.p(330, 260)
-            ],
-            block_scale: 1.25
-        },
-        2: {
-            block_pos: [
-                cc.p(276, 474),
-                cc.p(710, 200)
-            ],
-            block_scale: 1
-        },
-        3: {
-            block_pos: [
-                cc.p(186, 344),
-                cc.p(480, 162),
-                cc.p(1028, 266)
-            ],
-            block_scale: 1
-        },
-        4: {
-            block_pos: [
-                cc.p(186, 344),
-                cc.p(480, 162),
-                cc.p(1028, 266),
-                cc.p(370, 667)
-            ],
-            block_scale: 1
-        }
-    },
+    _dt: null,
     _block_array: null,
     _sp_cloud: null,
     _sp_lightning: null,
@@ -129,14 +44,23 @@ MAIN_PERMEATE_SCENE.Permeate_main_layer = cc.Layer.extend({
             ]
         ],
         4: [
-            [cc.p(445, 325), cc.p(312, 420), cc.p(273, 390)],
-            [cc.p(445, 325), cc.p(606, 236), cc.p(568, 208)],
-            [cc.p(445, 325), cc.p(955, 326)],
-            [cc.p(445, 325), cc.p(460, 616)]
+            [
+                MAIN_PERMEATE_SCENE.path_pos_array["3"][1][0][0], MAIN_PERMEATE_SCENE.path_pos_array["3"][1][0][1], MAIN_PERMEATE_SCENE.path_pos_array["3"][2][0][1]
+            ],
+            [
+                MAIN_PERMEATE_SCENE.path_pos_array["3"][1][1][0], MAIN_PERMEATE_SCENE.path_pos_array["3"][1][1][1], MAIN_PERMEATE_SCENE.path_pos_array["3"][2][1][1]
+            ],
+            [
+                MAIN_PERMEATE_SCENE.path_pos_array["3"][0][1][0], MAIN_PERMEATE_SCENE.path_pos_array["3"][0][1][1]
+            ],
+            [
+                MAIN_PERMEATE_SCENE.path_pos_array["4"][0][2][0], MAIN_PERMEATE_SCENE.path_pos_array["4"][0][2][1]
+            ]
         ]
     },
     onEnter: function () {
         this._super();
+        this._dt = 0;
         this._is_action = false;
         this._block_array = [];
         this._team_array = [];
@@ -149,19 +73,19 @@ MAIN_PERMEATE_SCENE.Permeate_main_layer = cc.Layer.extend({
                         id: 's00001'
                     },
                     {
-                        id: 's00001'
+                        id: 's00002'
                     },
                     {
-                        id: 's00001'
+                        id: 's00003'
                     },
                     {
-                        id: 's00001'
+                        id: 's00004'
                     },
                     {
-                        id: 's00001'
+                        id: 's00005'
                     },
                     {
-                        id: 's00001'
+                        id: 's00006'
                     }
                 ]
             },
@@ -245,8 +169,10 @@ MAIN_PERMEATE_SCENE.Permeate_main_layer = cc.Layer.extend({
 
         this.initBlock(_json);
         this.drawLine(_json.length);
-        var _bg_color = new cc.LayerColor(cc.color(0, 0, 0), this._winSize.width, this._winSize.height);
-        this.addChild(_bg_color);
+        // var _bg_color = new cc.LayerColor(cc.color(0, 0, 0), this._winSize.width, this._winSize.height);
+        // this.addChild(_bg_color);
+
+        this.scheduleUpdate();
     },
     addBg: function () {
         this._sp_cloud = new cc.Sprite(MAIN_PERMEATE_SCENE.res.sp_cloud);
@@ -276,7 +202,7 @@ MAIN_PERMEATE_SCENE.Permeate_main_layer = cc.Layer.extend({
     },
     initBlock: function (obj) {
         for (var _index = 0, _len = obj.length; _index < _len; _index++) {
-            var _pos_obj = this._block_server_num[_len];
+            var _pos_obj = MAIN_PERMEATE_SCENE.block_server_num[_len];
             this.addBlock(obj[_index], _pos_obj, _index);
         }
     },
@@ -314,15 +240,21 @@ MAIN_PERMEATE_SCENE.Permeate_main_layer = cc.Layer.extend({
         if (_len_block_array < 3) {
             for (var _index = 0; _index < _len_block_array; _index++) {
                 _old_block = this._block_array[_index];
-                _new_pos = this._block_server_num[_len_block_array + 1]["block_pos"][_index];
+                _new_pos = MAIN_PERMEATE_SCENE.block_server_num[_len_block_array + 1]["block_pos"][_index];
                 _old_block.runAction(cc.spawn(cc.moveTo(this._opactions._add_block_fadeout_action_time, _new_pos), cc.scaleTo(this._opactions._add_block_fadeout_action_time, 1)));
+
+                for (var _index_team = 0, _len_team = this._team_array.length; _index_team < _len_team; _index_team++) {
+
+                }
+
+
             }
         }
 
         this._layer_line_yellow.runAction(cc.fadeOut(.25));
 
         setTimeout(function () {
-            this.addBlock(block_data, this._block_server_num[_len_block_array + 1], _len_block_array);
+            this.addBlock(block_data, MAIN_PERMEATE_SCENE.block_server_num[_len_block_array + 1], _len_block_array);
 
             this._layer_line_yellow.removeFromParent();
             this._layer_line_yellow = null;
@@ -344,7 +276,7 @@ MAIN_PERMEATE_SCENE.Permeate_main_layer = cc.Layer.extend({
         if (_result === -1) {
             // cc.log('新队伍');
             _team = new Team_class(obj);
-            _team.setPosition(cc.pAdd(MAIN_PERMEATE_SCENE.path_pos_array["1"][0][0], cc.p(0, 30)));
+            _team.setPosition(cc.pAdd(MAIN_PERMEATE_SCENE.path_pos_array.entry, cc.p(0, 30)));
             this.addChild(_team, 10);
             this._team_array.push(_team);
             this.teamMoveToBlock(_team, obj);
@@ -356,7 +288,8 @@ MAIN_PERMEATE_SCENE.Permeate_main_layer = cc.Layer.extend({
         }
     },
     teamMoveToBlock: function (team, obj) {
-        var _line_start_pos = team.getPosition(),
+        var _this = this,
+            _line_start_pos = team.getPosition(),
             _block_index = null,
             _path_array = null,
             _line_end_pos = null,
@@ -380,16 +313,27 @@ MAIN_PERMEATE_SCENE.Permeate_main_layer = cc.Layer.extend({
         }
 
         //移动到攻击的 具体server的上
-        // _line_end_pos = this._block_array[_block_index].getServerPos();
-        // _distance = cc.pDistance(_line_start_pos, _line_end_pos);
-        // _action_time = _distance / team._options.team_move_action_distance;
-        // _action.push(cc.moveTo(_action_time, cc.pAdd(_line_end_pos, cc.p(0, 30))));
+        _line_end_pos = this._block_array[_block_index].getServerPos(obj);
+        _distance = cc.pDistance(_line_start_pos, _line_end_pos);
+        _action_time = _distance / team._options.team_move_action_distance;
+        _action.push(cc.moveTo(_action_time, cc.pAdd(_line_end_pos, cc.p(0, 30))));
 
         _action.push(cc.callFunc(function (team) {
+            // _this.
             // team.removeFromParent();
             // _this._block_array[_block_index].addTeam(team, team.convertToNodeSpaceAR(team.getPosition()));
+            team.attackServer();
+            _this._block_array[_block_index].hitServer(obj);
         }));
         team.runAction(cc.sequence(_action));
+    },
+    update: function (dt) {
+        if (this._dt < 1) {
+            this._dt += dt;
+        } else {
+            // cc.log(111111);
+            this._dt = 0;
+        }
     }
 });
 

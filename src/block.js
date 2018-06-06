@@ -193,7 +193,7 @@ var Block_class = cc.Node.extend({
             _this.addChild(_sp, 1);
         });
         // cc.log(obj["server"]);
-        _obj_server_direction[obj["server"].length].forEach(function (pos) {
+        _obj_server_direction[obj["server"].length].forEach(function (pos, index) {
             //添加底层红色图片
             _sp = new cc.Sprite(_this._block_server.icon[1]);
             _sp.setPosition(pos);
@@ -202,7 +202,7 @@ var Block_class = cc.Node.extend({
             _sp = new cc.Sprite(_this._block_server.icon[0]);
             _sp.setPosition(pos);
             _this.addChild(_sp, 2);
-            _sp.server_id = obj["server"]["id"];
+            _sp.server_id = obj["server"][index]["id"];
             _this._server_obj_array.push(_sp);
         });
 
@@ -217,15 +217,18 @@ var Block_class = cc.Node.extend({
         this.addChild(_sp_interchanger_small, 2);
 
         _sp_interchanger_small.opacity = 0;
-        _sp_interchanger_small.runAction(cc.sequence(cc.delayTime(.5), cc.fadeIn(this._options.action_time_interchanger_small)));
+        _sp_interchanger_small.runAction(cc.sequence(cc.delayTime(.2), cc.fadeIn(this._options.action_time_interchanger_small)));
 
     },
-    hitServer: function (num) {
-        var _action = cc.sequence(cc.fadeOut(.3), cc.fadeIn(.3)).repeat(3);
-        this._server_obj_array[num].runAction(_action);
+    hitServer: function (obj) {
+        var _index = MAIN_PERMEATE_SCENE.findObjFromArray(obj, "attack_server_id", this._server_obj_array, "server_id");
+        var _action = cc.sequence(cc.fadeOut(.3), cc.fadeIn(.3)).repeatForever();
+        this._server_obj_array[_index].runAction(_action);
     },
-    getServerPos: function (server_id) {
-
-        // return this._server_obj_array[num].convertToWorldSpace(cc.p(11, 18));
+    getServerPos: function (obj) {
+        var _index = MAIN_PERMEATE_SCENE.findObjFromArray(obj, "attack_server_id", this._server_obj_array, "server_id");
+        // cc.log(obj.attack_server_id);
+        // cc.log(_index);
+        return this._server_obj_array[_index].convertToWorldSpace(cc.p(10, 24));
     }
 })

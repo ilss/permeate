@@ -8,7 +8,7 @@
 var Draw_line_class = cc.Layer.extend({
     _options: {
         //1s 画多少ps
-        draw_line_action_distance: 400
+        draw_line_action_distance: 600
     },
     //每一段的间隔
     _draw_line_delay_time: 0,
@@ -23,6 +23,12 @@ var Draw_line_class = cc.Layer.extend({
             _line_start_pos = _obj[0][0],
             _line_end_pos = _obj[0][1];
 
+        _line_start_pos = MAIN_PERMEATE_SCENE.path_pos_array.entry;
+        _line_end_pos = MAIN_PERMEATE_SCENE.path_pos_array["1"][0][0];
+        _distance = cc.pDistance(_line_start_pos, _line_end_pos);
+        _action_time = _distance / this._options.draw_line_action_distance;
+        this.drawLine(_line_start_pos, _line_end_pos, _distance, _action_time);
+        this._draw_line_delay_time += _action_time;
         for (var index = 0; index < _len; index++) {
             var _len_sub = _obj[index].length;
             //处理要同时画的分支线段

@@ -104,7 +104,7 @@
     var btn = document.querySelector("#add_block_btn");
     var atk_btn = document.querySelector("#team_attack_btn");
     atk_btn.onclick = function () {
-      var _data = { id: '000333', name: '战队445', icon: '', attack_block_id: '000555', attack_server_id: 's00001' };
+      var _data = { id: '000' + Math.round(Math.random() * 1000), name: '战队445', icon: '', attack_block_id: '000001', attack_server_id: 's0000' + MAIN_PERMEATE_SCENE.randomNum(1, 6) };
       TEAM_ATTACK_SERVER(_data);
     }
 
