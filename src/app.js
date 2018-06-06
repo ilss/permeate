@@ -7,6 +7,7 @@
  */
 MAIN_PERMEATE_SCENE.Permeate_main_layer = cc.Layer.extend({
     _opactions: {
+        _team_num_max: 10,
         _add_block_fadeout_action_time: .5
     },
     //几个区的不同布局
@@ -42,13 +43,14 @@ MAIN_PERMEATE_SCENE.Permeate_main_layer = cc.Layer.extend({
             block_scale: 1
         }
     },
-    _block_array: [],
+    _block_array: null,
     _sp_cloud: null,
     _sp_lightning: null,
     _sp_firewall: null,
     _sp_interchanger: null,
     _winSize: null,
-    _team_array: [],
+    _team_array: null,
+    _is_action: false,  //动画中不响应   Draw_line_class 里重置
     _team_move_path: {
         4: [
             [cc.p(445, 325), cc.p(312, 420), cc.p(273, 390)],
@@ -59,6 +61,9 @@ MAIN_PERMEATE_SCENE.Permeate_main_layer = cc.Layer.extend({
     },
     onEnter: function () {
         this._super();
+        this._is_action = false;
+        this._block_array = [];
+        this._team_array = [];
         var _json = [
             {
                 id: '000001',
@@ -213,12 +218,9 @@ MAIN_PERMEATE_SCENE.Permeate_main_layer = cc.Layer.extend({
 
         _block.runAction(cc.fadeIn(this._opactions._add_block_fadeout_action_time));
 
-
         //击中效果
-        _block.hitServer(0);
-
+        // _block.hitServer(0);
         this._block_array.push(_block);
-
     },
     addNewBlock: function (block_data) {
         var _index = 0,
@@ -226,10 +228,11 @@ MAIN_PERMEATE_SCENE.Permeate_main_layer = cc.Layer.extend({
             _old_block = null,
             _new_pos = null;
 
-        if (_len_block_array === 4) {
+        if (_len_block_array === 4 || this._is_action) {
             return;
         }
 
+        this._is_action = true;
         // 淡出
         // for (; _index < _len_block_array; _index++) {
         //     _block = this._block_array[_index];
@@ -255,6 +258,35 @@ MAIN_PERMEATE_SCENE.Permeate_main_layer = cc.Layer.extend({
             this.drawLine(this._block_array.length);
 
         }.bind(this), this._opactions._add_block_fadeout_action_time * 1000);
+    },
+    /**
+     * @func 
+     * @desc 队伍入场
+     * @param {*} obj
+     */
+    addTeam: function (obj) {
+        obj = obj || { id: '000333', name: '战队445', icon: '', attack_block_id: '000001', attack_server_id: 's00001' };
+        var _result = null,
+            _team = null;
+        _result = this._team_array.findIndex(function (team) {
+            return team._team_id == obj.id;
+        });
+        if (_result === -1) {
+            // cc.log('新队伍');
+
+            _team = new Team_class(obj);
+            _team.setPosition(cc.pAdd(this._sp_firewall.getPosition(), cc.p(-10, -20)));
+            this.addChild(_team, 10);
+            this._team_array.push(_team);
+        } else {
+            cc.log('队伍已存在    ' + _result);
+            // this._team_array[_result].destroy();
+            // this._team_array.splice(_result, 1);
+            // cc.log(this._team_array);
+        }
+    },
+    newTeam: function (obj) {
+
     }
 });
 

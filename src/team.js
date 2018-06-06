@@ -7,6 +7,7 @@
  */
 var Team_class = cc.Node.extend({
     _team_id: null,
+    _team_name: null,
     _options: {
         //小蓝块变色动画时间
         action_time_interchanger_small: .5
@@ -23,55 +24,23 @@ var Team_class = cc.Node.extend({
 
     ctor: function (obj) {
         this._super();
-        var _sp = new cc.Sprite(MAIN_PERMEATE_SCENE.res.bg_block);
+        this.setCascadeOpacityEnabled(true);
+        this._team_id = obj.id || '000' + Math.round(Math.random() * 1000);
+        this._team_name = obj.name || '';
+        this._team_icon = obj.icon || this._team_icon_def[window["MAIN_PERMEATE_SCENE"].randomNum(this._team_icon_def.length - 1)];
+        var _sp = new cc.Sprite(this._team_icon),
+            _action = cc.sequence(cc.fadeIn(.5), cc.scaleTo(.5, 0, 1), cc.scaleTo(.5, 1, 1), cc.delayTime(.5)).repeatForever();
+        this.setAnchorPoint(.5, 0);
         _sp.x = 0;
         _sp.y = 0;
+        _sp.opacity = 0;
         this.addChild(_sp);
-        this.initBlock(obj, direction);
+        _sp.runAction(_action);
     },
-    initBlock: function (obj, direction) {
-        var _sp = null,
-            _this = this,
-            _txt_name = null,
-            _block_direction = this._block_direction[direction],
-            _obj_server_direction = this._block_server[_block_direction];
-
-        this._block_pc[_block_direction].pos.forEach(function (pos) {
-            _sp = new cc.Sprite(MAIN_PERMEATE_SCENE.res.sp_block_pc);
-            _sp.setPosition(pos);
-            _this.addChild(_sp, 1);
-        });
-
-        _obj_server_direction[obj.server.length].forEach(function (pos) {
-            //添加底层红色图片
-            _sp = new cc.Sprite(_this._block_server.icon[1]);
-            _sp.setPosition(pos);
-            _this.addChild(_sp, 1);
-            //添加顶层蓝色图片
-            _sp = new cc.Sprite(_this._block_server.icon[0]);
-            _sp.setPosition(pos);
-            _this.addChild(_sp, 2);
-            _this._server_obj_array.push(_sp);
-        });
-
-        // _txt_name = new cc.LabelTTF(obj.name, 10);
-        // _txt_name.setFontFillColor(cc.color(255, 187, 0));
-        // _txt_name.setPosition(_obj_server_direction.txt_name.pos)
-        // _txt_name.setRotation(_obj_server_direction.txt_name.rotation);
-        // this.addChild(_txt_name, 1);
-
-        var _sp_interchanger_small = new cc.Sprite(MAIN_PERMEATE_SCENE.res.sp_interchanger_small);
-        _sp_interchanger_small.setPosition(_obj_server_direction.interchanger_pos);
-        this.addChild(_sp_interchanger_small, 2);
-
-        _sp_interchanger_small.opacity = 0;
-        _sp_interchanger_small.runAction(cc.sequence(cc.delayTime(.5), cc.fadeIn(this._options.action_time_interchanger_small)));
-    },
-    hitServer: function (num) {
-        var _action = cc.sequence(cc.fadeOut(.3), cc.fadeIn(.3)).repeat(3);
-        this._server_obj_array[num].runAction(_action);
-    },
-    getServerPos: function (num) {
-        return this._server_obj_array[num].convertToWorldSpace(cc.p(11, 18));
+    destroy: function () {
+        this.cleanup();
+        this.runAction(cc.sequence(cc.spawn(cc.fadeOut(.5), cc.moveBy(.5, cc.p(0, 20))), cc.callFunc(function (target) {
+            target.removeFromParent();
+        })));
     }
 })

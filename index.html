@@ -94,7 +94,7 @@
   <div id="actionEffect">
     <canvas id="permeateMainCanvas" width="1300" height="860"></canvas>
     <button id="add_block_btn" style="width: 300px; height: 60px; margin: 0px auto 0px -300px; z-index: 9; position: absolute; bottom: 0;">添加大区</button>
-    <!-- <button id="change_team_btn" name="aaa" style="width: 300px; height: 60px; margin: 0px auto 0px 50px; z-index: 9; position: absolute; bottom: 0;">换 队</button> -->
+    <button id="team_attack_btn" name="aaa" style="width: 300px; height: 60px; margin: 0px auto 0px 50px; z-index: 9; position: absolute; bottom: 0;">攻击server</button>
   </div>
   <!-- <script src="res/loading.js"></script> -->
   <script src="frameworks/cocos2d-html5/CCBoot.js"></script>
@@ -102,6 +102,12 @@
   <script>
     // setInterval(function () { ATTCAKING_ACTION(3); }, 100);
     var btn = document.querySelector("#add_block_btn");
+    var atk_btn = document.querySelector("#team_attack_btn");
+    atk_btn.onclick = function () {
+      var _data = { id: '000333', name: '战队445', icon: '', attack_block_id: '000001', attack_server_id: 's00001' };
+      TEAM_ATTACK_SERVER(_data);
+    }
+
     btn.onclick = function () {
       PERMEATE_ADD_BLOCK({
         id: '000' + Math.round(Math.random() * 1000),

@@ -41,6 +41,13 @@
         MAIN_PERMEATE_SCENE._EFFECTS_MAIN_LAYER.addNewBlock(block_data);
     }
 
+    function teamAttackServer (team_attack_data) {
+        if (typeof team_attack_data !== 'object') {
+            throw new Error('TEAM_ATTACK_SERVER 参数必须为json格式');
+        }
+        MAIN_PERMEATE_SCENE._EFFECTS_MAIN_LAYER.addTeam(team_attack_data);
+    }
+
     window["PERMEATE_ADD_BLOCK"] = addBlock;
-    // window["CHANGE_TEAM"] = changeTeam;
+    window["TEAM_ATTACK_SERVER"] = teamAttackServer;
 }(window));

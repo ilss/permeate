@@ -109,6 +109,7 @@ var Draw_line_class = cc.Layer.extend({
     drawLine: function (s_pos, e_pos, _distance, _action_time) {
         var _rotate = null,
             _scale_size = null,
+            _this = this,
             _line = new cc.Sprite(MAIN_PERMEATE_SCENE.res.sp_line_yellow);
         _line.setPosition(s_pos);
         this.addChild(_line, 1);
@@ -121,7 +122,10 @@ var Draw_line_class = cc.Layer.extend({
 
         // 2点距离 / 线段图片宽度; 
         _scale_size = Math.round(_distance / 4);
-        _line.runAction(cc.sequence(cc.delayTime(this._draw_line_delay_time), cc.fadeIn(0), cc.scaleBy(_action_time, _scale_size, 1)));
+
+        _line.runAction(cc.sequence(cc.delayTime(this._draw_line_delay_time), cc.fadeIn(0), cc.scaleBy(_action_time, _scale_size, 1), cc.callFunc(function () {
+            _this.parent._is_action = false;
+        })));
 
     }
 })
