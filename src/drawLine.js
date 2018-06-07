@@ -77,9 +77,7 @@ var Draw_line_class = cc.Layer.extend({
         // 2点距离 / 线段图片宽度; 
         _scale_size = Math.round(_distance / 4);
 
-        _line.runAction(cc.sequence(cc.delayTime(this._draw_line_delay_time), cc.fadeIn(0), cc.scaleBy(_action_time, _scale_size, 1), cc.delayTime(.5), cc.callFunc(function (target) {
-            target.parent.parent._is_draw_line_action = false;
-        })));
+        _line.runAction(cc.sequence(cc.delayTime(this._draw_line_delay_time), cc.fadeIn(0), cc.scaleBy(_action_time, _scale_size, 1)));
 
     }
 })

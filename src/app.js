@@ -7,7 +7,6 @@
  */
 
 MAIN_PERMEATE_SCENE.Permeate_main_layer = cc.Layer.extend({
-
     _dt: null,
     _block_array: null,
     _sp_cloud: null,
@@ -18,8 +17,6 @@ MAIN_PERMEATE_SCENE.Permeate_main_layer = cc.Layer.extend({
     _team_array: null,
     _is_action_block: null,
     _is_action_team: null,
-    _is_draw_line_action: false,
-    _is_action: false,  //动画中不响应   Draw_line_class 里重置
     _add_block_array: null, //缓存加BLOCK请求 场上有team入场时暂缓处理
     _add_team_array: null, //缓存要上场的team
     _team_move_path: {
@@ -64,8 +61,6 @@ MAIN_PERMEATE_SCENE.Permeate_main_layer = cc.Layer.extend({
         this._super();
         this._dt = 0;
         this._is_action_block = false;
-        this._is_action = false;
-        this._is_draw_line_action = false;
         this._is_action_team = 0;
         this._block_array = [];
         this._team_array = [];
@@ -203,7 +198,6 @@ MAIN_PERMEATE_SCENE.Permeate_main_layer = cc.Layer.extend({
         this.addChild(this._sp_interchanger, 2);
     },
     drawLine: function (num) {
-        this._is_draw_line_action = true;
         this._layer_line_yellow = new Draw_line_class(num);
         this._layer_line_yellow.setCascadeOpacityEnabled(true);
         this.addChild(this._layer_line_yellow, 1);
@@ -237,21 +231,24 @@ MAIN_PERMEATE_SCENE.Permeate_main_layer = cc.Layer.extend({
         this._block_array.push(_block);
     },
     saveNewBlockRequest: function (block_data) {
+
         if (this._block_array.length < MAIN_PERMEATE_SCENE["_opactions"]["_block_show_num_max"]) {
-            if (GLOBAL_FUNC_SIMPLEEDU.findObjFromArray(block_data, "id", this._block_array, "_block_id") !== -1) {
-                cc.log('block 已存在！！');
+            if (GLOBAL_FUNC_SIMPLEEDU.findObjFromArray(block_data, "id", this._block_array, "_block_id") !== -1 && GLOBAL_FUNC_SIMPLEEDU.findObjFromArray(block_data, "id", this._add_block_array, "id") !== -1) {
+                cc.log('block' + block_data.id + ' 已存在！！');
                 return;
             }
-            if (!this._is_action_block && !this._is_action && !this._is_draw_line_action) {
-                this.addNewBlock(block_data);
+            this._add_block_array.unshift(block_data);
+            cc.log(this._add_block_array);
+            if (!this._is_action_block && this._is_action_team === 0) {
+                this.addNewBlock();
             } else {
-                this._add_block_array.push(block_data);
-                this.schedule(this.updateAddBlock, 5.0);
+                this.schedule(this.updateAddBlock, 2.0);
             }
         }
     },
-    addNewBlock: function (block_data) {
-        var _index = 0,
+    addNewBlock: function () {
+        var _block_data = this._add_block_array.pop(),
+            _index = 0,
             _len_block_array = this._block_array.length,
             _old_block = null,
             _old_block_old_pos = null,
@@ -259,7 +256,7 @@ MAIN_PERMEATE_SCENE.Permeate_main_layer = cc.Layer.extend({
 
         if (!this._is_action_block) {
             this._is_action_block = true;
-            setTimeout(function () { this._is_action_block = false; }.bind(this), 2000);
+            setTimeout(function () { this._is_action_block = false; }.bind(this), 1500);
         }
         //重置现有区的坐标和缩放
         //场景缩放
@@ -284,7 +281,7 @@ MAIN_PERMEATE_SCENE.Permeate_main_layer = cc.Layer.extend({
         this._layer_line_yellow.runAction(cc.fadeOut(.25));
 
         setTimeout(function () {
-            this.addBlock(block_data, MAIN_PERMEATE_SCENE.block_server_num[_len_block_array + 1], _len_block_array);
+            this.addBlock(_block_data, MAIN_PERMEATE_SCENE.block_server_num[_len_block_array + 1], _len_block_array);
 
             this._layer_line_yellow.removeFromParent();
             this._layer_line_yellow = null;
@@ -293,14 +290,10 @@ MAIN_PERMEATE_SCENE.Permeate_main_layer = cc.Layer.extend({
     },
     saveTeamRequest: function (team_data) {
         if (this._team_array.length < MAIN_PERMEATE_SCENE["_opactions"]["_team_show_num_max"]) {
-
             this.addTeam(team_data);
-            // if (!this._is_action_block && !this._is_action && !this._is_draw_line_action) {
-            //     this.schedule(this.updateAddTeam, 1.0);
-            // } else {
-            //     this._add_team_array.push(team_data);
-            //     this.schedule(this.updateAddBlock, 5.0);
-            // }
+        } else {
+            this._add_team_array.push(team_data);
+            this.schedule(this.updateAddTeam, 2.0);
         }
     },
     /**
@@ -373,19 +366,17 @@ MAIN_PERMEATE_SCENE.Permeate_main_layer = cc.Layer.extend({
         cc.log('updateAddBlock');
         if (this._block_array.length === MAIN_PERMEATE_SCENE["_opactions"]["_block_show_num_max"] || this._add_block_array.length === 0) {
             this.unschedule(this.updateAddBlock);
+            return;
         }
-        this._is_action = this._is_action_team > 0 ? true : false;
 
         //处理 新增 block
-        if (this._add_block_array.length > 0 && !this._is_action && !this._is_draw_line_action) {
-            if (this._block_array.length < 4) {
-                var _data = this._add_block_array.shift();
-                this.addNewBlock(_data);
-            }
+        if (this._add_block_array.length > 0 && this._is_action_team === 0 && !this._is_action_block) {
+            this.addNewBlock();
         }
     },
     updateAddTeam: function () {
         cc.log('updateAddTeam');
+        // cc.log(cc.isScheduled(this.updateAddTeam));
     }
 });
 
