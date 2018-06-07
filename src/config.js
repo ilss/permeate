@@ -12,22 +12,22 @@ MAIN_PERMEATE_SCENE.block_server_num = {
         block_pos: [
             cc.p(330, 260)
         ],
-        block_scale: 1.25
+        block_scale: 1.2
     },
     2: {
         block_pos: [
             cc.p(276, 474),
             cc.p(710, 200)
         ],
-        block_scale: 1
+        block_scale: 1.1
     },
     3: {
         block_pos: [
-            cc.p(186, 344),
-            cc.p(480, 162),
+            cc.p(230, 380),
+            cc.p(538, 183),
             cc.p(1028, 266)
         ],
-        block_scale: 1
+        block_scale: 1.05
     },
     4: {
         block_pos: [
@@ -44,7 +44,7 @@ MAIN_PERMEATE_SCENE.block_server_num = {
 MAIN_PERMEATE_SCENE.path_pos_array = {
     entry: cc.p(786, 520),
     1: [
-        [cc.p(706, 473), cc.p(438, 320)]
+        [cc.p(706, 473), cc.p(417, 307)]
     ],
     2: [
         //每个数组包含 一个起点与一个终点
@@ -62,17 +62,17 @@ MAIN_PERMEATE_SCENE.path_pos_array = {
     3: [
         //每个数组包含 一个起点与一个终点
         [
-            [cc.p(706, 473), cc.p(455, 327)],
+            [cc.p(706, 473), cc.p(505, 356)],
             [cc.p(706, 473), cc.p(954, 325)]
         ],
         [
             //表示同时画N段线
-            [cc.p(455, 327), cc.p(313, 413)],
-            [cc.p(455, 327), cc.p(606, 231)],
+            [cc.p(505, 356), cc.p(346, 457)],
+            [cc.p(505, 356), cc.p(668, 253)],
         ],
         [
-            [cc.p(314, 415), cc.p(274, 392)],
-            [cc.p(606, 231), cc.p(568, 209)]
+            [cc.p(350, 448), cc.p(316, 426)],
+            [cc.p(668, 253), cc.p(628, 229)]
         ]
     ],
     4: [

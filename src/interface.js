@@ -44,7 +44,7 @@
     }
 
     function addBlock (block_data) {
-        MAIN_PERMEATE_SCENE._EFFECTS_MAIN_LAYER.addNewBlock(block_data);
+        MAIN_PERMEATE_SCENE._EFFECTS_MAIN_LAYER.addNewBlockRequest(block_data);
     }
 
     function teamAttackServer (team_attack_data) {

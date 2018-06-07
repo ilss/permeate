@@ -174,6 +174,7 @@ var Block_class = cc.Node.extend({
         this._block_id = obj["id"];
         this._server_obj_array = [];
         // cc.log(obj);
+
         var _sp = new cc.Sprite(MAIN_PERMEATE_SCENE.res.bg_block);
         _sp.x = 0;
         _sp.y = 0;
@@ -218,7 +219,6 @@ var Block_class = cc.Node.extend({
 
         _sp_interchanger_small.opacity = 0;
         _sp_interchanger_small.runAction(cc.sequence(cc.delayTime(.2), cc.fadeIn(this._options.action_time_interchanger_small)));
-
     },
     hitServer: function (obj) {
         var _index = MAIN_PERMEATE_SCENE.findObjFromArray(obj, "attack_server_id", this._server_obj_array, "server_id");
@@ -227,8 +227,7 @@ var Block_class = cc.Node.extend({
     },
     getServerPos: function (obj) {
         var _index = MAIN_PERMEATE_SCENE.findObjFromArray(obj, "attack_server_id", this._server_obj_array, "server_id");
-        // cc.log(obj.attack_server_id);
-        // cc.log(_index);
-        return this._server_obj_array[_index].convertToWorldSpace(cc.p(10, 24));
+        // return this._server_obj_array[_index].getParent().convertToWorldSpace(this._server_obj_array[_index].getPosition());
+        return this._server_obj_array[_index].getPosition();
     }
 })
