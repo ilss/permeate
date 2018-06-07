@@ -12,14 +12,14 @@ MAIN_PERMEATE_SCENE.block_server_num = {
         block_pos: [
             cc.p(330, 260)
         ],
-        block_scale: 1.2
+        block_scale: 1.25
     },
     2: {
         block_pos: [
             cc.p(276, 474),
             cc.p(710, 200)
         ],
-        block_scale: 1.1
+        block_scale: 1.15
     },
     3: {
         block_pos: [
@@ -27,7 +27,7 @@ MAIN_PERMEATE_SCENE.block_server_num = {
             cc.p(538, 183),
             cc.p(1028, 266)
         ],
-        block_scale: 1.05
+        block_scale: 1.075
     },
     4: {
         block_pos: [

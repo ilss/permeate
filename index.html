@@ -100,14 +100,6 @@
   <script src="frameworks/cocos2d-html5/CCBoot.js"></script>
   <script cocos src="main.js"></script>
   <script>
-    // setInterval(function () { ATTCAKING_ACTION(3); }, 100);
-    var btn = document.querySelector("#add_block_btn");
-    var atk_btn = document.querySelector("#team_attack_btn");
-    atk_btn.onclick = function () {
-      var _data = { id: '000' + Math.round(Math.random() * 1000), name: '战队445', icon: '', attack_block_id: '000001', attack_server_id: 's0000' + MAIN_PERMEATE_SCENE.randomNum(1, 6) };
-      TEAM_ATTACK_SERVER(_data);
-    }
-
     var add_block_array = [{
       id: '000111',
       name: '管理区',
@@ -116,19 +108,19 @@
           id: 's00001'
         },
         {
-          id: 's00001'
+          id: 's00002'
         },
         {
-          id: 's00001'
+          id: 's00003'
         },
         {
-          id: 's00001'
+          id: 's00004'
         },
         {
-          id: 's00001'
+          id: 's00005'
         },
         {
-          id: 's00001'
+          id: 's00006'
         }
       ]
     },
@@ -140,19 +132,16 @@
           id: 's00001'
         },
         {
-          id: 's00001'
+          id: 's00002'
         },
         {
-          id: 's00001'
+          id: 's00003'
         },
         {
-          id: 's00001'
+          id: 's00004'
         },
         {
-          id: 's00001'
-        },
-        {
-          id: 's00001'
+          id: 's00005'
         }
       ]
     },
@@ -164,26 +153,29 @@
           id: 's00001'
         },
         {
-          id: 's00001'
+          id: 's00002'
         },
         {
-          id: 's00001'
+          id: 's00003'
         },
         {
-          id: 's00001'
-        },
-        {
-          id: 's00001'
-        },
-        {
-          id: 's00001'
+          id: 's00004'
         }
       ]
     }];
+
+    var btn = document.querySelector("#add_block_btn");
+    var atk_btn = document.querySelector("#team_attack_btn");
+
+    atk_btn.onclick = function () {
+      var _data = { id: '000' + Math.round(Math.random() * 1000), name: '战队445', icon: '', attack_block_id: '000222', attack_server_id: 's0000' + MAIN_PERMEATE_SCENE.randomNum(1, 5) };
+      TEAM_ATTACK_SERVER(_data);
+    }
+
     var add_block_index = 0;
     btn.onclick = function () {
       PERMEATE_ADD_BLOCK(add_block_array[add_block_index]);
-      add_block_index++;
+      add_block_index = add_block_index < add_block_array.length - 1 ? add_block_index + 1 : 0;
     }
   </script>
 

@@ -1,6 +1,13 @@
 (function (window) {
     window["MAIN_PERMEATE_SCENE"] = {
         _EFFECTS_MAIN_LAYER: null,
+        //基础设置
+        _opactions: {
+            _block_show_num_max: 4,
+            _team_show_num_max: 10,
+            _add_block_fadeout_action_time: .5
+        },
+
         /**
          * @func 
          * @desc 返回minNum 到 maxNum 之间的随机数，包括minNum 和 maxNum.
@@ -20,38 +27,27 @@
                 default:
                     return 0;
             }
-        },
-
-        getRotate: function (pos1, pos2) {
-            var o = pos1.x - pos2.x,
-                a = pos1.y - pos2.y,
-                _at = Math.atan(o / a) * 180 / Math.PI;
-            if (a < 0) {
-                if (o < 0)
-                    _at = 180 + Math.abs(_at);
-                else
-                    _at = 180 - Math.abs(_at);
-            }
-            _at -= 90;
-            return Math.round(_at);
-        },
-
-        findObjFromArray: function (obj, obj_key, array, array_key) {
-            return array.findIndex(function (item) {
-                return item[array_key] === obj[obj_key];
-            });
         }
     }
 
     function addBlock (block_data) {
-        MAIN_PERMEATE_SCENE._EFFECTS_MAIN_LAYER.addNewBlockRequest(block_data);
+        if (GLOBAL_FUNC_SIMPLEEDU.objHasSomeProperty(block_data, ["id", "name", "server"])) {
+            MAIN_PERMEATE_SCENE._EFFECTS_MAIN_LAYER.saveNewBlockRequest(block_data);
+        } else {
+            cc.log('addBlock 参数格式错误');
+        }
     }
 
     function teamAttackServer (team_attack_data) {
-        if (typeof team_attack_data !== 'object') {
-            throw new Error('TEAM_ATTACK_SERVER 参数必须为json格式');
+        // if (objHasSomeProperty(team_attack_data, ["id", "name", "icon", "attack_block_id", "attack_server_id"])) {
+        //     throw new Error('TEAM_ATTACK_SERVER 参数格式错误');
+        // }
+        if (GLOBAL_FUNC_SIMPLEEDU.objHasSomeProperty(team_attack_data, ["id", "name", "icon", "attack_block_id", "attack_server_id"])) {
+            MAIN_PERMEATE_SCENE._EFFECTS_MAIN_LAYER.saveTeamRequest(team_attack_data);
+        } else {
+            cc.log('teamAttackServer 参数格式错误');
         }
-        MAIN_PERMEATE_SCENE._EFFECTS_MAIN_LAYER.addTeam(team_attack_data);
+
     }
 
     window["PERMEATE_ADD_BLOCK"] = addBlock;

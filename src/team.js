@@ -24,7 +24,6 @@ var Team_class = cc.Node.extend({
         MAIN_PERMEATE_SCENE.res.sp_team_icon_5,
         MAIN_PERMEATE_SCENE.res.sp_team_icon_6
     ],
-
     ctor: function (obj) {
         this._super();
         this.setCascadeOpacityEnabled(true);
@@ -48,6 +47,9 @@ var Team_class = cc.Node.extend({
         var _action = cc.sequence(cc.scaleTo(this._options.action_time_interchanger_small, 0, 1), cc.scaleTo(this._options.action_time_interchanger_small, 1, 1)).repeatForever();
         this.cleanup();
         this.runAction(_action);
+    },
+    teamIntoServer: function () {
+        // cc.log('teamIntoServer');
     },
     destroy: function () {
         this.cleanup();

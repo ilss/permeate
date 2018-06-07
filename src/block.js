@@ -148,7 +148,7 @@ var Block_class = cc.Node.extend({
                 cc.p(-14, 43)
             ],
             5: [
-                cc.p(47, -19),
+                cc.p(-47, -19),
                 cc.p(-4, 8),
                 cc.p(39, 31),
                 cc.p(-55, 19),
@@ -173,9 +173,8 @@ var Block_class = cc.Node.extend({
         this._super();
         this._block_id = obj["id"];
         this._server_obj_array = [];
-        // cc.log(obj);
 
-        var _sp = new cc.Sprite(MAIN_PERMEATE_SCENE.res.bg_block);
+        var _sp = new cc.Sprite("#permeate_block_bg.png");
         _sp.x = 0;
         _sp.y = 0;
         this.addChild(_sp);
@@ -189,11 +188,11 @@ var Block_class = cc.Node.extend({
             _obj_server_direction = this._block_server[_block_direction];
 
         this._block_pc[_block_direction].pos.forEach(function (pos) {
-            _sp = new cc.Sprite(MAIN_PERMEATE_SCENE.res.sp_block_pc);
+            _sp = new cc.Sprite("#permeate_pc.png");
             _sp.setPosition(pos);
             _this.addChild(_sp, 1);
         });
-        // cc.log(obj["server"]);
+
         _obj_server_direction[obj["server"].length].forEach(function (pos, index) {
             //添加底层红色图片
             _sp = new cc.Sprite(_this._block_server.icon[1]);
@@ -213,7 +212,7 @@ var Block_class = cc.Node.extend({
         _txt_name.setRotation(_obj_server_direction.txt_name.rotation);
         this.addChild(_txt_name, 1);
 
-        var _sp_interchanger_small = new cc.Sprite(MAIN_PERMEATE_SCENE.res.sp_interchanger_small);
+        var _sp_interchanger_small = new cc.Sprite("#interchanger_small.png");
         _sp_interchanger_small.setPosition(_obj_server_direction.interchanger_pos);
         this.addChild(_sp_interchanger_small, 2);
 
@@ -221,12 +220,12 @@ var Block_class = cc.Node.extend({
         _sp_interchanger_small.runAction(cc.sequence(cc.delayTime(.2), cc.fadeIn(this._options.action_time_interchanger_small)));
     },
     hitServer: function (obj) {
-        var _index = MAIN_PERMEATE_SCENE.findObjFromArray(obj, "attack_server_id", this._server_obj_array, "server_id");
+        var _index = GLOBAL_FUNC_SIMPLEEDU.findObjFromArray(obj, "attack_server_id", this._server_obj_array, "server_id");
         var _action = cc.sequence(cc.fadeOut(.3), cc.fadeIn(.3)).repeatForever();
         this._server_obj_array[_index].runAction(_action);
     },
     getServerPos: function (obj) {
-        var _index = MAIN_PERMEATE_SCENE.findObjFromArray(obj, "attack_server_id", this._server_obj_array, "server_id");
+        var _index = GLOBAL_FUNC_SIMPLEEDU.findObjFromArray(obj, "attack_server_id", this._server_obj_array, "server_id");
         // return this._server_obj_array[_index].getParent().convertToWorldSpace(this._server_obj_array[_index].getPosition());
         return this._server_obj_array[_index].getPosition();
     }

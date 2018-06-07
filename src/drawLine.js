@@ -71,7 +71,7 @@ var Draw_line_class = cc.Layer.extend({
         _line.opacity = 0;
 
         //确定线的角度
-        _rotate = MAIN_PERMEATE_SCENE.getRotate(s_pos, e_pos);
+        _rotate = GLOBAL_FUNC_SIMPLEEDU.getRotate(s_pos, e_pos);
         _line.setRotation(_rotate);
 
         // 2点距离 / 线段图片宽度; 

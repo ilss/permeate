@@ -11,6 +11,7 @@
         "webhtml"
     ],
     "jsList": [
+        "src/global.js",
         "src/interface.js",
         "src/config.js",
         "src/resource.js",
