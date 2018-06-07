@@ -231,14 +231,12 @@ MAIN_PERMEATE_SCENE.Permeate_main_layer = cc.Layer.extend({
         this._block_array.push(_block);
     },
     saveNewBlockRequest: function (block_data) {
-
         if (this._block_array.length < MAIN_PERMEATE_SCENE["_opactions"]["_block_show_num_max"]) {
             if (GLOBAL_FUNC_SIMPLEEDU.findObjFromArray(block_data, "id", this._block_array, "_block_id") !== -1 && GLOBAL_FUNC_SIMPLEEDU.findObjFromArray(block_data, "id", this._add_block_array, "id") !== -1) {
                 cc.log('block' + block_data.id + ' 已存在！！');
                 return;
             }
             this._add_block_array.unshift(block_data);
-            cc.log(this._add_block_array);
             if (!this._is_action_block && this._is_action_team === 0) {
                 this.addNewBlock();
             } else {
@@ -289,11 +287,12 @@ MAIN_PERMEATE_SCENE.Permeate_main_layer = cc.Layer.extend({
         }.bind(this), MAIN_PERMEATE_SCENE["_opactions"]["_add_block_fadeout_action_time"] * 1000);
     },
     saveTeamRequest: function (team_data) {
+        // cc.log(team_data);
         if (this._team_array.length < MAIN_PERMEATE_SCENE["_opactions"]["_team_show_num_max"]) {
-            this.addTeam(team_data);
-        } else {
-            this._add_team_array.push(team_data);
-            this.schedule(this.updateAddTeam, 2.0);
+            // this.addTeam(team_data);
+
+            this._add_team_array.unshift(team_data);
+            this.schedule(this.updateAddTeam, 1.0);
         }
     },
     /**
@@ -301,27 +300,30 @@ MAIN_PERMEATE_SCENE.Permeate_main_layer = cc.Layer.extend({
      * @desc 队伍入场
      * @param {object} obj  { id: '000333', name: '战队445', icon: '', attack_block_id: '000001', attack_server_id: 's00001' }
      */
-    addTeam: function (obj) {
-        obj = obj || { id: '000333', name: '战队445', icon: '', attack_block_id: '000001', attack_server_id: 's00001' };
-
-        var _result = null,
+    addTeam: function () {
+        cc.log(this._is_action_block);
+        if (this._is_action_block) {
+            return;
+        }
+        var _obj = this._add_team_array.pop(),
+            _result = null,
             _block_index = null,
             _team = null;
-        _result = GLOBAL_FUNC_SIMPLEEDU.findObjFromArray(obj, "id", this._team_array, "_team_id");
-        _block_index = GLOBAL_FUNC_SIMPLEEDU.findObjFromArray(obj, "attack_block_id", this._block_array, "_block_id");
+        _result = GLOBAL_FUNC_SIMPLEEDU.findObjFromArray(_obj, "id", this._team_array, "_team_id");
+        _block_index = GLOBAL_FUNC_SIMPLEEDU.findObjFromArray(_obj, "attack_block_id", this._block_array, "_block_id");
 
         if (_block_index < 0) {
-            cc.log("不存在ID " + obj.attack_block_id + '的大区');
+            cc.log("不存在ID " + _obj.attack_block_id + '的大区');
             return;
         }
         if (_result === -1) {
             // cc.log('新队伍');
             this._is_action_team++;
-            _team = new Team_class(obj);
+            _team = new Team_class(_obj);
             _team.setPosition(cc.pAdd(MAIN_PERMEATE_SCENE.path_pos_array.entry, cc.p(0, 30)));
             this.addChild(_team, 10);
             this._team_array.push(_team);
-            this.teamMoveToBlock(_team, obj);
+            this.teamMoveToBlock(_team, _obj);
             _team.teamIntoServer();
         } else {
             cc.log('队伍已存在    ' + _result);
@@ -375,7 +377,10 @@ MAIN_PERMEATE_SCENE.Permeate_main_layer = cc.Layer.extend({
         }
     },
     updateAddTeam: function () {
-        cc.log('updateAddTeam');
+        cc.log(this._add_team_array.length);
+        if (this._add_team_array.length > 0) {
+            this.addTeam();
+        }
         // cc.log(cc.isScheduled(this.updateAddTeam));
     }
 });
