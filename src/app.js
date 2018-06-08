@@ -91,30 +91,30 @@ MAIN_PERMEATE_SCENE.Permeate_main_layer = cc.Layer.extend({
                     }
                 ]
             },
-            // {
-            //     id: '000002',
-            //     name: '管理区',
-            //     server: [
-            //         {
-            //             id: 's00001'
-            //         },
-            //         {
-            //             id: 's00001'
-            //         },
-            //         // {
-            //         //     id: 's00001'
-            //         // },
-            //         // {
-            //         //     id: 's00001'
-            //         // },
-            //         // {
-            //         //     id: 's00001'
-            //         // },
-            //         // {
-            //         //     id: 's00001'
-            //         // }
-            //     ]
-            // },
+            {
+                id: '000111',
+                name: '管理区',
+                server: [
+                    {
+                        id: 's00001'
+                    },
+                    {
+                        id: 's00002'
+                    },
+                    {
+                        id: 's00003'
+                    },
+                    {
+                        id: 's00004'
+                    },
+                    {
+                        id: 's00005'
+                    },
+                    {
+                        id: 's00006'
+                    }
+                ]
+            },
             // {
             //     id: '000003',
             //     name: '管理区',
@@ -173,8 +173,6 @@ MAIN_PERMEATE_SCENE.Permeate_main_layer = cc.Layer.extend({
         this.drawLine(_json.length);
         // var _bg_color = new cc.LayerColor(cc.color(0, 0, 0), this._winSize.width, this._winSize.height);
         // this.addChild(_bg_color);
-
-
     },
     addBg: function () {
         this._sp_cloud = new cc.Sprite("#permeate_cloud.png");
@@ -304,11 +302,12 @@ MAIN_PERMEATE_SCENE.Permeate_main_layer = cc.Layer.extend({
         if (this._is_action_block || this._add_block_array.length > 0) {
             return;
         }
-
         cc.log(1111);
         var _obj = this._add_team_array.pop(),
             _result = null,
             _block_index = null,
+            _action = null,
+            _action_time = null,
             _team = null;
         _result = GLOBAL_FUNC_SIMPLEEDU.findObjFromArray(_obj, "id", this._team_array, "_team_id");
         _block_index = GLOBAL_FUNC_SIMPLEEDU.findObjFromArray(_obj, "attack_block_id", this._block_array, "_block_id");
@@ -320,18 +319,22 @@ MAIN_PERMEATE_SCENE.Permeate_main_layer = cc.Layer.extend({
         }
         if (_result === -1) {
             // cc.log('新队伍');
-            this._is_action_team++;
             _team = new Team_class(_obj);
             _team.setPosition(cc.pAdd(MAIN_PERMEATE_SCENE.path_pos_array.entry, cc.p(0, 30)));
             this.addChild(_team, 10);
             this._team_array.push(_team);
             this.teamMoveToBlock(_team, _obj);
-            _team.teamIntoServer();
         } else {
-            cc.log('队伍已存在    ' + _result);
+            // cc.log('队伍已存在    ' + _result);
+            _team = this._team_array[_result];
+            _action = cc.spawn(cc.moveBy(_team._options.action_time_interchanger_small, cc.p(0, 35)), cc.scaleTo(_team._options.action_time_interchanger_small, 1, 1), cc.fadeIn(_team._options.action_time_interchanger_small));
+            _team.cleanup();
+            _team.runAction(cc.sequence(_action, cc.callFunc(function () {
+                this.teamMoveToBlock(_team, _obj, true);
+            }.bind(this))));
         }
     },
-    teamMoveToBlock: function (team, obj) {
+    teamMoveToBlock: function (team, obj, type) {
         var _this = this,
             _line_start_pos = team.getPosition(),
             _block = null,
@@ -342,29 +345,26 @@ MAIN_PERMEATE_SCENE.Permeate_main_layer = cc.Layer.extend({
             _action_time = null,
             _action = [cc.delayTime(.5)];
 
+        this._is_action_team++;
         _block_index = GLOBAL_FUNC_SIMPLEEDU.findObjFromArray(obj, "attack_block_id", this._block_array, "_block_id");
-        _path_array = this._team_move_path[this._block_array.length][_block_index];
-        for (var _index = 0, _len = _path_array.length; _index < _len; _index++) {
-            _line_end_pos = _path_array[_index];
-            _distance = cc.pDistance(_line_start_pos, _line_end_pos);
-            _action_time = _distance / team._options.team_move_action_distance;
-            _action.push(cc.moveTo(_action_time, cc.pAdd(_line_end_pos, cc.p(0, 30))));
-            _line_start_pos = _line_end_pos;
+        _block = _this._block_array[_block_index];
+        if (!type) {
+            _path_array = this._team_move_path[this._block_array.length][_block_index];
+            for (var _index = 0, _len = _path_array.length; _index < _len; _index++) {
+                _line_end_pos = _path_array[_index];
+                _distance = cc.pDistance(_line_start_pos, _line_end_pos);
+                _action_time = _distance / team._options.team_move_action_distance;
+                _action.push(cc.moveTo(_action_time, cc.pAdd(_line_end_pos, cc.p(0, 30))));
+                _line_start_pos = _line_end_pos;
+            }
         }
 
-        //移动到攻击的 具体server的上
-        _block = _this._block_array[_block_index];
+        //移动到具体server的上
         _line_end_pos = cc.pAdd(_block.getPosition(), this._block_array[_block_index].getServerPos(obj));
         _distance = cc.pDistance(_line_start_pos, _line_end_pos);
         _action_time = _distance / team._options.team_move_action_distance;
-        _action.push(cc.moveTo(_action_time, cc.pAdd(_line_end_pos, cc.p(0, 30))));
 
-        _action.push(cc.callFunc(function (team) {
-            _this._is_action_team--;
-            team.attackServer();
-            // _block.hitServer(obj);
-        }));
-        team.runAction(cc.sequence(_action));
+        team.moveToServer(_line_end_pos, _action, _action_time);
     },
     updateAddBlock: function () {
         cc.log('updateAddBlock');
@@ -386,7 +386,6 @@ MAIN_PERMEATE_SCENE.Permeate_main_layer = cc.Layer.extend({
         } else {
             this.unschedule(this.updateAddTeam);
         }
-        // cc.log(cc.isScheduled(this.updateAddTeam));
     }
 });
 

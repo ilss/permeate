@@ -164,12 +164,22 @@
       ]
     }];
 
+    var attack_server_data = [
+      { id: 't00001', name: 't00001', icon: '', attack_block_id: '000111', attack_server_id: 's00001' },
+      { id: 't00002', name: 't00002', icon: '', attack_block_id: '000111', attack_server_id: 's00002' },
+      { id: 't00003', name: 't00003', icon: '', attack_block_id: '000111', attack_server_id: 's00003' },
+      { id: 't00001', name: 't00001', icon: '', attack_block_id: '000001', attack_server_id: 's00003' },
+      { id: 't00002', name: 't00002', icon: '', attack_block_id: '000001', attack_server_id: 's00002' },
+    ];
+
+    var index_attack_server_data = 0;
     var btn = document.querySelector("#add_block_btn");
     var atk_btn = document.querySelector("#team_attack_btn");
 
     atk_btn.onclick = function () {
-      var _data = { id: '000' + Math.round(Math.random() * 1000), name: '战队445', icon: '', attack_block_id: '000111', attack_server_id: 's0000' + MAIN_PERMEATE_SCENE.randomNum(1, 5) };
+      var _data = attack_server_data[index_attack_server_data];
       TEAM_ATTACK_SERVER(_data);
+      index_attack_server_data = index_attack_server_data < attack_server_data.length - 1 ? index_attack_server_data + 1 : 0;
     }
 
     var add_block_index = 0;

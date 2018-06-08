@@ -49,6 +49,9 @@
             }
             _at -= 90;
             return Math.round(_at);
+        },
+        distanceToActionTime: function (pos1, pos2, move_speed) {
+            return cc.pDistance(pos1, pos2) / move_speed;
         }
     }
 }(window));

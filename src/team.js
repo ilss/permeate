@@ -35,7 +35,6 @@ var Team_class = cc.Node.extend({
 
         var _sp = new cc.Sprite(this._team_icon),
             _action = cc.sequence(cc.fadeIn(this._options.action_time_interchanger_small), cc.scaleTo(this._options.action_time_interchanger_small, 1, 1));
-
         _sp.x = 0;
         _sp.y = 0;
         _sp.setScale(.1);
@@ -43,13 +42,20 @@ var Team_class = cc.Node.extend({
         this.addChild(_sp);
         _sp.runAction(_action);
     },
+    moveToServer: function (_line_end_pos, _action, _action_time) {
+        _action.push(cc.moveTo(_action_time, cc.pAdd(_line_end_pos, cc.p(0, 30))));
+        _action.push(cc.callFunc(function (team) {
+            team.getParent()._is_action_team--;
+            team.attackServer();
+        }));
+        this.runAction(cc.sequence(_action));
+    },
     attackServer: function () {
         var _action = cc.sequence(cc.scaleTo(this._options.action_time_interchanger_small, 0, 1), cc.scaleTo(this._options.action_time_interchanger_small, 1, 1));
         this.cleanup();
         this.runAction(cc.sequence(_action.clone(), _action.clone(), _action.clone(), _action.clone(), cc.spawn(cc.moveBy(this._options.action_time_interchanger_small, cc.p(0, -35)), cc.scaleTo(this._options.action_time_interchanger_small, 0, 0), cc.fadeOut(this._options.action_time_interchanger_small))));
     },
     destroy: function () {
-        this.cleanup();
         this.runAction(cc.sequence(cc.spawn(cc.fadeOut(this._options.action_time_interchanger_small), cc.moveBy(this._options.action_time_interchanger_small, cc.p(0, 20))), cc.callFunc(function (target) {
             target.removeFromParent();
         })));
