@@ -2,18 +2,12 @@
  * @Author: Liang Liang
  * @Date: 2018-06-01 10:18:04
  * @LastEditors: Liang Liang
- * @LastEditTime: 2018-06-08 17:18:04
+ * @LastEditTime: 2018-06-08 18:01:28
  * @Description: 
  */
 (function (window) {
     window["MAIN_PERMEATE_SCENE"] = {
         _EFFECTS_MAIN_LAYER: null,
-        //基础设置
-        _opactions: {
-            _block_show_num_max: 4,
-            _team_show_num_max: 10,
-            _add_block_fadeout_action_time: .5
-        },
 
         /**
          * @func 

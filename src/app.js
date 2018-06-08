@@ -19,44 +19,6 @@ MAIN_PERMEATE_SCENE.Permeate_main_layer = cc.Layer.extend({
     _is_action_team: null,
     _add_block_array: null, //缓存加BLOCK请求 场上有team入场时暂缓处理
     _add_team_array: null, //缓存要上场的team
-    _team_move_path: {
-        1: [
-            [MAIN_PERMEATE_SCENE.path_pos_array["1"][0][1]]
-        ],
-        2: [
-            [
-                MAIN_PERMEATE_SCENE.path_pos_array["2"][1][0][0], MAIN_PERMEATE_SCENE.path_pos_array["2"][1][0][1], MAIN_PERMEATE_SCENE.path_pos_array["2"][2][0][1]
-            ],
-            [
-                MAIN_PERMEATE_SCENE.path_pos_array["2"][1][1][0], MAIN_PERMEATE_SCENE.path_pos_array["2"][1][1][1], MAIN_PERMEATE_SCENE.path_pos_array["2"][2][1][1]
-            ]
-        ],
-        3: [
-            [
-                MAIN_PERMEATE_SCENE.path_pos_array["3"][1][0][0], MAIN_PERMEATE_SCENE.path_pos_array["3"][1][0][1], MAIN_PERMEATE_SCENE.path_pos_array["3"][2][0][1]
-            ],
-            [
-                MAIN_PERMEATE_SCENE.path_pos_array["3"][1][1][0], MAIN_PERMEATE_SCENE.path_pos_array["3"][1][1][1], MAIN_PERMEATE_SCENE.path_pos_array["3"][2][1][1]
-            ],
-            [
-                MAIN_PERMEATE_SCENE.path_pos_array["3"][0][1][0], MAIN_PERMEATE_SCENE.path_pos_array["3"][0][1][1]
-            ]
-        ],
-        4: [
-            [
-                MAIN_PERMEATE_SCENE.path_pos_array["4"][1][0][0], MAIN_PERMEATE_SCENE.path_pos_array["4"][1][0][1], MAIN_PERMEATE_SCENE.path_pos_array["4"][2][0][1]
-            ],
-            [
-                MAIN_PERMEATE_SCENE.path_pos_array["4"][1][1][0], MAIN_PERMEATE_SCENE.path_pos_array["4"][1][1][1], MAIN_PERMEATE_SCENE.path_pos_array["4"][2][1][1]
-            ],
-            [
-                MAIN_PERMEATE_SCENE.path_pos_array["4"][0][1][0], MAIN_PERMEATE_SCENE.path_pos_array["4"][0][1][1]
-            ],
-            [
-                MAIN_PERMEATE_SCENE.path_pos_array["4"][0][2][0], MAIN_PERMEATE_SCENE.path_pos_array["4"][0][2][1]
-            ]
-        ]
-    },
     onEnter: function () {
         this._super();
         this._dt = 0;
@@ -296,7 +258,6 @@ MAIN_PERMEATE_SCENE.Permeate_main_layer = cc.Layer.extend({
     /**
      * @func 
      * @desc 队伍入场
-     * @param {object} obj  { id: '000333', name: '战队445', icon: '', attack_block_id: '000001', attack_server_id: 's00001' }
      */
     addTeam: function () {
         if (this._is_action_block || this._add_block_array.length > 0) {
@@ -359,7 +320,7 @@ MAIN_PERMEATE_SCENE.Permeate_main_layer = cc.Layer.extend({
 
         if (!type) {
             _action.push(cc.delayTime(.5));
-            _path_array = this._team_move_path[this._block_array.length][_block_index];
+            _path_array = MAIN_PERMEATE_SCENE.team_move_path[this._block_array.length][_block_index];
             for (var _index = 0, _len = _path_array.length; _index < _len; _index++) {
                 _line_end_pos = _path_array[_index];
                 _distance = cc.pDistance(_line_start_pos, _line_end_pos);
@@ -367,6 +328,8 @@ MAIN_PERMEATE_SCENE.Permeate_main_layer = cc.Layer.extend({
                 _action.push(cc.moveTo(_action_time, cc.pAdd(_line_end_pos, cc.p(0, 30))));
                 _line_start_pos = _line_end_pos;
             }
+        } else {
+            _action.push(cc.delayTime(.3));
         }
 
         //移动到具体server的上

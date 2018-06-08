@@ -2,10 +2,16 @@
  * @Author: Liang Liang
  * @Date: 2018-06-1 09:09:39
  * @LastEditors: Liang Liang
- * @LastEditTime: 2018-06-01 18:10:04
+ * @LastEditTime: 2018-06-08 18:05:11
  * @Description: 
  */
 
+//基础设置
+MAIN_PERMEATE_SCENE._opactions = {
+    _block_show_num_max: 4,
+    _team_show_num_max: 10,
+    _add_block_fadeout_action_time: .5
+}
 //几个区的不同布局
 MAIN_PERMEATE_SCENE.block_server_num = {
     1: {
@@ -92,4 +98,44 @@ MAIN_PERMEATE_SCENE.path_pos_array = {
             [cc.p(606, 231), cc.p(568, 209)]
         ]
     ],
+}
+
+
+MAIN_PERMEATE_SCENE.team_move_path = {
+    1: [
+        [MAIN_PERMEATE_SCENE.path_pos_array["1"][0][1]]
+    ],
+    2: [
+        [
+            MAIN_PERMEATE_SCENE.path_pos_array["2"][1][0][0], MAIN_PERMEATE_SCENE.path_pos_array["2"][1][0][1], MAIN_PERMEATE_SCENE.path_pos_array["2"][2][0][1]
+        ],
+        [
+            MAIN_PERMEATE_SCENE.path_pos_array["2"][1][1][0], MAIN_PERMEATE_SCENE.path_pos_array["2"][1][1][1], MAIN_PERMEATE_SCENE.path_pos_array["2"][2][1][1]
+        ]
+    ],
+    3: [
+        [
+            MAIN_PERMEATE_SCENE.path_pos_array["3"][1][0][0], MAIN_PERMEATE_SCENE.path_pos_array["3"][1][0][1], MAIN_PERMEATE_SCENE.path_pos_array["3"][2][0][1]
+        ],
+        [
+            MAIN_PERMEATE_SCENE.path_pos_array["3"][1][1][0], MAIN_PERMEATE_SCENE.path_pos_array["3"][1][1][1], MAIN_PERMEATE_SCENE.path_pos_array["3"][2][1][1]
+        ],
+        [
+            MAIN_PERMEATE_SCENE.path_pos_array["3"][0][1][0], MAIN_PERMEATE_SCENE.path_pos_array["3"][0][1][1]
+        ]
+    ],
+    4: [
+        [
+            MAIN_PERMEATE_SCENE.path_pos_array["4"][1][0][0], MAIN_PERMEATE_SCENE.path_pos_array["4"][1][0][1], MAIN_PERMEATE_SCENE.path_pos_array["4"][2][0][1]
+        ],
+        [
+            MAIN_PERMEATE_SCENE.path_pos_array["4"][1][1][0], MAIN_PERMEATE_SCENE.path_pos_array["4"][1][1][1], MAIN_PERMEATE_SCENE.path_pos_array["4"][2][1][1]
+        ],
+        [
+            MAIN_PERMEATE_SCENE.path_pos_array["4"][0][1][0], MAIN_PERMEATE_SCENE.path_pos_array["4"][0][1][1]
+        ],
+        [
+            MAIN_PERMEATE_SCENE.path_pos_array["4"][0][2][0], MAIN_PERMEATE_SCENE.path_pos_array["4"][0][2][1]
+        ]
+    ]
 }
