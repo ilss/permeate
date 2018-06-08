@@ -399,6 +399,19 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">team_attack_completed_add_coin.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>8,9,16,19</rect>
+                <key>scale9Paddings</key>
+                <rect>8,9,16,19</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
         </map>
         <key>fileList</key>
         <array>
@@ -418,6 +431,7 @@
             <filename>permeate_dialog_border_right.png</filename>
             <filename>permeate_dialog_bottom_right.png</filename>
             <filename>permeate_dialog_congratulations.png</filename>
+            <filename>team_attack_completed_add_coin.png</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>

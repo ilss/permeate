@@ -309,8 +309,6 @@ MAIN_PERMEATE_SCENE.Permeate_main_layer = cc.Layer.extend({
             _action = null,
             _team = null;
 
-
-
         _result = GLOBAL_FUNC_SIMPLEEDU.findObjFromArray(_obj, "id", this._team_array, "_team_id");
         _block_index = GLOBAL_FUNC_SIMPLEEDU.findObjFromArray(_obj, "attack_block_id", this._block_array, "_block_id");
 
@@ -320,14 +318,14 @@ MAIN_PERMEATE_SCENE.Permeate_main_layer = cc.Layer.extend({
             return;
         }
         if (_result === -1) {
-            // cc.log('新队伍');
+            cc.log('新队伍');
             _team = new Team_class(_obj);
             _team.setPosition(cc.pAdd(MAIN_PERMEATE_SCENE.path_pos_array.entry, cc.p(0, 30)));
             this.addChild(_team, 10);
             this._team_array.push(_team);
             this.teamMoveToBlock(_team, _obj);
         } else {
-            // cc.log('队伍已存在    ' + _result);
+            cc.log('队伍已存在    ' + _result);
             _team = this._team_array[_result];
 
             //如果队伍正在动画中则稍后再处理
@@ -353,12 +351,14 @@ MAIN_PERMEATE_SCENE.Permeate_main_layer = cc.Layer.extend({
             _line_end_pos = null,
             _distance = null,
             _action_time = null,
-            _action = [cc.delayTime(.5)];
+            _action = [];
 
         this._is_action_team++;
         _block_index = GLOBAL_FUNC_SIMPLEEDU.findObjFromArray(obj, "attack_block_id", this._block_array, "_block_id");
         _block = _this._block_array[_block_index];
+
         if (!type) {
+            _action.push(cc.delayTime(.5));
             _path_array = this._team_move_path[this._block_array.length][_block_index];
             for (var _index = 0, _len = _path_array.length; _index < _len; _index++) {
                 _line_end_pos = _path_array[_index];

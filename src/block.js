@@ -214,7 +214,7 @@ var Block_class = cc.Node.extend({
 
         _txt_name = new cc.LabelTTF(obj.id, 10);
         _txt_name.setFontFillColor(cc.color(255, 187, 0));
-        _txt_name.setPosition(_obj_server_direction.txt_name.pos)
+        _txt_name.setPosition(_obj_server_direction.txt_name.pos);
         _txt_name.setRotation(_obj_server_direction.txt_name.rotation);
         this.addChild(_txt_name, 1);
 

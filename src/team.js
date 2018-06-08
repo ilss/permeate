@@ -46,22 +46,46 @@ var Team_class = cc.Node.extend({
     },
     moveToServer: function (_line_end_pos, _action, _action_time, _block, _obj) {
         this.is_lock = true;
+
         _action.push(cc.moveTo(_action_time, cc.pAdd(_line_end_pos, cc.p(0, 30))));
         _action.push(cc.callFunc(function (team) {
-            team.attackServer();
+            team.attackServer(_obj);
+            cc.log(11111)
             if (_block !== null) {
                 _block.hitServer(_obj);
             }
         }));
         this.runAction(cc.sequence(_action));
     },
-    attackServer: function () {
-        var _action = cc.sequence(cc.scaleTo(this._options.action_time_interchanger_small, 0, 1), cc.scaleTo(this._options.action_time_interchanger_small, 1, 1));
-        this.cleanup();
-        this.runAction(cc.sequence(_action.clone(), _action.clone(), _action.clone(), _action.clone(), cc.spawn(cc.moveBy(this._options.action_time_interchanger_small, cc.p(0, -35)), cc.scaleTo(this._options.action_time_interchanger_small, 0, 0), cc.fadeOut(this._options.action_time_interchanger_small)), cc.callFunc(function (team) {
+    attackServer: function (obj) {
+        var _action = cc.sequence(cc.scaleTo(this._options.action_time_interchanger_small, 0, 1), cc.scaleTo(this._options.action_time_interchanger_small, 1, 1)),
+            _action_array = [];
+        _action_array.push(_action.clone());
+        _action_array.push(_action.clone());
+        _action_array.push(_action.clone());
+        _action_array.push(_action.clone());
+
+        //处理加分
+        if (obj.hasOwnProperty("coin")) {
+            var _sp_bg_coin = new cc.Scale9Sprite(MAIN_PERMEATE_SCENE.res.bg_add_coin, cc.rect(0, 0, 31, 37), cc.rect(15, 0, 10, 37));
+            _sp_bg_coin.setAnchorPoint(0, .5);
+            cc.log(_sp_bg_coin);
+            _sp_bg_coin.x = 15;
+            _sp_bg_coin.width = 300;
+            _sp_bg_coin.height = 37;
+            _sp_bg_coin.opacity = 0;
+            this.addChild(_sp_bg_coin, 5);
+            _action_array.push(cc.delayTime(3));
+            _sp_bg_coin.runAction(cc.sequence(cc.delayTime(this._options.action_time_interchanger_small * 8), cc.fadeIn(.5), cc.delayTime(2), cc.fadeOut(this._options.action_time_interchanger_small)));
+        }
+
+        _action_array.push(cc.spawn(cc.moveBy(this._options.action_time_interchanger_small, cc.p(0, -35)), cc.scaleTo(this._options.action_time_interchanger_small, 0, 0), cc.fadeOut(this._options.action_time_interchanger_small)));
+        _action_array.push(cc.callFunc(function (team) {
             team.is_lock = false;
             team.getParent()._is_action_team--;
-        })));
+        }));
+        this.cleanup();
+        this.runAction(cc.sequence(_action_array));
     },
     destroy: function () {
         this.runAction(cc.sequence(cc.spawn(cc.fadeOut(this._options.action_time_interchanger_small), cc.moveBy(this._options.action_time_interchanger_small, cc.p(0, 20))), cc.callFunc(function (target) {
