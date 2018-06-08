@@ -16,3 +16,12 @@ cocos2d-Js 攻击特效
 
 PERMEATE_ADD_BLOCK(block_data)
 ---------------------------------------------------------------------------
+
+Team渗透Server
+ /**
+* @func 
+* @desc Team 开始渗透 Server
+* @param {object} team_attack_data    { id: 't00002', name: 't00002', icon: '', attack_block_id: '000001', attack_server_id: 's00002', attack_completed: true, coin: 25 }   attack_completed  和  coin  为完成渗透时加入 否则不要加入这两个参数
+*/
+TEAM_ATTACK_SERVER(team_attack_data)
+---------------------------------------------------------------------------

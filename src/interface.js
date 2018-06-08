@@ -1,3 +1,10 @@
+/*
+ * @Author: Liang Liang
+ * @Date: 2018-06-01 10:18:04
+ * @LastEditors: Liang Liang
+ * @LastEditTime: 2018-06-08 17:18:04
+ * @Description: 
+ */
 (function (window) {
     window["MAIN_PERMEATE_SCENE"] = {
         _EFFECTS_MAIN_LAYER: null,

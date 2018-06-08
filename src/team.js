@@ -2,7 +2,7 @@
  * @Author: Liang Liang
  * @Date: 2018-05-30 09:09:39
  * @LastEditors: Liang Liang
- * @LastEditTime: 2018-06-01 18:10:04
+ * @LastEditTime: 2018-06-08 18:10:04
  * @Description: 
  */
 var Team_class = cc.Node.extend({
