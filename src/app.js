@@ -288,11 +288,12 @@ MAIN_PERMEATE_SCENE.Permeate_main_layer = cc.Layer.extend({
     },
     saveTeamRequest: function (team_data) {
         // cc.log(team_data);
-        if (this._team_array.length < MAIN_PERMEATE_SCENE["_opactions"]["_team_show_num_max"]) {
+        this._add_team_array.unshift(team_data);
+        if (this._is_action_block || this._add_block_array.length > 0) {
             // this.addTeam(team_data);
-
-            this._add_team_array.unshift(team_data);
             this.schedule(this.updateAddTeam, 1.0);
+        } else {
+            this.addTeam();
         }
     },
     /**
@@ -302,7 +303,7 @@ MAIN_PERMEATE_SCENE.Permeate_main_layer = cc.Layer.extend({
      */
     addTeam: function () {
         cc.log(this._is_action_block);
-        if (this._is_action_block) {
+        if (this._is_action_block || this._add_block_array.length > 0) {
             return;
         }
         var _obj = this._add_team_array.pop(),
@@ -368,6 +369,7 @@ MAIN_PERMEATE_SCENE.Permeate_main_layer = cc.Layer.extend({
         cc.log('updateAddBlock');
         if (this._block_array.length === MAIN_PERMEATE_SCENE["_opactions"]["_block_show_num_max"] || this._add_block_array.length === 0) {
             this.unschedule(this.updateAddBlock);
+            this._add_block_array.splice(0, this._add_block_array.length);
             return;
         }
 
