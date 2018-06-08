@@ -10,6 +10,7 @@ var Team_class = cc.Node.extend({
     _team_name: null,
     _attack_block: null,
     _attack_server: null,
+    is_lock: false,    //动画中锁定
     _options: {
         //小蓝块变色动画时间
         action_time_interchanger_small: .3,
@@ -26,6 +27,7 @@ var Team_class = cc.Node.extend({
     ],
     ctor: function (obj) {
         this._super();
+        this.is_lock = false;
         this.setCascadeOpacityEnabled(true);
         this._team_id = obj.id || '000' + Math.round(Math.random() * 1000);
         this._team_name = obj.name || '';
@@ -43,9 +45,9 @@ var Team_class = cc.Node.extend({
         _sp.runAction(_action);
     },
     moveToServer: function (_line_end_pos, _action, _action_time) {
+        this.is_lock = true;
         _action.push(cc.moveTo(_action_time, cc.pAdd(_line_end_pos, cc.p(0, 30))));
         _action.push(cc.callFunc(function (team) {
-            team.getParent()._is_action_team--;
             team.attackServer();
         }));
         this.runAction(cc.sequence(_action));
@@ -53,7 +55,10 @@ var Team_class = cc.Node.extend({
     attackServer: function () {
         var _action = cc.sequence(cc.scaleTo(this._options.action_time_interchanger_small, 0, 1), cc.scaleTo(this._options.action_time_interchanger_small, 1, 1));
         this.cleanup();
-        this.runAction(cc.sequence(_action.clone(), _action.clone(), _action.clone(), _action.clone(), cc.spawn(cc.moveBy(this._options.action_time_interchanger_small, cc.p(0, -35)), cc.scaleTo(this._options.action_time_interchanger_small, 0, 0), cc.fadeOut(this._options.action_time_interchanger_small))));
+        this.runAction(cc.sequence(_action.clone(), _action.clone(), _action.clone(), _action.clone(), cc.spawn(cc.moveBy(this._options.action_time_interchanger_small, cc.p(0, -35)), cc.scaleTo(this._options.action_time_interchanger_small, 0, 0), cc.fadeOut(this._options.action_time_interchanger_small)), cc.callFunc(function (team) {
+            team.is_lock = false;
+            team.getParent()._is_action_team--;
+        })));
     },
     destroy: function () {
         this.runAction(cc.sequence(cc.spawn(cc.fadeOut(this._options.action_time_interchanger_small), cc.moveBy(this._options.action_time_interchanger_small, cc.p(0, 20))), cc.callFunc(function (target) {

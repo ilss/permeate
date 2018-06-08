@@ -302,18 +302,17 @@ MAIN_PERMEATE_SCENE.Permeate_main_layer = cc.Layer.extend({
         if (this._is_action_block || this._add_block_array.length > 0) {
             return;
         }
-        cc.log(1111);
+
         var _obj = this._add_team_array.pop(),
             _result = null,
             _block_index = null,
             _action = null,
-            _action_time = null,
             _team = null;
         _result = GLOBAL_FUNC_SIMPLEEDU.findObjFromArray(_obj, "id", this._team_array, "_team_id");
         _block_index = GLOBAL_FUNC_SIMPLEEDU.findObjFromArray(_obj, "attack_block_id", this._block_array, "_block_id");
 
         if (_block_index < 0) {
-            cc.log("不存在ID " + _obj.attack_block_id + '的大区');
+            // cc.log("不存在ID " + _obj.attack_block_id + '的大区');
             this._add_team_array.unshift(_obj);
             return;
         }
@@ -380,7 +379,7 @@ MAIN_PERMEATE_SCENE.Permeate_main_layer = cc.Layer.extend({
         }
     },
     updateAddTeam: function () {
-        cc.log(this._add_team_array.length);
+        cc.log('this._add_team_array.length = ' + this._add_team_array.length);
         if (this._add_team_array.length > 0) {
             this.addTeam();
         } else {
