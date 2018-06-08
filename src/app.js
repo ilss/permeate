@@ -308,6 +308,9 @@ MAIN_PERMEATE_SCENE.Permeate_main_layer = cc.Layer.extend({
             _block_index = null,
             _action = null,
             _team = null;
+
+
+
         _result = GLOBAL_FUNC_SIMPLEEDU.findObjFromArray(_obj, "id", this._team_array, "_team_id");
         _block_index = GLOBAL_FUNC_SIMPLEEDU.findObjFromArray(_obj, "attack_block_id", this._block_array, "_block_id");
 
@@ -326,6 +329,13 @@ MAIN_PERMEATE_SCENE.Permeate_main_layer = cc.Layer.extend({
         } else {
             // cc.log('队伍已存在    ' + _result);
             _team = this._team_array[_result];
+
+            //如果队伍正在动画中则稍后再处理
+            if (_team.is_lock) {
+                this._add_team_array.unshift(_obj);
+                return;
+            }
+
             _action = cc.spawn(cc.moveBy(_team._options.action_time_interchanger_small, cc.p(0, 35)), cc.scaleTo(_team._options.action_time_interchanger_small, 1, 1), cc.fadeIn(_team._options.action_time_interchanger_small));
             _team.cleanup();
             _team.runAction(cc.sequence(_action, cc.callFunc(function () {
@@ -381,7 +391,7 @@ MAIN_PERMEATE_SCENE.Permeate_main_layer = cc.Layer.extend({
         }
     },
     updateAddTeam: function () {
-        // cc.log('this._add_team_array.length = ' + this._add_team_array.length);
+        cc.log('this._add_team_array.length = ' + this._add_team_array.length);
         //如果有新增block请求则暂停处理新增team优先处理新增block请求
         if (this._add_block_array.length > 0) {
             return;
@@ -389,7 +399,7 @@ MAIN_PERMEATE_SCENE.Permeate_main_layer = cc.Layer.extend({
         if (this._add_team_array.length > 0) {
             this.addTeam();
         } else {
-            this.unschedule(this.updateAddTeam);
+            // this.unschedule(this.updateAddTeam);
         }
     }
 });
