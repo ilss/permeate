@@ -290,7 +290,6 @@ MAIN_PERMEATE_SCENE.Permeate_main_layer = cc.Layer.extend({
         // cc.log(team_data);
         this._add_team_array.unshift(team_data);
         if (this._is_action_block || this._add_block_array.length > 0) {
-            // this.addTeam(team_data);
             this.schedule(this.updateAddTeam, 1.0);
         } else {
             this.addTeam();
@@ -302,10 +301,11 @@ MAIN_PERMEATE_SCENE.Permeate_main_layer = cc.Layer.extend({
      * @param {object} obj  { id: '000333', name: '战队445', icon: '', attack_block_id: '000001', attack_server_id: 's00001' }
      */
     addTeam: function () {
-        cc.log(this._is_action_block);
         if (this._is_action_block || this._add_block_array.length > 0) {
             return;
         }
+
+        cc.log(1111);
         var _obj = this._add_team_array.pop(),
             _result = null,
             _block_index = null,
@@ -315,6 +315,7 @@ MAIN_PERMEATE_SCENE.Permeate_main_layer = cc.Layer.extend({
 
         if (_block_index < 0) {
             cc.log("不存在ID " + _obj.attack_block_id + '的大区');
+            this._add_team_array.unshift(_obj);
             return;
         }
         if (_result === -1) {
@@ -361,7 +362,7 @@ MAIN_PERMEATE_SCENE.Permeate_main_layer = cc.Layer.extend({
         _action.push(cc.callFunc(function (team) {
             _this._is_action_team--;
             team.attackServer();
-            _block.hitServer(obj);
+            // _block.hitServer(obj);
         }));
         team.runAction(cc.sequence(_action));
     },
@@ -382,6 +383,8 @@ MAIN_PERMEATE_SCENE.Permeate_main_layer = cc.Layer.extend({
         cc.log(this._add_team_array.length);
         if (this._add_team_array.length > 0) {
             this.addTeam();
+        } else {
+            this.unschedule(this.updateAddTeam);
         }
         // cc.log(cc.isScheduled(this.updateAddTeam));
     }

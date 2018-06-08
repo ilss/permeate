@@ -44,12 +44,9 @@ var Team_class = cc.Node.extend({
         _sp.runAction(_action);
     },
     attackServer: function () {
-        var _action = cc.sequence(cc.scaleTo(this._options.action_time_interchanger_small, 0, 1), cc.scaleTo(this._options.action_time_interchanger_small, 1, 1)).repeatForever();
+        var _action = cc.sequence(cc.scaleTo(this._options.action_time_interchanger_small, 0, 1), cc.scaleTo(this._options.action_time_interchanger_small, 1, 1));
         this.cleanup();
-        this.runAction(_action);
-    },
-    teamIntoServer: function () {
-        // cc.log('teamIntoServer');
+        this.runAction(cc.sequence(_action.clone(), _action.clone(), _action.clone(), _action.clone(), cc.spawn(cc.moveBy(this._options.action_time_interchanger_small, cc.p(0, -35)), cc.scaleTo(this._options.action_time_interchanger_small, 0, 0), cc.fadeOut(this._options.action_time_interchanger_small))));
     },
     destroy: function () {
         this.cleanup();
