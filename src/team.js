@@ -65,18 +65,37 @@ var Team_class = cc.Node.extend({
         _action_array.push(_action.clone());
         _action_array.push(_action.clone());
 
-        //处理加分
+        //处理加分显示
         if (obj.hasOwnProperty("coin")) {
             var _sp_bg_coin = new cc.Scale9Sprite(MAIN_PERMEATE_SCENE.res.bg_add_coin, cc.rect(0, 0, 31, 37), cc.rect(15, 0, 10, 37));
             _sp_bg_coin.setAnchorPoint(0, .5);
-            cc.log(_sp_bg_coin);
+            _sp_bg_coin.setCascadeOpacityEnabled(true);
             _sp_bg_coin.x = 15;
-            _sp_bg_coin.width = 300;
             _sp_bg_coin.height = 37;
             _sp_bg_coin.opacity = 0;
+
+            var _team_name = new cc.LabelTTF(obj.name, 16);
+            _team_name.setFontFillColor(cc.color(255, 186, 0));
+            _team_name.setAnchorPoint(0, .5);
+            _team_name.x = 25;
+            _team_name.y = 20;
+            _sp_bg_coin.addChild(_team_name, 1);
+
+            var _coin_txt = new cc.LabelTTF('+' + obj.coin, 22);
+            _coin_txt.setFontFillColor(cc.color(255, 50, 67));
+            _coin_txt.setAnchorPoint(0, .5);
+            _coin_txt.x = 45 + _team_name.getContentSize().width;
+            _coin_txt.y = 22;
+            _coin_txt.opacity = 0;
+            _sp_bg_coin.addChild(_coin_txt, 1);
+            _coin_txt.runAction(cc.sequence(cc.delayTime(this._options.action_time_interchanger_small * 10), cc.fadeIn(.3), cc.blink(.5, 3)));
+
+            _sp_bg_coin.width = _team_name.getContentSize().width + _coin_txt.getContentSize().width + 60;
             this.addChild(_sp_bg_coin, 5);
             _action_array.push(cc.delayTime(3));
-            _sp_bg_coin.runAction(cc.sequence(cc.delayTime(this._options.action_time_interchanger_small * 8), cc.fadeIn(.5), cc.delayTime(2), cc.fadeOut(this._options.action_time_interchanger_small)));
+            _sp_bg_coin.runAction(cc.sequence(cc.delayTime(this._options.action_time_interchanger_small * 8), cc.fadeIn(.5), cc.delayTime(2), cc.fadeOut(this._options.action_time_interchanger_small), cc.callFunc(function (sp) {
+                sp.removeFromParent();
+            })));
         }
 
         _action_array.push(cc.spawn(cc.moveBy(this._options.action_time_interchanger_small, cc.p(0, -35)), cc.scaleTo(this._options.action_time_interchanger_small, 0, 0), cc.fadeOut(this._options.action_time_interchanger_small)));

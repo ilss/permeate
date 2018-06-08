@@ -171,6 +171,7 @@ MAIN_PERMEATE_SCENE.Permeate_main_layer = cc.Layer.extend({
         this.addBg();
         this.initBlock(_json);
         this.drawLine(_json.length);
+        this.schedule(this.updateAddTeam, 2.0);
         // var _bg_color = new cc.LayerColor(cc.color(0, 0, 0), this._winSize.width, this._winSize.height);
         // this.addChild(_bg_color);
     },
@@ -285,13 +286,12 @@ MAIN_PERMEATE_SCENE.Permeate_main_layer = cc.Layer.extend({
         }.bind(this), MAIN_PERMEATE_SCENE["_opactions"]["_add_block_fadeout_action_time"] * 1000);
     },
     saveTeamRequest: function (team_data) {
-        // cc.log(saveTeamRequest);
         this._add_team_array.unshift(team_data);
-        if (this._is_action_block || this._add_block_array.length > 0) {
-            this.schedule(this.updateAddTeam, 1.0);
-        } else {
-            this.addTeam();
-        }
+        // if (this._is_action_block || this._add_block_array.length > 0) {
+        //     this.schedule(this.updateAddTeam, 1.0);
+        // } else {
+        //     this.addTeam();
+        // }
     },
     /**
      * @func 

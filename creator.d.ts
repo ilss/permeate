@@ -3876,7 +3876,7 @@ declare module cc {
 		
 		@example 
 		```js
-		cc.log("Content Size: " + node.getContentSize());
+		cc.log("Content Size: " + node.LabelTTF());
 		``` 
 		*/
 		getContentSize(ignoreSizeProvider?: boolean): Size;
