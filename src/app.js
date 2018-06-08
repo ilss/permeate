@@ -285,7 +285,7 @@ MAIN_PERMEATE_SCENE.Permeate_main_layer = cc.Layer.extend({
         }.bind(this), MAIN_PERMEATE_SCENE["_opactions"]["_add_block_fadeout_action_time"] * 1000);
     },
     saveTeamRequest: function (team_data) {
-        // cc.log(team_data);
+        // cc.log(saveTeamRequest);
         this._add_team_array.unshift(team_data);
         if (this._is_action_block || this._add_block_array.length > 0) {
             this.schedule(this.updateAddTeam, 1.0);
@@ -339,6 +339,7 @@ MAIN_PERMEATE_SCENE.Permeate_main_layer = cc.Layer.extend({
             _block = null,
             _block_index = null,
             _path_array = null,
+            _target_block = null,
             _line_end_pos = null,
             _distance = null,
             _action_time = null,
@@ -362,11 +363,12 @@ MAIN_PERMEATE_SCENE.Permeate_main_layer = cc.Layer.extend({
         _line_end_pos = cc.pAdd(_block.getPosition(), this._block_array[_block_index].getServerPos(obj));
         _distance = cc.pDistance(_line_start_pos, _line_end_pos);
         _action_time = _distance / team._options.team_move_action_distance;
-
-        team.moveToServer(_line_end_pos, _action, _action_time);
+        //如果渗透完成 加2个参数
+        _target_block = obj.hasOwnProperty("attack_completed") ? _block : null;
+        team.moveToServer(_line_end_pos, _action, _action_time, _target_block, obj);
     },
     updateAddBlock: function () {
-        cc.log('updateAddBlock');
+        // cc.log('updateAddBlock');
         if (this._block_array.length === MAIN_PERMEATE_SCENE["_opactions"]["_block_show_num_max"] || this._add_block_array.length === 0) {
             this.unschedule(this.updateAddBlock);
             this._add_block_array.splice(0, this._add_block_array.length);
@@ -379,7 +381,11 @@ MAIN_PERMEATE_SCENE.Permeate_main_layer = cc.Layer.extend({
         }
     },
     updateAddTeam: function () {
-        cc.log('this._add_team_array.length = ' + this._add_team_array.length);
+        // cc.log('this._add_team_array.length = ' + this._add_team_array.length);
+        //如果有新增block请求则暂停处理新增team优先处理新增block请求
+        if (this._add_block_array.length > 0) {
+            return;
+        }
         if (this._add_team_array.length > 0) {
             this.addTeam();
         } else {

@@ -227,7 +227,7 @@ var Block_class = cc.Node.extend({
     },
     hitServer: function (obj) {
         var _index = GLOBAL_FUNC_SIMPLEEDU.findObjFromArray(obj, "attack_server_id", this._server_obj_array, "server_id");
-        var _action = cc.sequence(cc.fadeOut(.3), cc.fadeIn(.3)).repeatForever();
+        var _action = cc.sequence(cc.fadeOut(.3), cc.fadeIn(.3)).repeat(4);
         this._server_obj_array[_index].runAction(_action);
     },
     getServerPos: function (obj) {

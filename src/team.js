@@ -44,11 +44,14 @@ var Team_class = cc.Node.extend({
         this.addChild(_sp);
         _sp.runAction(_action);
     },
-    moveToServer: function (_line_end_pos, _action, _action_time) {
+    moveToServer: function (_line_end_pos, _action, _action_time, _block, _obj) {
         this.is_lock = true;
         _action.push(cc.moveTo(_action_time, cc.pAdd(_line_end_pos, cc.p(0, 30))));
         _action.push(cc.callFunc(function (team) {
             team.attackServer();
+            if (_block !== null) {
+                _block.hitServer(_obj);
+            }
         }));
         this.runAction(cc.sequence(_action));
     },
