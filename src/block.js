@@ -169,7 +169,6 @@ var Block_class = cc.Node.extend({
                 cc.p(11, 60)
             ],
         }
-
     },
     _block_id: null,
     //缓存server obj

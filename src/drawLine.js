@@ -3,7 +3,7 @@
  * @Date: 2018-06-4 09:09:39
  * @LastEditors: Liang Liang
  * @LastEditTime: 2018-06-04 18:10:04
- * @Description: 
+ * @Description: 画黄线
  */
 var Draw_line_class = cc.Layer.extend({
     _options: {
@@ -23,7 +23,7 @@ var Draw_line_class = cc.Layer.extend({
             _line_start_pos = _obj[0][0],
             _line_end_pos = _obj[0][1];
 
-        _line_start_pos = MAIN_PERMEATE_SCENE.path_pos_array.entry;
+        _line_start_pos = MAIN_PERMEATE_SCENE.basic_pos_array.entry;
         _line_end_pos = MAIN_PERMEATE_SCENE.path_pos_array["1"][0][0];
         _distance = cc.pDistance(_line_start_pos, _line_end_pos);
         _action_time = _distance / this._options.draw_line_action_distance;

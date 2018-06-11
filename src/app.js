@@ -139,23 +139,19 @@ MAIN_PERMEATE_SCENE.Permeate_main_layer = cc.Layer.extend({
     },
     addBg: function () {
         this._sp_cloud = new cc.Sprite("#permeate_cloud.png");
-        this._sp_cloud.x = 938;
-        this._sp_cloud.y = 670;
+        this._sp_cloud.setPosition(MAIN_PERMEATE_SCENE.basic_pos_array.cloud);
         this.addChild(this._sp_cloud, 2);
 
         this._sp_lightning = new cc.Sprite("#permeate_lightning.png");
-        this._sp_lightning.x = 885;
-        this._sp_lightning.y = 592;
+        this._sp_lightning.setPosition(MAIN_PERMEATE_SCENE.basic_pos_array.lightning);
         this.addChild(this._sp_lightning, 2);
 
         this._sp_firewall = new cc.Sprite("#permeate_firewall.png");
-        this._sp_firewall.x = 789;
-        this._sp_firewall.y = 564;
+        this._sp_firewall.setPosition(MAIN_PERMEATE_SCENE.basic_pos_array.firewall);
         this.addChild(this._sp_firewall, 2);
 
         this._sp_interchanger = new cc.Sprite("#permeate_interchanger.png");
-        this._sp_interchanger.x = 706;
-        this._sp_interchanger.y = 478;
+        this._sp_interchanger.setPosition(MAIN_PERMEATE_SCENE.basic_pos_array.interchanger);
         this.addChild(this._sp_interchanger, 2);
     },
     drawLine: function (num) {
@@ -194,7 +190,7 @@ MAIN_PERMEATE_SCENE.Permeate_main_layer = cc.Layer.extend({
     saveNewBlockRequest: function (block_data) {
         if (this._block_array.length < MAIN_PERMEATE_SCENE["_opactions"]["_block_show_num_max"]) {
             if (GLOBAL_FUNC_SIMPLEEDU.findObjFromArray(block_data, "id", this._block_array, "_block_id") !== -1 && GLOBAL_FUNC_SIMPLEEDU.findObjFromArray(block_data, "id", this._add_block_array, "id") !== -1) {
-                cc.log('block' + block_data.id + ' 已存在！！');
+                // cc.log('block' + block_data.id + ' 已存在！！');
                 return;
             }
             this._add_block_array.unshift(block_data);
@@ -236,7 +232,6 @@ MAIN_PERMEATE_SCENE.Permeate_main_layer = cc.Layer.extend({
                 }
             }
         }
-
         this._layer_line_yellow.runAction(cc.fadeOut(.25));
 
         setTimeout(function () {
@@ -247,6 +242,10 @@ MAIN_PERMEATE_SCENE.Permeate_main_layer = cc.Layer.extend({
             this.drawLine(this._block_array.length);
         }.bind(this), MAIN_PERMEATE_SCENE["_opactions"]["_add_block_fadeout_action_time"] * 1000);
     },
+    /**
+     * @desc 缓存队伍相关行为数据
+     * @param {object} team_data
+     */
     saveTeamRequest: function (team_data) {
         this._add_team_array.unshift(team_data);
         // if (this._is_action_block || this._add_block_array.length > 0) {
@@ -256,8 +255,7 @@ MAIN_PERMEATE_SCENE.Permeate_main_layer = cc.Layer.extend({
         // }
     },
     /**
-     * @func 
-     * @desc 队伍入场
+     * @desc 处理队伍入场请求
      */
     addTeam: function () {
         if (this._is_action_block || this._add_block_array.length > 0) {
@@ -265,29 +263,44 @@ MAIN_PERMEATE_SCENE.Permeate_main_layer = cc.Layer.extend({
         }
 
         var _obj = this._add_team_array.pop(),
-            _result = null,
+            _result_team_is_new = null,
+            _result_server_has_action_team = null,
             _block_index = null,
             _action = null,
+            _line_end_pos = null,
+            _height_distance = null,
             _team = null;
 
-        _result = GLOBAL_FUNC_SIMPLEEDU.findObjFromArray(_obj, "id", this._team_array, "_team_id");
+        _result_team_is_new = GLOBAL_FUNC_SIMPLEEDU.findObjFromArray(_obj, "id", this._team_array, "_team_id");
         _block_index = GLOBAL_FUNC_SIMPLEEDU.findObjFromArray(_obj, "attack_block_id", this._block_array, "_block_id");
+        _result_server_has_action_team = this.getServerActionTeamNum(_obj.attack_server_id);
 
         if (_block_index < 0) {
             // cc.log("不存在ID " + _obj.attack_block_id + '的大区');
             this._add_team_array.unshift(_obj);
             return;
         }
-        if (_result === -1) {
+
+        if (_result_team_is_new === -1) {
             cc.log('新队伍');
             _team = new Team_class(_obj);
-            _team.setPosition(cc.pAdd(MAIN_PERMEATE_SCENE.path_pos_array.entry, cc.p(0, 30)));
+            _team.setPosition(cc.pAdd(MAIN_PERMEATE_SCENE.basic_pos_array.entry, cc.p(0, 30)));
             this.addChild(_team, 10);
             this._team_array.push(_team);
             this.teamMoveToBlock(_team, _obj);
+            _team.attack_block_id = _obj.attack_block_id;
+            _team.attack_server_id = _obj.attack_server_id;
         } else {
-            cc.log('队伍已存在    ' + _result);
-            _team = this._team_array[_result];
+            // cc.log('队伍已存在    ' + _result_team_is_new);
+
+            //如果当前server上已经存在两个动画中的team时则暂缓响应
+            if (_result_server_has_action_team.length === 2) {
+                this._add_team_array.unshift(_obj);
+                return;
+            }
+
+            _team = this._team_array[_result_team_is_new];
+            _result_server_has_action_team = this.getServerActionTeamNum(_team.attack_server_id);
 
             //如果队伍正在动画中则稍后再处理
             if (_team.is_lock) {
@@ -300,18 +313,44 @@ MAIN_PERMEATE_SCENE.Permeate_main_layer = cc.Layer.extend({
             //避免新增block后坐标发生变化
             var _team_block = this._block_array[GLOBAL_FUNC_SIMPLEEDU.findObjFromArray(_team, "attack_block_id", this._block_array, "_block_id")];
             _team.setPosition(cc.pAdd(_team_block.getPosition(), _team_block.getServerPos(_team)));
-            _team.runAction(cc.sequence(_action, cc.callFunc(function () {
-                this.teamMoveToBlock(_team, _obj, true);
+
+            //如果此server上已存在一个正在行动的team
+
+            if (_result_server_has_action_team.length > 0) {
+                //已经存在的team
+                var _server_team = _result_server_has_action_team.pop();
+                // if (Math.abs(_server_team.getPosition().x - _team.x) < 5) {
+                //     _height_distance = _server_team.getPosition().y - _team.y;
+                // } else {
+                //     _line_end_pos = cc.pAdd(_team_block.getPosition(), _team_block.getServerPos(_obj));
+                //     _height_distance = _server_team.getPosition().y - _line_end_pos.y;
+                // }
+                _height_distance = _server_team.getPosition().y - _team.y;
+                if (_height_distance < 40) {
+                    cc.log('_result_server_has_action_team = ' + _result_server_has_action_team.length);
+                    _team.y += 20;
+                    _team.setLocalZOrder(9);
+                } else {
+                    _team.setLocalZOrder(10);
+                }
+            } else {
+                _team.setLocalZOrder(10);
+            }
+
+            _team.runAction(cc.sequence(_action, cc.delayTime(.3), cc.callFunc(function () {
+                this.teamMoveToServer(_team, _obj, true);
             }.bind(this))));
         }
     },
-    teamMoveToBlock: function (team, obj, type) {
-        var _this = this,
-            _line_start_pos = team.getPosition(),
-            _block = null,
+    /**
+     * @desc  Team 移动到目标大区
+     * @param {object} team  队伍对象
+     * @param {object} obj  队伍行动数据Json
+     */
+    teamMoveToBlock: function (team, obj) {
+        var _line_start_pos = team.getPosition(),
             _block_index = null,
             _path_array = null,
-            _target_block = null,
             _line_end_pos = null,
             _distance = null,
             _action_time = null,
@@ -321,7 +360,8 @@ MAIN_PERMEATE_SCENE.Permeate_main_layer = cc.Layer.extend({
         _block_index = GLOBAL_FUNC_SIMPLEEDU.findObjFromArray(obj, "attack_block_id", this._block_array, "_block_id");
         _block = this._block_array[_block_index];
 
-        if (!type) {
+        // 判断是否是第一次入场
+        if (team.attack_server_id === null) {
             _action.push(cc.delayTime(.5));
             _path_array = MAIN_PERMEATE_SCENE.team_move_path[this._block_array.length][_block_index];
             for (var _index = 0, _len = _path_array.length; _index < _len; _index++) {
@@ -332,28 +372,66 @@ MAIN_PERMEATE_SCENE.Permeate_main_layer = cc.Layer.extend({
                 _line_start_pos = _line_end_pos;
             }
         } else {
-            _action.push(cc.delayTime(.3));
+            _action.push(cc.delayTime(.2));
         }
 
+        _action.push(cc.callFunc(function () {
+            this.teamMoveToServer(team, obj);
+        }.bind(this)));
+        // team.moveToServer(_line_end_pos, _action, _action_time, _target_block, obj);
+        team.runAction(cc.sequence(_action));
+    },
+    teamMoveToServer: function (team, obj) {
+        var _line_start_pos = team.getPosition(),
+            _result_server_has_action_team = null,
+            _block = null,
+            _block_index = null,
+            _target_block = null,
+            _line_end_pos = null,
+            _distance = null,
+            _action_time = null;
+
+        _block_index = GLOBAL_FUNC_SIMPLEEDU.findObjFromArray(obj, "attack_block_id", this._block_array, "_block_id");
+        _block = this._block_array[_block_index];
+        team.attack_block_id = obj.attack_block_id;
+        team.attack_server_id = obj.attack_server_id;
         //移动到具体server的上
         _line_end_pos = cc.pAdd(_block.getPosition(), this._block_array[_block_index].getServerPos(obj));
         _distance = cc.pDistance(_line_start_pos, _line_end_pos);
         _action_time = _distance / team._options.team_move_action_distance;
         //如果渗透完成 加2个参数
         _target_block = obj.hasOwnProperty("attack_completed") ? _block : null;
-        team.moveToServer(_line_end_pos, _action, _action_time, _target_block, obj);
+
+        _result_server_has_action_team = this.getServerActionTeamNum(obj.attack_server_id);
+
+        if (_result_server_has_action_team.length > 0) {
+            // cc.log(_result_server_has_action_team.length);
+            var _height_distance = _result_server_has_action_team.pop().getPosition().y - _line_end_pos.y;
+            cc.log(team._team_id + '高度差：' + _height_distance);
+            if (_height_distance < 40 && _height_distance > 28) {
+                _line_end_pos.y += 20;
+                team.setLocalZOrder(9);
+            } else {
+                team.setLocalZOrder(10);
+            }
+        } else {
+            team.setLocalZOrder(10);
+        }
+
+        team.moveToServer2(_line_end_pos, _action_time, _target_block, obj);
     },
     /**
      * @desc  返回目标server 上当前正在渗透的team数量
      * @param {string} target_server_id
+     * @returns {array}
      */
-    getServerTeamNum: function (target_server_id) {
+    getServerActionTeamNum: function (target_server_id) {
         var _result = this._team_array.filter(function (team) {
             if (team.is_lock) {
                 return team.attack_server_id === target_server_id;
             }
         });
-        cc.log('_result = ' + _result);
+        return _result;
     },
     updateAddBlock: function () {
         // cc.log('updateAddBlock');
@@ -369,7 +447,7 @@ MAIN_PERMEATE_SCENE.Permeate_main_layer = cc.Layer.extend({
         }
     },
     updateAddTeam: function () {
-        cc.log('this._add_team_array.length = ' + this._add_team_array.length);
+        // cc.log('this._add_team_array.length = ' + this._add_team_array.length);
         //如果有新增block请求则暂停处理新增team优先处理新增block请求
         if (this._add_block_array.length > 0) {
             return;

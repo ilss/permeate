@@ -12,6 +12,15 @@ MAIN_PERMEATE_SCENE._opactions = {
     _team_show_num_max: 10,
     _add_block_fadeout_action_time: .5
 }
+
+MAIN_PERMEATE_SCENE.basic_pos_array = {
+    entry: cc.p(786, 520),
+    cloud: cc.p(938, 670),
+    lightning: cc.p(885, 592),
+    firewall: cc.p(789, 564),
+    interchanger: cc.p(706, 478),
+}
+
 //几个区的不同布局
 MAIN_PERMEATE_SCENE.block_server_num = {
     1: {
@@ -48,7 +57,6 @@ MAIN_PERMEATE_SCENE.block_server_num = {
 
 //黄线路径
 MAIN_PERMEATE_SCENE.path_pos_array = {
-    entry: cc.p(786, 520),
     1: [
         [cc.p(706, 473), cc.p(417, 307)]
     ],

@@ -43,7 +43,19 @@ var Team_class = cc.Node.extend({
         _sp.runAction(_action);
     },
     moveToServer: function (_line_end_pos, _action, _action_time, _block, _obj) {
+        // this.is_lock = true;
+        // _action.push(cc.moveTo(_action_time, cc.pAdd(_line_end_pos, cc.p(0, 30))));
+        // _action.push(cc.callFunc(function (team) {
+        //     team.attackServer(_obj);
+        //     if (_block !== null) {
+        //         _block.hitServer(_obj);
+        //     }
+        // }));
+        // this.runAction(cc.sequence(_action));
+    },
+    moveToServer2: function (_line_end_pos, _action_time, _block, _obj) {
         this.is_lock = true;
+        var _action = [];
         _action.push(cc.moveTo(_action_time, cc.pAdd(_line_end_pos, cc.p(0, 30))));
         _action.push(cc.callFunc(function (team) {
             team.attackServer(_obj);
@@ -100,8 +112,6 @@ var Team_class = cc.Node.extend({
             team.getParent()._is_action_team--;
         }));
         this.cleanup();
-        this.attack_block_id = obj.attack_block_id || '';
-        this.attack_server_id = obj.attack_server_id || '';
         this.runAction(cc.sequence(_action_array));
     },
     destroy: function () {
