@@ -8,8 +8,8 @@
 var Team_class = cc.Node.extend({
     _team_id: null,
     _team_name: null,
-    _attack_block: null,
-    _attack_server: null,
+    attack_block_id: null,
+    attack_server_id: null,    //处理重叠
     is_lock: false,    //动画中锁定
     _options: {
         //小蓝块变色动画时间
@@ -32,8 +32,6 @@ var Team_class = cc.Node.extend({
         this._team_id = obj.id || '000' + Math.round(Math.random() * 1000);
         this._team_name = obj.name || '';
         this._team_icon = obj.icon || this._team_icon_def[window["MAIN_PERMEATE_SCENE"].randomNum(this._team_icon_def.length - 1)];
-        this._attack_block = obj.attack_block_id || '';
-        this._attack_server = obj.attack_server_id || '';
 
         var _sp = new cc.Sprite(this._team_icon),
             _action = cc.sequence(cc.fadeIn(this._options.action_time_interchanger_small), cc.scaleTo(this._options.action_time_interchanger_small, 1, 1));
@@ -46,11 +44,9 @@ var Team_class = cc.Node.extend({
     },
     moveToServer: function (_line_end_pos, _action, _action_time, _block, _obj) {
         this.is_lock = true;
-
         _action.push(cc.moveTo(_action_time, cc.pAdd(_line_end_pos, cc.p(0, 30))));
         _action.push(cc.callFunc(function (team) {
             team.attackServer(_obj);
-            cc.log(11111)
             if (_block !== null) {
                 _block.hitServer(_obj);
             }
@@ -58,7 +54,7 @@ var Team_class = cc.Node.extend({
         this.runAction(cc.sequence(_action));
     },
     attackServer: function (obj) {
-        var _action = cc.sequence(cc.scaleTo(this._options.action_time_interchanger_small, 0, 1), cc.scaleTo(this._options.action_time_interchanger_small, 1, 1)),
+        var _action = cc.sequence(cc.scaleTo(0.2, 0, 1), cc.scaleTo(0.2, 1, 1)),
             _action_array = [];
         _action_array.push(_action.clone());
         _action_array.push(_action.clone());
@@ -88,12 +84,12 @@ var Team_class = cc.Node.extend({
             _coin_txt.y = 22;
             _coin_txt.opacity = 0;
             _sp_bg_coin.addChild(_coin_txt, 1);
-            _coin_txt.runAction(cc.sequence(cc.delayTime(this._options.action_time_interchanger_small * 10), cc.fadeIn(.3), cc.blink(.5, 3)));
+            _coin_txt.runAction(cc.sequence(cc.delayTime(this._options.action_time_interchanger_small * 8), cc.fadeIn(.3), cc.blink(.5, 3)));
 
             _sp_bg_coin.width = _team_name.getContentSize().width + _coin_txt.getContentSize().width + 60;
             this.addChild(_sp_bg_coin, 5);
             _action_array.push(cc.delayTime(3));
-            _sp_bg_coin.runAction(cc.sequence(cc.delayTime(this._options.action_time_interchanger_small * 8), cc.fadeIn(.5), cc.delayTime(2), cc.fadeOut(this._options.action_time_interchanger_small), cc.callFunc(function (sp) {
+            _sp_bg_coin.runAction(cc.sequence(cc.delayTime(this._options.action_time_interchanger_small * 6), cc.fadeIn(.5), cc.delayTime(2), cc.fadeOut(this._options.action_time_interchanger_small), cc.callFunc(function (sp) {
                 sp.removeFromParent();
             })));
         }
@@ -104,6 +100,8 @@ var Team_class = cc.Node.extend({
             team.getParent()._is_action_team--;
         }));
         this.cleanup();
+        this.attack_block_id = obj.attack_block_id || '';
+        this.attack_server_id = obj.attack_server_id || '';
         this.runAction(cc.sequence(_action_array));
     },
     destroy: function () {

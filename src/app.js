@@ -133,7 +133,7 @@ MAIN_PERMEATE_SCENE.Permeate_main_layer = cc.Layer.extend({
         this.addBg();
         this.initBlock(_json);
         this.drawLine(_json.length);
-        this.schedule(this.updateAddTeam, 2.0);
+        this.schedule(this.updateAddTeam, 3.0);
         // var _bg_color = new cc.LayerColor(cc.color(0, 0, 0), this._winSize.width, this._winSize.height);
         // this.addChild(_bg_color);
     },
@@ -297,6 +297,9 @@ MAIN_PERMEATE_SCENE.Permeate_main_layer = cc.Layer.extend({
 
             _action = cc.spawn(cc.moveBy(_team._options.action_time_interchanger_small, cc.p(0, 35)), cc.scaleTo(_team._options.action_time_interchanger_small, 1, 1), cc.fadeIn(_team._options.action_time_interchanger_small));
             _team.cleanup();
+            //避免新增block后坐标发生变化
+            var _team_block = this._block_array[GLOBAL_FUNC_SIMPLEEDU.findObjFromArray(_team, "attack_block_id", this._block_array, "_block_id")];
+            _team.setPosition(cc.pAdd(_team_block.getPosition(), _team_block.getServerPos(_team)));
             _team.runAction(cc.sequence(_action, cc.callFunc(function () {
                 this.teamMoveToBlock(_team, _obj, true);
             }.bind(this))));
@@ -316,7 +319,7 @@ MAIN_PERMEATE_SCENE.Permeate_main_layer = cc.Layer.extend({
 
         this._is_action_team++;
         _block_index = GLOBAL_FUNC_SIMPLEEDU.findObjFromArray(obj, "attack_block_id", this._block_array, "_block_id");
-        _block = _this._block_array[_block_index];
+        _block = this._block_array[_block_index];
 
         if (!type) {
             _action.push(cc.delayTime(.5));
@@ -339,6 +342,18 @@ MAIN_PERMEATE_SCENE.Permeate_main_layer = cc.Layer.extend({
         //如果渗透完成 加2个参数
         _target_block = obj.hasOwnProperty("attack_completed") ? _block : null;
         team.moveToServer(_line_end_pos, _action, _action_time, _target_block, obj);
+    },
+    /**
+     * @desc  返回目标server 上当前正在渗透的team数量
+     * @param {string} target_server_id
+     */
+    getServerTeamNum: function (target_server_id) {
+        var _result = this._team_array.filter(function (team) {
+            if (team.is_lock) {
+                return team.attack_server_id === target_server_id;
+            }
+        });
+        cc.log('_result = ' + _result);
     },
     updateAddBlock: function () {
         // cc.log('updateAddBlock');
