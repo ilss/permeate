@@ -6,6 +6,7 @@
  * @Description: 
  */
 var Team_class = cc.Node.extend({
+    _icon: null,
     _team_id: null,
     _team_name: null,
     attack_block_id: null,
@@ -33,27 +34,59 @@ var Team_class = cc.Node.extend({
         this._team_name = obj.name || '';
         this._team_icon = obj.icon || this._team_icon_def[window["MAIN_PERMEATE_SCENE"].randomNum(this._team_icon_def.length - 1)];
 
-        var _sp = new cc.Sprite(this._team_icon),
-            _action = cc.sequence(cc.fadeIn(this._options.action_time_interchanger_small), cc.scaleTo(this._options.action_time_interchanger_small, 1, 1));
-        _sp.x = 0;
-        _sp.y = 0;
-        _sp.setScale(.1);
-        _sp.opacity = 0;
-        this.addChild(_sp);
-        _sp.runAction(_action);
+        var _action = cc.sequence(cc.fadeIn(this._options.action_time_interchanger_small), cc.scaleTo(this._options.action_time_interchanger_small, 1, 1));
+        this._icon = new cc.Sprite(MAIN_PERMEATE_SCENE.res.mask_team_icon);
+        this._icon.x = 0;
+        this._icon.y = 0;
+        this._icon.setScale(.1);
+        this._icon.opacity = 0;
+        this.addChild(this._icon);
+        this._icon.runAction(_action);
+
+        this.loadUrlImage(this._team_icon, this._icon);
     },
-    moveToServer: function (_line_end_pos, _action, _action_time, _block, _obj) {
-        // this.is_lock = true;
-        // _action.push(cc.moveTo(_action_time, cc.pAdd(_line_end_pos, cc.p(0, 30))));
-        // _action.push(cc.callFunc(function (team) {
-        //     team.attackServer(_obj);
-        //     if (_block !== null) {
-        //         _block.hitServer(_obj);
-        //     }
-        // }));
-        // this.runAction(cc.sequence(_action));
+    loadUrlImage: function (faceurl, node) {
+        // && (/^https?:\/\/\.+(.png|.gif|.jpe?g)$/g).test(url)
+        var _this = this;
+        var addDefaultIcon = function (node) {
+            var _img = _this._team_icon_def[window["MAIN_PERMEATE_SCENE"].randomNum(_this._team_icon_def.length - 1)];
+            var _sp = new cc.Sprite(_img);
+            _sp.setPosition(17, 17);
+            node.addChild(_sp, -1);
+        };
+
+        if (typeof faceurl === 'string' && (/(.png|.gif|.jpe?g)$/gi).test(faceurl)) {
+            cc.loader.loadImg(faceurl, { isCrossOrigin: false }, function (err, img) {
+                var _sp = null,
+                    _size = null;
+                if (err) {
+                    cc.log("图片加载失败 " + err);
+                    addDefaultIcon(node);
+                }
+                else {
+                    _sp = new cc.Sprite(img);
+                    var _clip = new cc.Sprite(MAIN_PERMEATE_SCENE.res.clipping_team_icon);
+                    var _clipper = new cc.ClippingNode(_clip);
+                    _clipper.attr({
+                        anchorX: 0.5,
+                        anchorY: 0.5,
+                        x: 17,
+                        y: 17
+                    });
+                    // _clipper.stencil = _clip;
+                    _clipper.alphaThreshold = 0;
+                    _size = _sp.getContentSize();
+                    _sp.setScale(34 / _size.width, 34 / _size.height);
+                    _clipper.addChild(_sp);
+                    node.addChild(_clipper, -1);
+                }
+            });
+        } else {
+            cc.log("图片url错误 ");
+            addDefaultIcon(node);
+        }
     },
-    moveToServer2: function (_line_end_pos, _action_time, _block, _obj) {
+    moveToServer: function (_line_end_pos, _action_time, _block, _obj) {
         this.is_lock = true;
         var _action = [];
         _action.push(cc.moveTo(_action_time, cc.pAdd(_line_end_pos, cc.p(0, 30))));
