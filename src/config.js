@@ -62,88 +62,20 @@ MAIN_PERMEATE_SCENE.path_pos_array = {
     ],
     2: [
         //每个数组包含 一个起点与一个终点
-        [cc.p(706, 473), cc.p(609, 418)],
-        [
-            //表示同时画N段线
-            [cc.p(609, 418), cc.p(403, 546)],
-            [cc.p(609, 418), cc.p(842, 275)],
-        ],
-        [
-            [cc.p(403, 546), cc.p(363, 522)],
-            [cc.p(842, 275), cc.p(797, 246)]
-        ]
+        [cc.p(706, 473), cc.p(609, 418), cc.p(403, 546), cc.p(363, 522)],
+        [cc.p(706, 473), cc.p(609, 418), cc.p(842, 275), cc.p(797, 246)],
     ],
     3: [
         //每个数组包含 一个起点与一个终点
-        [
-            [cc.p(706, 473), cc.p(505, 356)],
-            [cc.p(706, 473), cc.p(954, 325)]
-        ],
-        [
-            //表示同时画N段线
-            [cc.p(505, 356), cc.p(346, 457)],
-            [cc.p(505, 356), cc.p(668, 253)],
-        ],
-        [
-            [cc.p(350, 448), cc.p(316, 426)],
-            [cc.p(668, 253), cc.p(628, 229)]
-        ]
+        [cc.p(706, 473), cc.p(507, 358), cc.p(358, 450), cc.p(317, 426)],
+        [cc.p(706, 473), cc.p(507, 358), cc.p(668, 253), cc.p(628, 229)],
+        [cc.p(706, 473), cc.p(954, 325)]
     ],
     4: [
         //每个数组包含 一个起点与一个终点
-        [
-            [cc.p(706, 473), cc.p(454, 325)],
-            [cc.p(706, 473), cc.p(954, 325)],
-            [cc.p(706, 473), cc.p(457, 619)]
-        ],
-        [
-            //表示同时画N段线
-            [cc.p(455, 327), cc.p(313, 413)],
-            [cc.p(455, 327), cc.p(606, 231)],
-        ],
-        [
-            [cc.p(314, 415), cc.p(274, 392)],
-            [cc.p(606, 231), cc.p(568, 209)]
-        ]
+        [cc.p(708, 471), cc.p(456, 326), cc.p(314, 413), cc.p(277, 390)],
+        [cc.p(708, 471), cc.p(456, 326), cc.p(606, 231), cc.p(568, 209)],
+        [cc.p(706, 473), cc.p(954, 325)],
+        [cc.p(706, 473), cc.p(457, 619)]
     ],
-}
-
-
-MAIN_PERMEATE_SCENE.team_move_path = {
-    1: [
-        [MAIN_PERMEATE_SCENE.path_pos_array["1"][0][1]]
-    ],
-    2: [
-        [
-            MAIN_PERMEATE_SCENE.path_pos_array["2"][1][0][0], MAIN_PERMEATE_SCENE.path_pos_array["2"][1][0][1], MAIN_PERMEATE_SCENE.path_pos_array["2"][2][0][1]
-        ],
-        [
-            MAIN_PERMEATE_SCENE.path_pos_array["2"][1][1][0], MAIN_PERMEATE_SCENE.path_pos_array["2"][1][1][1], MAIN_PERMEATE_SCENE.path_pos_array["2"][2][1][1]
-        ]
-    ],
-    3: [
-        [
-            MAIN_PERMEATE_SCENE.path_pos_array["3"][1][0][0], MAIN_PERMEATE_SCENE.path_pos_array["3"][1][0][1], MAIN_PERMEATE_SCENE.path_pos_array["3"][2][0][1]
-        ],
-        [
-            MAIN_PERMEATE_SCENE.path_pos_array["3"][1][1][0], MAIN_PERMEATE_SCENE.path_pos_array["3"][1][1][1], MAIN_PERMEATE_SCENE.path_pos_array["3"][2][1][1]
-        ],
-        [
-            MAIN_PERMEATE_SCENE.path_pos_array["3"][0][1][0], MAIN_PERMEATE_SCENE.path_pos_array["3"][0][1][1]
-        ]
-    ],
-    4: [
-        [
-            MAIN_PERMEATE_SCENE.path_pos_array["4"][1][0][0], MAIN_PERMEATE_SCENE.path_pos_array["4"][1][0][1], MAIN_PERMEATE_SCENE.path_pos_array["4"][2][0][1]
-        ],
-        [
-            MAIN_PERMEATE_SCENE.path_pos_array["4"][1][1][0], MAIN_PERMEATE_SCENE.path_pos_array["4"][1][1][1], MAIN_PERMEATE_SCENE.path_pos_array["4"][2][1][1]
-        ],
-        [
-            MAIN_PERMEATE_SCENE.path_pos_array["4"][0][1][0], MAIN_PERMEATE_SCENE.path_pos_array["4"][0][1][1]
-        ],
-        [
-            MAIN_PERMEATE_SCENE.path_pos_array["4"][0][2][0], MAIN_PERMEATE_SCENE.path_pos_array["4"][0][2][1]
-        ]
-    ]
 }

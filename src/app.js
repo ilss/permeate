@@ -77,54 +77,54 @@ MAIN_PERMEATE_SCENE.Permeate_main_layer = cc.Layer.extend({
                     }
                 ]
             },
-            // {
-            //     id: '000003',
-            //     name: '管理区',
-            //     server: [
-            //         {
-            //             id: 's00001'
-            //         },
-            //         {
-            //             id: 's00001'
-            //         },
-            //         {
-            //             id: 's00001'
-            //         },
-            //         {
-            //             id: 's00001'
-            //         },
-            //         {
-            //             id: 's00001'
-            //         },
-            //         {
-            //             id: 's00001'
-            //         }
-            //     ]
-            // },
-            // {
-            //     id: '000004',
-            //     name: '管理区',
-            //     server: [
-            //         {
-            //             id: 's00001'
-            //         },
-            //         {
-            //             id: 's00001'
-            //         },
-            //         {
-            //             id: 's00001'
-            //         },
-            //         {
-            //             id: 's00001'
-            //         },
-            //         // {
-            //         //     id: 's00001'
-            //         // },
-            //         // {
-            //         //     id: 's00001'
-            //         // }
-            //     ]
-            // }
+            {
+                id: '000003',
+                name: '管理区',
+                server: [
+                    {
+                        id: 's00001'
+                    },
+                    {
+                        id: 's00001'
+                    },
+                    {
+                        id: 's00001'
+                    },
+                    {
+                        id: 's00001'
+                    },
+                    {
+                        id: 's00001'
+                    },
+                    {
+                        id: 's00001'
+                    }
+                ]
+            },
+            {
+                id: '000004',
+                name: '管理区',
+                server: [
+                    {
+                        id: 's00001'
+                    },
+                    {
+                        id: 's00001'
+                    },
+                    {
+                        id: 's00001'
+                    },
+                    {
+                        id: 's00001'
+                    },
+                    // {
+                    //     id: 's00001'
+                    // },
+                    // {
+                    //     id: 's00001'
+                    // }
+                ]
+            }
         ];
         MAIN_PERMEATE_SCENE._EFFECTS_MAIN_LAYER = this;
         this._winSize = cc.director.getWinSize();
@@ -373,7 +373,8 @@ MAIN_PERMEATE_SCENE.Permeate_main_layer = cc.Layer.extend({
         // 判断是否是第一次入场
         if (team.attack_server_id === null) {
             _action.push(cc.delayTime(.5));
-            _path_array = MAIN_PERMEATE_SCENE.team_move_path[this._block_array.length][_block_index];
+            // _path_array = MAIN_PERMEATE_SCENE.team_move_path[this._block_array.length][_block_index];
+            _path_array = MAIN_PERMEATE_SCENE.path_pos_array[this._block_array.length][_block_index];
             for (var _index = 0, _len = _path_array.length; _index < _len; _index++) {
                 _line_end_pos = _path_array[_index];
                 _distance = cc.pDistance(_line_start_pos, _line_end_pos);

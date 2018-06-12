@@ -19,7 +19,6 @@ var Draw_line_class = cc.Layer.extend({
         var _distance = null,
             _action_time = null,
             _obj = MAIN_PERMEATE_SCENE.path_pos_array[num],
-            _len = _obj.length,
             _line_start_pos = _obj[0][0],
             _line_end_pos = _obj[0][1];
 
@@ -29,30 +28,44 @@ var Draw_line_class = cc.Layer.extend({
         _action_time = _distance / this._options.draw_line_action_distance;
         this.drawLine(_line_start_pos, _line_end_pos, _distance, _action_time);
         this._draw_line_delay_time += _action_time;
-        for (var index = 0; index < _len; index++) {
-            var _len_sub = _obj[index].length;
-            //处理要同时画的分支线段
-            if (_obj[index][0] instanceof Array) {
-                for (var index_sub = 0; index_sub < _len_sub; index_sub++) {
-                    _line_start_pos = _obj[index][index_sub][0];
-                    _line_end_pos = _obj[index][index_sub][1];
-                    _distance = cc.pDistance(_line_start_pos, _line_end_pos);
-                    _action_time = _distance / this._options.draw_line_action_distance;
-                    this.drawLine(_line_start_pos, _line_end_pos, _distance, _action_time);
-                }
 
-                _action_time += 0.2;
-                this._draw_line_delay_time += _action_time;
-            } else {
-                _line_start_pos = _obj[index][0];
-                _line_end_pos = _obj[index][1];
-
+        for (var _i = 0, _leni = _obj.length; _i < _leni; _i++) {
+            this._draw_line_delay_time = 0;
+            for (var _j = 0, _lenj = _obj[_i].length - 1; _j < _lenj; _j++) {
+                _line_start_pos = _obj[_i][_j];
+                _line_end_pos = _obj[_i][_j + 1];
                 _distance = cc.pDistance(_line_start_pos, _line_end_pos);
                 _action_time = _distance / this._options.draw_line_action_distance;
                 this.drawLine(_line_start_pos, _line_end_pos, _distance, _action_time);
                 this._draw_line_delay_time += _action_time;
             }
         }
+
+
+        // for (var index = 0; index < _len; index++) {
+        //     var _len_sub = _obj[index].length;
+        //     //处理要同时画的分支线段
+        //     if (_obj[index][0] instanceof Array) {
+        //         for (var index_sub = 0; index_sub < _len_sub; index_sub++) {
+        //             _line_start_pos = _obj[index][index_sub][0];
+        //             _line_end_pos = _obj[index][index_sub][1];
+        //             _distance = cc.pDistance(_line_start_pos, _line_end_pos);
+        //             _action_time = _distance / this._options.draw_line_action_distance;
+        //             this.drawLine(_line_start_pos, _line_end_pos, _distance, _action_time);
+        //         }
+
+        //         _action_time += 0.2;
+        //         this._draw_line_delay_time += _action_time;
+        //     } else {
+        //         _line_start_pos = _obj[index][0];
+        //         _line_end_pos = _obj[index][1];
+
+        //         _distance = cc.pDistance(_line_start_pos, _line_end_pos);
+        //         _action_time = _distance / this._options.draw_line_action_distance;
+        //         this.drawLine(_line_start_pos, _line_end_pos, _distance, _action_time);
+        //         this._draw_line_delay_time += _action_time;
+        //     }
+        // }
     },
     /**
      * @desc 画线方法
