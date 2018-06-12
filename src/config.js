@@ -21,6 +21,11 @@ MAIN_PERMEATE_SCENE.basic_pos_array = {
     interchanger: cc.p(706, 478),
 }
 
+//渗透成功对话框
+MAIN_PERMEATE_SCENE.opations_team_succeed_dialog = {
+    action_times: .33
+}
+
 //几个区的不同布局
 MAIN_PERMEATE_SCENE.block_server_num = {
     1: {
@@ -52,6 +57,15 @@ MAIN_PERMEATE_SCENE.block_server_num = {
             cc.p(370, 667)
         ],
         block_scale: 1
+    },
+    6: {
+        block_pos: [
+            cc.p(186, 344),
+            cc.p(480, 162),
+            cc.p(1028, 266),
+            cc.p(370, 667)
+        ],
+        block_scale: 1
     }
 }
 
@@ -74,8 +88,8 @@ MAIN_PERMEATE_SCENE.path_pos_array = {
     4: [
         //每个数组包含 一个起点与一个终点
         [cc.p(708, 471), cc.p(456, 326), cc.p(314, 413), cc.p(277, 390)],
-        [cc.p(708, 471), cc.p(456, 326), cc.p(606, 231), cc.p(568, 209)],
-        [cc.p(706, 473), cc.p(954, 325)],
-        [cc.p(706, 473), cc.p(457, 619)]
+        [cc.p(708, 471), cc.p(456, 326), cc.p(606, 231), cc.p(570, 209)],
+        [cc.p(706, 470), cc.p(954, 325)],
+        [cc.p(708, 472), cc.p(460, 618)]
     ],
 }

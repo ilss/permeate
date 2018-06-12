@@ -60,7 +60,7 @@
                 <key>spriteSourceSize</key>
                 <string>{732,363}</string>
                 <key>textureRect</key>
-                <string>{{56,289},{732,363}}</string>
+                <string>{{204,289},{732,363}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -71,11 +71,11 @@
                 <key>spriteOffset</key>
                 <string>{0,0}</string>
                 <key>spriteSize</key>
-                <string>{54,262}</string>
+                <string>{146,358}</string>
                 <key>spriteSourceSize</key>
-                <string>{54,262}</string>
+                <string>{146,358}</string>
                 <key>textureRect</key>
-                <string>{{0,289},{54,262}}</string>
+                <string>{{56,289},{146,358}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -109,7 +109,22 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
-            <key>permeate_dialog_team_icon.png</key>
+            <key>permeate_dialog_lighting_right.png</key>
+            <dict>
+                <key>aliases</key>
+                <array/>
+                <key>spriteOffset</key>
+                <string>{0,0}</string>
+                <key>spriteSize</key>
+                <string>{54,262}</string>
+                <key>spriteSourceSize</key>
+                <string>{54,262}</string>
+                <key>textureRect</key>
+                <string>{{0,289},{54,262}}</string>
+                <key>textureRotated</key>
+                <false/>
+            </dict>
+            <key>permeate_dialog_team_icon_mask.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
@@ -273,7 +288,7 @@
             <key>size</key>
             <string>{986,652}</string>
             <key>smartupdate</key>
-            <string>$TexturePacker:SmartUpdate:352b657f28d875f9a454ea2a0b9f81b1:fe95eb91b54226bc871f947280d6a56d:713857574ee2e14ec14e6d553de0a758$</string>
+            <string>$TexturePacker:SmartUpdate:60c909108268a49445614a978800bcbf:9d36815961c0ae3b00176af7cb7b9ca0:713857574ee2e14ec14e6d553de0a758$</string>
             <key>textureFileName</key>
             <string>permeate_img_all.png</string>
         </dict>

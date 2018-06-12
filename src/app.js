@@ -15,6 +15,7 @@ MAIN_PERMEATE_SCENE.Permeate_main_layer = cc.Layer.extend({
     _sp_interchanger: null,
     _winSize: null,
     _team_array: null,
+    _layer_add_block_dialog: null,
     _is_action_block: null,
     _is_action_team: null,
     _add_block_array: null, //缓存加BLOCK请求 场上有team入场时暂缓处理
@@ -22,6 +23,7 @@ MAIN_PERMEATE_SCENE.Permeate_main_layer = cc.Layer.extend({
     onEnter: function () {
         this._super();
         this._dt = 0;
+        this._layer_add_block_dialog = null;
         this._is_action_block = false;
         this._is_action_team = 0;
         this._block_array = [];
@@ -53,78 +55,78 @@ MAIN_PERMEATE_SCENE.Permeate_main_layer = cc.Layer.extend({
                     }
                 ]
             },
-            {
-                id: '000111',
-                name: '管理区',
-                server: [
-                    {
-                        id: 's00001'
-                    },
-                    {
-                        id: 's00002'
-                    },
-                    {
-                        id: 's00003'
-                    },
-                    {
-                        id: 's00004'
-                    },
-                    {
-                        id: 's00005'
-                    },
-                    {
-                        id: 's00006'
-                    }
-                ]
-            },
-            {
-                id: '000003',
-                name: '管理区',
-                server: [
-                    {
-                        id: 's00001'
-                    },
-                    {
-                        id: 's00001'
-                    },
-                    {
-                        id: 's00001'
-                    },
-                    {
-                        id: 's00001'
-                    },
-                    {
-                        id: 's00001'
-                    },
-                    {
-                        id: 's00001'
-                    }
-                ]
-            },
-            {
-                id: '000004',
-                name: '管理区',
-                server: [
-                    {
-                        id: 's00001'
-                    },
-                    {
-                        id: 's00001'
-                    },
-                    {
-                        id: 's00001'
-                    },
-                    {
-                        id: 's00001'
-                    },
-                    // {
-                    //     id: 's00001'
-                    // },
-                    // {
-                    //     id: 's00001'
-                    // }
-                ]
-            }
+            // {
+            //     id: '000111',
+            //     name: '管理区',
+            //     server: [
+            //         {
+            //             id: 's00001'
+            //         },
+            //         {
+            //             id: 's00002'
+            //         },
+            //         {
+            //             id: 's00003'
+            //         },
+            //         {
+            //             id: 's00004'
+            //         },
+            //         {
+            //             id: 's00005'
+            //         },
+            //         {
+            //             id: 's00006'
+            //         }
+            //     ]
+            // },
+            // {
+            //     id: '000003',
+            //     name: '管理区',
+            //     server: [
+            //         {
+            //             id: 's00001'
+            //         },
+            //         {
+            //             id: 's00001'
+            //         },
+            //         // {
+            //         //     id: 's00001'
+            //         // },
+            //         // {
+            //         //     id: 's00001'
+            //         // },
+            //         // {
+            //         //     id: 's00001'
+            //         // },
+            //         // {
+            //         //     id: 's00001'
+            //         // }
+            //     ]
+            // },
+            // {
+            //     id: '000004',
+            //     name: '管理区',
+            //     server: [
+            //         {
+            //             id: 's00001'
+            //         },
+            //         {
+            //             id: 's00001'
+            //         },
+            //         {
+            //             id: 's00001'
+            //         },
+            //         {
+            //             id: 's00001'
+            //         },
+            //         // {
+            //         //     id: 's00001'
+            //         // },
+            //         // {
+            //         //     id: 's00001'
+            //         // }
+            //     ]
+            // }
         ];
         MAIN_PERMEATE_SCENE._EFFECTS_MAIN_LAYER = this;
         this._winSize = cc.director.getWinSize();
@@ -134,6 +136,7 @@ MAIN_PERMEATE_SCENE.Permeate_main_layer = cc.Layer.extend({
         this.initBlock(_json);
         this.drawLine(_json.length);
         this.schedule(this.updateAddTeam, 3.0);
+
         // var _bg_color = new cc.LayerColor(cc.color(0, 0, 0), this._winSize.width, this._winSize.height);
         // this.addChild(_bg_color);
     },
@@ -181,11 +184,8 @@ MAIN_PERMEATE_SCENE.Permeate_main_layer = cc.Layer.extend({
         //入场动画
         _block.setCascadeOpacityEnabled(true);
         _block.opacity = 0;
-
         _block.runAction(cc.fadeIn(MAIN_PERMEATE_SCENE["_opactions"]["_add_block_fadeout_action_time"]));
 
-        //击中效果
-        // _block.hitServer(0);
         this._block_array.push(_block);
     },
     /**
@@ -202,7 +202,8 @@ MAIN_PERMEATE_SCENE.Permeate_main_layer = cc.Layer.extend({
             this._add_block_array.unshift(block_data);
             //如果没有 动画中的大区 或 动画中的team 则开始新增大区
             if (!this._is_action_block && this._is_action_team === 0) {
-                this.addNewBlock();
+                this.alertTeamInfo();
+                // this.addNewBlock();
             } else {
                 this.schedule(this.updateAddBlock, 2.0);
             }
@@ -216,12 +217,6 @@ MAIN_PERMEATE_SCENE.Permeate_main_layer = cc.Layer.extend({
             _old_block = null,
             _old_block_old_pos = null,
             _new_pos = null;
-
-        if (!this._is_action_block) {
-            this._is_action_block = true;
-            setTimeout(function () { _this._is_action_block = false; }, 1500);
-        }
-
         //重置现有区的坐标和缩放
         //场景缩放
         this.runAction(cc.scaleTo(MAIN_PERMEATE_SCENE["_opactions"]["_add_block_fadeout_action_time"], MAIN_PERMEATE_SCENE.block_server_num[_len_block_array + 1]["block_scale"]));
@@ -244,12 +239,188 @@ MAIN_PERMEATE_SCENE.Permeate_main_layer = cc.Layer.extend({
         this._layer_line_yellow.runAction(cc.fadeOut(.25));
 
         setTimeout(function () {
-            this.addBlock(_block_data, MAIN_PERMEATE_SCENE.block_server_num[_len_block_array + 1], _len_block_array);
+            _this.addBlock(_block_data, MAIN_PERMEATE_SCENE.block_server_num[_len_block_array + 1], _len_block_array);
+            _this._layer_line_yellow.removeFromParent();
+            _this._layer_line_yellow = null;
+            _this.drawLine(_this._block_array.length);
+        }, MAIN_PERMEATE_SCENE["_opactions"]["_add_block_fadeout_action_time"] * 1000);
+    },
+    alertTeamInfo: function () {
+        if (this._add_block_array.length < 1) {
+            return;
+        }
 
-            this._layer_line_yellow.removeFromParent();
-            this._layer_line_yellow = null;
-            this.drawLine(this._block_array.length);
-        }.bind(this), MAIN_PERMEATE_SCENE["_opactions"]["_add_block_fadeout_action_time"] * 1000);
+        var _this = this,
+            _size = null,
+            _sp_team_icon_all = null,
+            _sp_team_icon = null,
+            _sp_team_icon_mask = null,
+            _clip = null,
+            _clipper = null,
+            _team_name_ttf = null,
+            _succeed_ttf = null,
+            _bg_dialog = null,
+            _bg_dialog_border_left = null,
+            _bg_dialog_border_right = null,
+            _bg_dialog_linghting_left = null,
+            _bg_dialog_linghting_right = null,
+            _bg_dialog_bottom_left = null,
+            _bg_dialog_bottom_right = null,
+            _sp_dialog_congratulations = null,
+            _team = this._team_array[GLOBAL_FUNC_SIMPLEEDU.findObjFromArray(this._add_block_array[0].team, "id", this._team_array, "_team_id")];
+
+        if (_team === undefined) {
+            cc.log('队伍从未入场');
+            //在队伍入场缓存中查找该ID的队伍请求
+            _team = this._team_array[GLOBAL_FUNC_SIMPLEEDU.findObjFromArray(this._add_block_array[0].team, "id", this._add_team_array, "_team_id")];
+        }
+
+        if (_team === undefined) {
+            cc.log('没有此队伍数据');
+            //清除此条无效请求
+            this._add_block_array.pop();
+            return;
+        }
+
+        if (!this._is_action_block) {
+            this._is_action_block = true;
+            setTimeout(function () {
+                _this._is_action_block = false;
+            }, 4000);
+        }
+
+        this._layer_add_block_dialog = new cc.Layer();
+        this._layer_add_block_dialog.setCascadeOpacityEnabled(true);
+        this._layer_add_block_dialog.setScale(1.25 / MAIN_PERMEATE_SCENE.block_server_num[this._block_array.length]["block_scale"]);
+
+        //处理team头像
+        _sp_team_icon_all = new cc.Sprite();
+        _sp_team_icon_all.setCascadeOpacityEnabled(true);
+        _sp_team_icon = new cc.Sprite(_team._icon_img.getSpriteFrame());
+        _clip = new cc.Sprite(MAIN_PERMEATE_SCENE.res.clipping_team_icon_dialog);
+        _clipper = new cc.ClippingNode(_clip);
+
+        _clipper.setCascadeOpacityEnabled(true);
+        _clipper.alphaThreshold = 0;
+        _size = _sp_team_icon.getContentSize();
+        _sp_team_icon.setScale(106 / _size.width, 119 / _size.height);
+        _clipper.addChild(_sp_team_icon);
+        _sp_team_icon_all.addChild(_clipper, 1);
+
+        _sp_team_icon_mask = new cc.Sprite("#permeate_dialog_team_icon_mask.png");
+        _sp_team_icon_mask.setPosition(_clipper.getPosition());
+        _sp_team_icon_all.addChild(_sp_team_icon_mask, 2);
+        _sp_team_icon_all.opacity = 0;
+        _sp_team_icon_all.setScale(.1, .1);
+        _sp_team_icon_all.x = this._winSize.width / 2;
+        _sp_team_icon_all.y = this._winSize.height / 2 + 170;
+        this._layer_add_block_dialog.addChild(_sp_team_icon_all, 5);
+        _sp_team_icon_all.runAction(cc.spawn(cc.fadeIn(MAIN_PERMEATE_SCENE.opations_team_succeed_dialog.action_times), cc.scaleTo(MAIN_PERMEATE_SCENE.opations_team_succeed_dialog.action_times, 1, 1)));
+
+        //小翅膀
+        _bg_dialog_linghting_right = new cc.Sprite("#permeate_dialog_wing_right.png");
+        _bg_dialog_linghting_right.x = _sp_team_icon_all.x + 80;
+        _bg_dialog_linghting_right.y = _sp_team_icon_all.y - 40;
+        _bg_dialog_linghting_right.opacity = 0;
+        _bg_dialog_linghting_right.setRotation(90);
+        _bg_dialog_linghting_right.setAnchorPoint(0, 0);
+        this._layer_add_block_dialog.addChild(_bg_dialog_linghting_right, 1);
+        _bg_dialog_linghting_right.runAction(cc.spawn(cc.fadeIn(MAIN_PERMEATE_SCENE.opations_team_succeed_dialog.action_times), cc.rotateBy(MAIN_PERMEATE_SCENE.opations_team_succeed_dialog.action_times, -90)));
+
+        _bg_dialog_linghting_left = new cc.Sprite("#permeate_dialog_wing_right.png");
+        _bg_dialog_linghting_left.x = _sp_team_icon_all.x - 80;
+        _bg_dialog_linghting_left.y = _sp_team_icon_all.y - 40;
+        _bg_dialog_linghting_left.setScale(-1, 1);
+        _bg_dialog_linghting_left.opacity = 0;
+        _bg_dialog_linghting_left.setRotation(-90);
+        _bg_dialog_linghting_left.setAnchorPoint(0, 0);
+        this._layer_add_block_dialog.addChild(_bg_dialog_linghting_left, 1);
+        _bg_dialog_linghting_left.runAction(cc.spawn(cc.fadeIn(MAIN_PERMEATE_SCENE.opations_team_succeed_dialog.action_times), cc.rotateBy(MAIN_PERMEATE_SCENE.opations_team_succeed_dialog.action_times, 90)));
+
+        //背景
+        _bg_dialog = new cc.Sprite("#permeate_dialog_bg.png");
+        _bg_dialog.x = this._winSize.width / 2;
+        _bg_dialog.y = this._winSize.height / 2;
+        _bg_dialog.opacity = 0;
+        this._layer_add_block_dialog.addChild(_bg_dialog, 0);
+        _bg_dialog.runAction(cc.sequence(cc.delayTime(MAIN_PERMEATE_SCENE.opations_team_succeed_dialog.action_times), cc.fadeIn(MAIN_PERMEATE_SCENE.opations_team_succeed_dialog.action_times)));
+
+        //team 名称
+        _team_name_ttf = new cc.LabelTTF(_team._team_name, "Arial", 60);
+        _team_name_ttf.setFontFillColor(cc.color(255, 206, 0));
+        _team_name_ttf.x = this._winSize.width / 2;
+        _team_name_ttf.y = this._winSize.height / 2 + 50 + 30;
+        _team_name_ttf.opacity = 0;
+        this._layer_add_block_dialog.addChild(_team_name_ttf, 2);
+        _team_name_ttf.runAction(cc.sequence(cc.delayTime(MAIN_PERMEATE_SCENE.opations_team_succeed_dialog.action_times * 2.5), cc.spawn(cc.fadeIn(MAIN_PERMEATE_SCENE.opations_team_succeed_dialog.action_times), cc.moveBy(MAIN_PERMEATE_SCENE.opations_team_succeed_dialog.action_times, cc.p(0, -30)))));
+
+        _succeed_ttf = new cc.LabelTTF('恭喜渗透成功  开启本赛段新区域', "Arial", 30);
+        _succeed_ttf.setFontFillColor(cc.color(245, 158, 0));
+        _succeed_ttf.x = this._winSize.width / 2;
+        _succeed_ttf.y = this._winSize.height / 2 - 60;
+        _succeed_ttf.opacity = 0;
+        this._layer_add_block_dialog.addChild(_succeed_ttf, 2);
+        _succeed_ttf.runAction(cc.sequence(cc.delayTime(MAIN_PERMEATE_SCENE.opations_team_succeed_dialog.action_times * 2.5), cc.spawn(cc.fadeIn(MAIN_PERMEATE_SCENE.opations_team_succeed_dialog.action_times), cc.moveBy(MAIN_PERMEATE_SCENE.opations_team_succeed_dialog.action_times, cc.p(0, 30)))));
+
+        _bg_dialog_linghting_right = new cc.Sprite("#permeate_dialog_lighting_right.png");
+        _bg_dialog_linghting_right.x = this._winSize.width / 2 + 296;
+        _bg_dialog_linghting_right.y = this._winSize.height / 2;
+        _bg_dialog_linghting_right.opacity = 0;
+        this._layer_add_block_dialog.addChild(_bg_dialog_linghting_right, 1);
+        _bg_dialog_linghting_right.runAction(cc.sequence(cc.delayTime(MAIN_PERMEATE_SCENE.opations_team_succeed_dialog.action_times + 0.2), cc.fadeIn(MAIN_PERMEATE_SCENE.opations_team_succeed_dialog.action_times)));
+
+        _bg_dialog_linghting_left = new cc.Sprite("#permeate_dialog_lighting_right.png");
+        _bg_dialog_linghting_left.x = this._winSize.width / 2 - 296;
+        _bg_dialog_linghting_left.y = this._winSize.height / 2;
+        _bg_dialog_linghting_left.setScale(-1, 1);
+        _bg_dialog_linghting_left.opacity = 0;
+        this._layer_add_block_dialog.addChild(_bg_dialog_linghting_left, 1);
+        _bg_dialog_linghting_left.runAction(cc.sequence(cc.delayTime(MAIN_PERMEATE_SCENE.opations_team_succeed_dialog.action_times + 0.2), cc.fadeIn(MAIN_PERMEATE_SCENE.opations_team_succeed_dialog.action_times)));
+
+        _bg_dialog_border_right = new cc.Sprite("#permeate_dialog_border_right.png");
+        _bg_dialog_border_right.x = this._winSize.width / 2 + 296 + 30;
+        _bg_dialog_border_right.y = this._winSize.height / 2 + 4;
+        _bg_dialog_border_right.opacity = 0;
+        this._layer_add_block_dialog.addChild(_bg_dialog_border_right, 1);
+        _bg_dialog_border_right.runAction(cc.sequence(cc.delayTime(MAIN_PERMEATE_SCENE.opations_team_succeed_dialog.action_times), cc.spawn(cc.fadeIn(MAIN_PERMEATE_SCENE.opations_team_succeed_dialog.action_times), cc.moveBy(MAIN_PERMEATE_SCENE.opations_team_succeed_dialog.action_times / 2, cc.p(-30, 0)))));
+
+        _bg_dialog_border_left = new cc.Sprite("#permeate_dialog_border_right.png");
+        _bg_dialog_border_left.x = this._winSize.width / 2 - 296 - 30;
+        _bg_dialog_border_left.y = this._winSize.height / 2 + 4;
+        _bg_dialog_border_left.setScale(-1, 1);
+        _bg_dialog_border_left.opacity = 0;
+        this._layer_add_block_dialog.addChild(_bg_dialog_border_left, 1);
+        _bg_dialog_border_left.runAction(cc.sequence(cc.delayTime(MAIN_PERMEATE_SCENE.opations_team_succeed_dialog.action_times), cc.spawn(cc.fadeIn(MAIN_PERMEATE_SCENE.opations_team_succeed_dialog.action_times), cc.moveBy(MAIN_PERMEATE_SCENE.opations_team_succeed_dialog.action_times / 2, cc.p(30, 0)))));
+
+        //底部 congratulations
+        _bg_dialog_bottom_right = new cc.Sprite("#permeate_dialog_bottom_right.png");
+        _bg_dialog_bottom_right.x = this._winSize.width / 2 + 120;
+        _bg_dialog_bottom_right.y = this._winSize.height / 2 - 136;
+        _bg_dialog_bottom_right.opacity = 0;
+        this._layer_add_block_dialog.addChild(_bg_dialog_bottom_right, 1);
+
+        _bg_dialog_bottom_left = new cc.Sprite("#permeate_dialog_bottom_right.png");
+        _bg_dialog_bottom_left.x = this._winSize.width / 2 - 120;
+        _bg_dialog_bottom_left.y = this._winSize.height / 2 - 136;
+        _bg_dialog_bottom_left.setScale(-1, 1);
+        _bg_dialog_bottom_left.opacity = 0;
+        this._layer_add_block_dialog.addChild(_bg_dialog_bottom_left, 1);
+
+        _sp_dialog_congratulations = new cc.Sprite("#permeate_dialog_congratulations.png");
+        _sp_dialog_congratulations.x = this._winSize.width / 2;
+        _sp_dialog_congratulations.y = this._winSize.height / 2 - 146;
+        _sp_dialog_congratulations.opacity = 0;
+        _sp_dialog_congratulations.setScale(.2, .2);
+        this._layer_add_block_dialog.addChild(_sp_dialog_congratulations, 1);
+        _sp_dialog_congratulations.runAction(cc.sequence(cc.delayTime(MAIN_PERMEATE_SCENE.opations_team_succeed_dialog.action_times * 2), cc.spawn(cc.fadeIn(MAIN_PERMEATE_SCENE.opations_team_succeed_dialog.action_times), cc.scaleTo(MAIN_PERMEATE_SCENE.opations_team_succeed_dialog.action_times, 1, 1))));
+
+        this.addChild(this._layer_add_block_dialog, 99);
+        this._layer_add_block_dialog.runAction(cc.sequence(cc.delayTime(3), cc.fadeOut(MAIN_PERMEATE_SCENE.opations_team_succeed_dialog.action_times), cc.delayTime(MAIN_PERMEATE_SCENE.opations_team_succeed_dialog.action_times), cc.callFunc(function () {
+            _this._layer_add_block_dialog.removeFromParent();
+            _this._layer_add_block_dialog = null;
+            _this.addNewBlock();
+        })));
+
     },
     /**
      * @desc 缓存队伍相关行为数据
@@ -285,7 +456,7 @@ MAIN_PERMEATE_SCENE.Permeate_main_layer = cc.Layer.extend({
         _result_server_has_action_team = this.getServerActionTeamNum(_obj.attack_server_id);
 
         if (_block_index < 0) {
-            // cc.log("不存在ID " + _obj.attack_block_id + '的大区');
+            cc.log("不存在ID " + _obj.attack_block_id + '的大区');
             this._add_team_array.unshift(_obj);
             return;
         }
@@ -328,12 +499,7 @@ MAIN_PERMEATE_SCENE.Permeate_main_layer = cc.Layer.extend({
             if (_result_server_has_action_team.length > 0) {
                 //已经存在的team
                 var _server_team = _result_server_has_action_team.pop();
-                // if (Math.abs(_server_team.getPosition().x - _team.x) < 5) {
-                //     _height_distance = _server_team.getPosition().y - _team.y;
-                // } else {
-                //     _line_end_pos = cc.pAdd(_team_block.getPosition(), _team_block.getServerPos(_obj));
-                //     _height_distance = _server_team.getPosition().y - _line_end_pos.y;
-                // }
+
                 _height_distance = _server_team.getPosition().y - _team.y;
                 if (_height_distance < 40) {
                     cc.log('_result_server_has_action_team = ' + _result_server_has_action_team.length);
@@ -373,7 +539,6 @@ MAIN_PERMEATE_SCENE.Permeate_main_layer = cc.Layer.extend({
         // 判断是否是第一次入场
         if (team.attack_server_id === null) {
             _action.push(cc.delayTime(.5));
-            // _path_array = MAIN_PERMEATE_SCENE.team_move_path[this._block_array.length][_block_index];
             _path_array = MAIN_PERMEATE_SCENE.path_pos_array[this._block_array.length][_block_index];
             for (var _index = 0, _len = _path_array.length; _index < _len; _index++) {
                 _line_end_pos = _path_array[_index];
@@ -390,7 +555,6 @@ MAIN_PERMEATE_SCENE.Permeate_main_layer = cc.Layer.extend({
         _action.push(cc.callFunc(function () {
             _this.teamMoveToServer(team, obj);
         }));
-        // team.moveToServer(_line_end_pos, _action, _action_time, _target_block, obj);
         team.runAction(cc.sequence(_action));
     },
     teamMoveToServer: function (team, obj) {
@@ -417,9 +581,7 @@ MAIN_PERMEATE_SCENE.Permeate_main_layer = cc.Layer.extend({
         _result_server_has_action_team = this.getServerActionTeamNum(obj.attack_server_id);
 
         if (_result_server_has_action_team.length > 0) {
-            // cc.log(_result_server_has_action_team.length);
             var _height_distance = _result_server_has_action_team.pop().getPosition().y - _line_end_pos.y;
-            cc.log(team._team_id + '高度差：' + _height_distance);
             if (_height_distance < 40 && _height_distance > 28) {
                 _line_end_pos.y += 20;
                 team.setLocalZOrder(9);
@@ -446,7 +608,6 @@ MAIN_PERMEATE_SCENE.Permeate_main_layer = cc.Layer.extend({
         return _result;
     },
     updateAddBlock: function () {
-        // cc.log('updateAddBlock');
         if (this._block_array.length === MAIN_PERMEATE_SCENE["_opactions"]["_block_show_num_max"] || this._add_block_array.length === 0) {
             this.unschedule(this.updateAddBlock);
             this._add_block_array.splice(0, this._add_block_array.length);
@@ -455,19 +616,17 @@ MAIN_PERMEATE_SCENE.Permeate_main_layer = cc.Layer.extend({
 
         //处理 新增 block
         if (this._add_block_array.length > 0 && this._is_action_team === 0 && !this._is_action_block) {
-            this.addNewBlock();
+            // this.addNewBlock();
+            this.alertTeamInfo();
         }
     },
     updateAddTeam: function () {
-        // cc.log('this._add_team_array.length = ' + this._add_team_array.length);
         //如果有新增block请求则暂停处理新增team优先处理新增block请求
         if (this._add_block_array.length > 0) {
             return;
         }
         if (this._add_team_array.length > 0) {
             this.addTeam();
-        } else {
-            // this.unschedule(this.updateAddTeam);
         }
     }
 });

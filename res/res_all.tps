@@ -262,9 +262,9 @@
                 <key>scale9Enabled</key>
                 <false/>
                 <key>scale9Borders</key>
-                <rect>14,66,27,131</rect>
+                <rect>37,90,73,179</rect>
                 <key>scale9Paddings</key>
-                <rect>14,66,27,131</rect>
+                <rect>37,90,73,179</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -294,7 +294,20 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">permeate_dialog_team_icon.png</key>
+            <key type="filename">permeate_dialog_lighting_right.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>14,66,27,131</rect>
+                <key>scale9Paddings</key>
+                <rect>14,66,27,131</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">permeate_dialog_team_icon_mask.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -415,7 +428,6 @@
         </map>
         <key>fileList</key>
         <array>
-            <filename>permeate_dialog_team_icon.png</filename>
             <filename>permeate_dialog_wing_right.png</filename>
             <filename>permeate_firewall.png</filename>
             <filename>permeate_interchanger.png</filename>
@@ -428,10 +440,12 @@
             <filename>permeate_block_bg.png</filename>
             <filename>permeate_cloud.png</filename>
             <filename>permeate_dialog_bg.png</filename>
-            <filename>permeate_dialog_border_right.png</filename>
             <filename>permeate_dialog_bottom_right.png</filename>
             <filename>permeate_dialog_congratulations.png</filename>
             <filename>team_attack_completed_add_coin.png</filename>
+            <filename>permeate_dialog_team_icon_mask.png</filename>
+            <filename>permeate_dialog_lighting_right.png</filename>
+            <filename>permeate_dialog_border_right.png</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>

@@ -46,8 +46,8 @@ var Block_class = cc.Node.extend({
     //小蓝块的配置
     _block_server: {
         icon: [
-            MAIN_PERMEATE_SCENE.res.sp_block_server_0,
-            MAIN_PERMEATE_SCENE.res.sp_block_server_1
+            "#permeate_server_0.png",
+            "#permeate_server_1.png"
         ],
         up: {
             interchanger_pos: cc.p(126, 74),

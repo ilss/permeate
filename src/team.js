@@ -7,6 +7,7 @@
  */
 var Team_class = cc.Node.extend({
     _icon: null,
+    _icon_img: null,    //对话框中需要引用图片
     _team_id: null,
     _team_name: null,
     attack_block_id: null,
@@ -49,10 +50,9 @@ var Team_class = cc.Node.extend({
         // && (/^https?:\/\/\.+(.png|.gif|.jpe?g)$/g).test(url)
         var _this = this;
         var addDefaultIcon = function (node) {
-            var _img = _this._team_icon_def[window["MAIN_PERMEATE_SCENE"].randomNum(_this._team_icon_def.length - 1)];
-            var _sp = new cc.Sprite(_img);
-            _sp.setPosition(17, 17);
-            node.addChild(_sp, -1);
+            _this._icon_img = new cc.Sprite(_this._team_icon_def[window["MAIN_PERMEATE_SCENE"].randomNum(_this._team_icon_def.length - 1)]);
+            _this._icon_img.setPosition(17, 17);
+            node.addChild(_this._icon_img, -1);
         };
 
         if (typeof faceurl === 'string' && (/(.png|.gif|.jpe?g)$/gi).test(faceurl)) {
@@ -64,20 +64,18 @@ var Team_class = cc.Node.extend({
                     addDefaultIcon(node);
                 }
                 else {
-                    _sp = new cc.Sprite(img);
+                    _this._icon_img = new cc.Sprite(img);
                     var _clip = new cc.Sprite(MAIN_PERMEATE_SCENE.res.clipping_team_icon);
                     var _clipper = new cc.ClippingNode(_clip);
                     _clipper.attr({
-                        anchorX: 0.5,
-                        anchorY: 0.5,
                         x: 17,
                         y: 17
                     });
                     // _clipper.stencil = _clip;
                     _clipper.alphaThreshold = 0;
-                    _size = _sp.getContentSize();
-                    _sp.setScale(34 / _size.width, 34 / _size.height);
-                    _clipper.addChild(_sp);
+                    _size = _this._icon_img.getContentSize();
+                    _this._icon_img.setScale(34 / _size.width, 34 / _size.height);
+                    _clipper.addChild(_this._icon_img);
                     node.addChild(_clipper, -1);
                 }
             });
