@@ -264,6 +264,10 @@ MAIN_PERMEATE_SCENE.Permeate_main_layer = cc.Layer.extend({
             _bg_dialog_border_right = null,
             _bg_dialog_linghting_left = null,
             _bg_dialog_linghting_right = null,
+            _clip_dialog_bottom_left = null,
+            _clipper_dialog_bottom_left = null,
+            _clip_dialog_bottom_right = null,
+            _clipper_dialog_bottom_right = null,
             _bg_dialog_bottom_left = null,
             _bg_dialog_bottom_right = null,
             _sp_dialog_congratulations = null,
@@ -286,7 +290,7 @@ MAIN_PERMEATE_SCENE.Permeate_main_layer = cc.Layer.extend({
             this._is_action_block = true;
             setTimeout(function () {
                 _this._is_action_block = false;
-            }, 4000);
+            }, 5000);
         }
 
         this._layer_add_block_dialog = new cc.Layer();
@@ -299,7 +303,6 @@ MAIN_PERMEATE_SCENE.Permeate_main_layer = cc.Layer.extend({
         _sp_team_icon = new cc.Sprite(_team._icon_img.getSpriteFrame());
         _clip = new cc.Sprite(MAIN_PERMEATE_SCENE.res.clipping_team_icon_dialog);
         _clipper = new cc.ClippingNode(_clip);
-
         _clipper.setCascadeOpacityEnabled(true);
         _clipper.alphaThreshold = 0;
         _size = _sp_team_icon.getContentSize();
@@ -352,7 +355,7 @@ MAIN_PERMEATE_SCENE.Permeate_main_layer = cc.Layer.extend({
         _team_name_ttf.y = this._winSize.height / 2 + 50 + 30;
         _team_name_ttf.opacity = 0;
         this._layer_add_block_dialog.addChild(_team_name_ttf, 2);
-        _team_name_ttf.runAction(cc.sequence(cc.delayTime(MAIN_PERMEATE_SCENE.opations_team_succeed_dialog.action_times * 2.5), cc.spawn(cc.fadeIn(MAIN_PERMEATE_SCENE.opations_team_succeed_dialog.action_times), cc.moveBy(MAIN_PERMEATE_SCENE.opations_team_succeed_dialog.action_times, cc.p(0, -30)))));
+        _team_name_ttf.runAction(cc.sequence(cc.delayTime(MAIN_PERMEATE_SCENE.opations_team_succeed_dialog.action_times * 3), cc.spawn(cc.fadeIn(MAIN_PERMEATE_SCENE.opations_team_succeed_dialog.action_times), cc.moveBy(MAIN_PERMEATE_SCENE.opations_team_succeed_dialog.action_times, cc.p(0, -30)))));
 
         _succeed_ttf = new cc.LabelTTF('恭喜渗透成功  开启本赛段新区域', "Arial", 30);
         _succeed_ttf.setFontFillColor(cc.color(245, 158, 0));
@@ -360,7 +363,7 @@ MAIN_PERMEATE_SCENE.Permeate_main_layer = cc.Layer.extend({
         _succeed_ttf.y = this._winSize.height / 2 - 60;
         _succeed_ttf.opacity = 0;
         this._layer_add_block_dialog.addChild(_succeed_ttf, 2);
-        _succeed_ttf.runAction(cc.sequence(cc.delayTime(MAIN_PERMEATE_SCENE.opations_team_succeed_dialog.action_times * 2.5), cc.spawn(cc.fadeIn(MAIN_PERMEATE_SCENE.opations_team_succeed_dialog.action_times), cc.moveBy(MAIN_PERMEATE_SCENE.opations_team_succeed_dialog.action_times, cc.p(0, 30)))));
+        _succeed_ttf.runAction(cc.sequence(cc.delayTime(MAIN_PERMEATE_SCENE.opations_team_succeed_dialog.action_times * 3), cc.spawn(cc.fadeIn(MAIN_PERMEATE_SCENE.opations_team_succeed_dialog.action_times), cc.moveBy(MAIN_PERMEATE_SCENE.opations_team_succeed_dialog.action_times, cc.p(0, 30)))));
 
         _bg_dialog_linghting_right = new cc.Sprite("#permeate_dialog_lighting_right.png");
         _bg_dialog_linghting_right.x = this._winSize.width / 2 + 296;
@@ -394,17 +397,32 @@ MAIN_PERMEATE_SCENE.Permeate_main_layer = cc.Layer.extend({
 
         //底部 congratulations
         _bg_dialog_bottom_right = new cc.Sprite("#permeate_dialog_bottom_right.png");
-        _bg_dialog_bottom_right.x = this._winSize.width / 2 + 120;
-        _bg_dialog_bottom_right.y = this._winSize.height / 2 - 136;
-        _bg_dialog_bottom_right.opacity = 0;
-        this._layer_add_block_dialog.addChild(_bg_dialog_bottom_right, 1);
+        _bg_dialog_bottom_right.x = 240;
+        _clip_dialog_bottom_right = new cc.Sprite('#permeate_dialog_bottom_mask.png');
+        _clipper_dialog_bottom_right = new cc.ClippingNode(_clip_dialog_bottom_right);
+        _clipper_dialog_bottom_right.setCascadeOpacityEnabled(true);
+        _clipper_dialog_bottom_right.x = this._winSize.width / 2 + 120;
+        _clipper_dialog_bottom_right.y = this._winSize.height / 2 - 136;
+        _clipper_dialog_bottom_right.alphaThreshold = 0;
+        _size = _sp_team_icon.getContentSize();
+        _clipper_dialog_bottom_right.addChild(_bg_dialog_bottom_right);
+        this._layer_add_block_dialog.addChild(_clipper_dialog_bottom_right, 1);
+        _bg_dialog_bottom_right.runAction(cc.sequence(cc.delayTime(MAIN_PERMEATE_SCENE.opations_team_succeed_dialog.action_times * 2), cc.moveBy(MAIN_PERMEATE_SCENE.opations_team_succeed_dialog.action_times, cc.p(-240, 0))));
 
         _bg_dialog_bottom_left = new cc.Sprite("#permeate_dialog_bottom_right.png");
-        _bg_dialog_bottom_left.x = this._winSize.width / 2 - 120;
-        _bg_dialog_bottom_left.y = this._winSize.height / 2 - 136;
         _bg_dialog_bottom_left.setScale(-1, 1);
-        _bg_dialog_bottom_left.opacity = 0;
-        this._layer_add_block_dialog.addChild(_bg_dialog_bottom_left, 1);
+        _bg_dialog_bottom_left.x = -240;
+        _clip_dialog_bottom_left = new cc.Sprite('#permeate_dialog_bottom_mask.png');
+        _clipper_dialog_bottom_left = new cc.ClippingNode(_clip_dialog_bottom_left);
+        _clipper_dialog_bottom_left.setCascadeOpacityEnabled(true);
+        _clipper_dialog_bottom_left.x = this._winSize.width / 2 - 120;
+        _clipper_dialog_bottom_left.y = this._winSize.height / 2 - 136;
+        _clipper_dialog_bottom_left.alphaThreshold = 0;
+        _size = _sp_team_icon.getContentSize();
+        _clipper_dialog_bottom_left.addChild(_bg_dialog_bottom_left);
+        this._layer_add_block_dialog.addChild(_clipper_dialog_bottom_left, 1);
+        _bg_dialog_bottom_left.runAction(cc.sequence(cc.delayTime(MAIN_PERMEATE_SCENE.opations_team_succeed_dialog.action_times * 2), cc.moveBy(MAIN_PERMEATE_SCENE.opations_team_succeed_dialog.action_times, cc.p(240, 0))));
+
 
         _sp_dialog_congratulations = new cc.Sprite("#permeate_dialog_congratulations.png");
         _sp_dialog_congratulations.x = this._winSize.width / 2;
@@ -420,7 +438,6 @@ MAIN_PERMEATE_SCENE.Permeate_main_layer = cc.Layer.extend({
             _this._layer_add_block_dialog = null;
             _this.addNewBlock();
         })));
-
     },
     /**
      * @desc 缓存队伍相关行为数据

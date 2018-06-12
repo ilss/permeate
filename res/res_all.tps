@@ -203,7 +203,7 @@
         </struct>
         <key>individualSpriteSettings</key>
         <map type="IndividualSpriteSettingsMap">
-            <key type="filename">interchanger_small.png</key>
+            <key type="filename">backup/interchanger_small.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -216,7 +216,7 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">permeate_block_bg.png</key>
+            <key type="filename">backup/permeate_block_bg.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -229,7 +229,7 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">permeate_cloud.png</key>
+            <key type="filename">backup/permeate_cloud.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -242,7 +242,7 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">permeate_dialog_bg.png</key>
+            <key type="filename">backup/permeate_dialog_bg.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -255,7 +255,7 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">permeate_dialog_border_right.png</key>
+            <key type="filename">backup/permeate_dialog_border_right.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -268,7 +268,8 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">permeate_dialog_bottom_right.png</key>
+            <key type="filename">backup/permeate_dialog_bottom_mask.png</key>
+            <key type="filename">backup/permeate_dialog_bottom_right.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -281,7 +282,7 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">permeate_dialog_congratulations.png</key>
+            <key type="filename">backup/permeate_dialog_congratulations.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -294,7 +295,7 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">permeate_dialog_lighting_right.png</key>
+            <key type="filename">backup/permeate_dialog_lighting_right.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -307,7 +308,7 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">permeate_dialog_team_icon_mask.png</key>
+            <key type="filename">backup/permeate_dialog_team_icon_mask.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -320,7 +321,7 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">permeate_dialog_wing_right.png</key>
+            <key type="filename">backup/permeate_dialog_wing_right.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -333,7 +334,7 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">permeate_firewall.png</key>
+            <key type="filename">backup/permeate_firewall.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -346,7 +347,7 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">permeate_interchanger.png</key>
+            <key type="filename">backup/permeate_interchanger.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -359,7 +360,7 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">permeate_lightning.png</key>
+            <key type="filename">backup/permeate_lightning.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -372,20 +373,7 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">permeate_line_yellow.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>1,1,2,2</rect>
-                <key>scale9Paddings</key>
-                <rect>1,1,2,2</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">permeate_pc.png</key>
+            <key type="filename">backup/permeate_pc.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -398,8 +386,8 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">permeate_server_0.png</key>
-            <key type="filename">permeate_server_1.png</key>
+            <key type="filename">backup/permeate_server_0.png</key>
+            <key type="filename">backup/permeate_server_1.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -409,43 +397,29 @@
                 <rect>6,9,11,18</rect>
                 <key>scale9Paddings</key>
                 <rect>6,9,11,18</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">team_attack_completed_add_coin.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>8,9,16,19</rect>
-                <key>scale9Paddings</key>
-                <rect>8,9,16,19</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
         </map>
         <key>fileList</key>
         <array>
-            <filename>permeate_dialog_wing_right.png</filename>
-            <filename>permeate_firewall.png</filename>
-            <filename>permeate_interchanger.png</filename>
-            <filename>permeate_lightning.png</filename>
-            <filename>permeate_line_yellow.png</filename>
-            <filename>permeate_pc.png</filename>
-            <filename>permeate_server_0.png</filename>
-            <filename>permeate_server_1.png</filename>
-            <filename>interchanger_small.png</filename>
-            <filename>permeate_block_bg.png</filename>
-            <filename>permeate_cloud.png</filename>
-            <filename>permeate_dialog_bg.png</filename>
-            <filename>permeate_dialog_bottom_right.png</filename>
-            <filename>permeate_dialog_congratulations.png</filename>
-            <filename>team_attack_completed_add_coin.png</filename>
-            <filename>permeate_dialog_team_icon_mask.png</filename>
-            <filename>permeate_dialog_lighting_right.png</filename>
-            <filename>permeate_dialog_border_right.png</filename>
+            <filename>backup/permeate_dialog_bg.png</filename>
+            <filename>backup/permeate_dialog_border_right.png</filename>
+            <filename>backup/permeate_dialog_bottom_mask.png</filename>
+            <filename>backup/permeate_dialog_bottom_right.png</filename>
+            <filename>backup/permeate_dialog_congratulations.png</filename>
+            <filename>backup/permeate_dialog_lighting_right.png</filename>
+            <filename>backup/permeate_dialog_team_icon_mask.png</filename>
+            <filename>backup/permeate_dialog_wing_right.png</filename>
+            <filename>backup/permeate_firewall.png</filename>
+            <filename>backup/permeate_interchanger.png</filename>
+            <filename>backup/permeate_lightning.png</filename>
+            <filename>backup/permeate_pc.png</filename>
+            <filename>backup/permeate_server_0.png</filename>
+            <filename>backup/permeate_server_1.png</filename>
+            <filename>backup/interchanger_small.png</filename>
+            <filename>backup/permeate_block_bg.png</filename>
+            <filename>backup/permeate_cloud.png</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>
