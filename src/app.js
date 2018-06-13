@@ -74,9 +74,9 @@ MAIN_PERMEATE_SCENE.Permeate_main_layer = cc.Layer.extend({
                     {
                         id: 's00005'
                     },
-                    {
-                        id: 's00006'
-                    }
+                    // {
+                    //     id: 's00006'
+                    // }
                 ]
             },
             {
