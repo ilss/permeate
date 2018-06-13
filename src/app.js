@@ -251,7 +251,6 @@ MAIN_PERMEATE_SCENE.Permeate_main_layer = cc.Layer.extend({
             //如果没有 动画中的大区 或 动画中的team 则开始新增大区
             if (!this._is_action_block && this._is_action_team === 0) {
                 this.alertTeamInfo();
-                // this.addNewBlock();
             } else {
                 this.schedule(this.updateAddBlock, 2.0);
             }
@@ -274,6 +273,7 @@ MAIN_PERMEATE_SCENE.Permeate_main_layer = cc.Layer.extend({
             _new_pos = MAIN_PERMEATE_SCENE.block_server_num[_len_block_array + 1]["block_pos"][_index];
             _old_block.runAction(cc.spawn(cc.moveTo(MAIN_PERMEATE_SCENE["_opactions"]["_add_block_fadeout_action_time"], _new_pos)));
 
+            // 场上team位置更新
             for (var _index_team = 0, _len_team = this._team_array.length; _index_team < _len_team; _index_team++) {
                 var _team = this._team_array[_index_team],
                     _team_new_pos = null;
@@ -443,7 +443,6 @@ MAIN_PERMEATE_SCENE.Permeate_main_layer = cc.Layer.extend({
         this._layer_add_block_dialog.addChild(_bg_dialog_border_left, 1);
         _bg_dialog_border_left.runAction(cc.sequence(cc.delayTime(MAIN_PERMEATE_SCENE.opations_team_succeed_dialog.action_times), cc.spawn(cc.fadeIn(MAIN_PERMEATE_SCENE.opations_team_succeed_dialog.action_times), cc.moveBy(MAIN_PERMEATE_SCENE.opations_team_succeed_dialog.action_times / 2, cc.p(30, 0)))));
 
-        //底部 congratulations
         _bg_dialog_bottom_right = new cc.Sprite("#permeate_dialog_bottom_right.png");
         _bg_dialog_bottom_right.x = 240;
         _clip_dialog_bottom_right = new cc.Sprite('#permeate_dialog_bottom_mask.png');
@@ -471,7 +470,7 @@ MAIN_PERMEATE_SCENE.Permeate_main_layer = cc.Layer.extend({
         this._layer_add_block_dialog.addChild(_clipper_dialog_bottom_left, 1);
         _bg_dialog_bottom_left.runAction(cc.sequence(cc.delayTime(MAIN_PERMEATE_SCENE.opations_team_succeed_dialog.action_times * 2), cc.moveBy(MAIN_PERMEATE_SCENE.opations_team_succeed_dialog.action_times, cc.p(240, 0))));
 
-
+        //底部 congratulations
         _sp_dialog_congratulations = new cc.Sprite("#permeate_dialog_congratulations.png");
         _sp_dialog_congratulations.x = this._winSize.width / 2;
         _sp_dialog_congratulations.y = this._winSize.height / 2 - 146;
@@ -500,7 +499,7 @@ MAIN_PERMEATE_SCENE.Permeate_main_layer = cc.Layer.extend({
         // }
     },
     /**
-     * @desc 处理队伍入场请求
+     * @desc 队伍入场
      */
     addTeam: function () {
         if (this._is_action_block || this._add_block_array.length > 0) {
@@ -512,7 +511,6 @@ MAIN_PERMEATE_SCENE.Permeate_main_layer = cc.Layer.extend({
             _result_server_has_action_team = null,
             _block_index = null,
             _action = null,
-            _line_end_pos = null,
             _height_distance = null,
             _team = null;
 
@@ -560,7 +558,6 @@ MAIN_PERMEATE_SCENE.Permeate_main_layer = cc.Layer.extend({
             _team.setPosition(cc.pAdd(_team_block.getPosition(), _team_block.getServerPos(_team)));
 
             //如果此server上已存在一个正在行动的team
-
             if (_result_server_has_action_team.length > 0) {
                 //已经存在的team
                 var _server_team = _result_server_has_action_team.pop();

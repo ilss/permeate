@@ -11,7 +11,7 @@ cocos2d-Js 攻击特效
  /**
 * @func 
 * @desc 向舞台添加新的区域
-* @param {object} block_data     {  id: '000555', name: '管理区', server: [{id: 's00001'},{id: 's00001'}...}
+* @param {object} block_data     {  id: '000555', name: '管理区', server: [{id: 's00001'},{id: 's00001'}...]}
 */
 
 PERMEATE_ADD_BLOCK(block_data)

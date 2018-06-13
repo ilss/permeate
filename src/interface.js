@@ -40,13 +40,11 @@
     }
 
     function teamAttackServer (team_attack_data) {
-        // if (objHasSomeProperty(team_attack_data, ["id", "name", "icon", "attack_block_id", "attack_server_id"])) {
-        //     throw new Error('TEAM_ATTACK_SERVER 参数格式错误');
-        // }
         if (GLOBAL_FUNC_SIMPLEEDU.objHasSomeProperty(team_attack_data, ["id", "name", "icon", "attack_block_id", "attack_server_id"])) {
             MAIN_PERMEATE_SCENE._EFFECTS_MAIN_LAYER.saveTeamRequest(team_attack_data);
         } else {
             cc.log('teamAttackServer 参数格式错误');
+            // throw new TypeError('TEAM_ATTACK_SERVER 参数格式错误');
         }
 
     }
