@@ -55,78 +55,126 @@ MAIN_PERMEATE_SCENE.Permeate_main_layer = cc.Layer.extend({
                     }
                 ]
             },
-            // {
-            //     id: '000111',
-            //     name: '管理区',
-            //     server: [
-            //         {
-            //             id: 's00001'
-            //         },
-            //         {
-            //             id: 's00002'
-            //         },
-            //         {
-            //             id: 's00003'
-            //         },
-            //         {
-            //             id: 's00004'
-            //         },
-            //         {
-            //             id: 's00005'
-            //         },
-            //         {
-            //             id: 's00006'
-            //         }
-            //     ]
-            // },
-            // {
-            //     id: '000003',
-            //     name: '管理区',
-            //     server: [
-            //         {
-            //             id: 's00001'
-            //         },
-            //         {
-            //             id: 's00001'
-            //         },
-            //         // {
-            //         //     id: 's00001'
-            //         // },
-            //         // {
-            //         //     id: 's00001'
-            //         // },
-            //         // {
-            //         //     id: 's00001'
-            //         // },
-            //         // {
-            //         //     id: 's00001'
-            //         // }
-            //     ]
-            // },
-            // {
-            //     id: '000004',
-            //     name: '管理区',
-            //     server: [
-            //         {
-            //             id: 's00001'
-            //         },
-            //         {
-            //             id: 's00001'
-            //         },
-            //         {
-            //             id: 's00001'
-            //         },
-            //         {
-            //             id: 's00001'
-            //         },
-            //         // {
-            //         //     id: 's00001'
-            //         // },
-            //         // {
-            //         //     id: 's00001'
-            //         // }
-            //     ]
-            // }
+            {
+                id: '000111',
+                name: '管理区',
+                server: [
+                    {
+                        id: 's00001'
+                    },
+                    {
+                        id: 's00002'
+                    },
+                    {
+                        id: 's00003'
+                    },
+                    {
+                        id: 's00004'
+                    },
+                    {
+                        id: 's00005'
+                    },
+                    {
+                        id: 's00006'
+                    }
+                ]
+            },
+            {
+                id: '000003',
+                name: '管理区',
+                server: [
+                    {
+                        id: 's00001'
+                    },
+                    {
+                        id: 's00001'
+                    },
+                    // {
+                    //     id: 's00001'
+                    // },
+                    // {
+                    //     id: 's00001'
+                    // },
+                    // {
+                    //     id: 's00001'
+                    // },
+                    // {
+                    //     id: 's00001'
+                    // }
+                ]
+            },
+            {
+                id: '000004',
+                name: '管理区',
+                server: [
+                    {
+                        id: 's00001'
+                    },
+                    {
+                        id: 's00001'
+                    },
+                    {
+                        id: 's00001'
+                    },
+                    {
+                        id: 's00001'
+                    },
+                    // {
+                    //     id: 's00001'
+                    // },
+                    // {
+                    //     id: 's00001'
+                    // }
+                ]
+            },
+            {
+                id: '000005',
+                name: '管理区',
+                server: [
+                    {
+                        id: 's00001'
+                    },
+                    {
+                        id: 's00001'
+                    },
+                    {
+                        id: 's00001'
+                    },
+                    {
+                        id: 's00001'
+                    },
+                    // {
+                    //     id: 's00001'
+                    // },
+                    // {
+                    //     id: 's00001'
+                    // }
+                ]
+            },
+            {
+                id: '000006',
+                name: '管理区',
+                server: [
+                    {
+                        id: 's00001'
+                    },
+                    {
+                        id: 's00001'
+                    },
+                    {
+                        id: 's00001'
+                    },
+                    {
+                        id: 's00001'
+                    },
+                    // {
+                    //     id: 's00001'
+                    // },
+                    // {
+                    //     id: 's00001'
+                    // }
+                ]
+            }
         ];
         MAIN_PERMEATE_SCENE._EFFECTS_MAIN_LAYER = this;
         this._winSize = cc.director.getWinSize();
@@ -137,8 +185,8 @@ MAIN_PERMEATE_SCENE.Permeate_main_layer = cc.Layer.extend({
         this.drawLine(_json.length);
         this.schedule(this.updateAddTeam, 3.0);
 
-        // var _bg_color = new cc.LayerColor(cc.color(0, 0, 0), this._winSize.width, this._winSize.height);
-        // this.addChild(_bg_color);
+        var _bg_color = new cc.LayerColor(cc.color(0, 0, 0), this._winSize.width, this._winSize.height);
+        this.addChild(_bg_color);
     },
     addBg: function () {
         this._sp_cloud = new cc.Sprite("#permeate_cloud.png");

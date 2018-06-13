@@ -90,7 +90,7 @@ var Block_class = cc.Node.extend({
             ],
         },
         left: {
-            interchanger_pos: cc.p(-112, 88),
+            interchanger_pos: cc.p(-115, 85),
             txt_name: {
                 pos: cc.p(65, -42),
                 rotation: -30
@@ -130,7 +130,7 @@ var Block_class = cc.Node.extend({
             ],
         },
         right: {
-            interchanger_pos: cc.p(133, -73),
+            interchanger_pos: cc.p(123, -70),
             txt_name: {
                 pos: cc.p(-66, 51),
                 rotation: -30
