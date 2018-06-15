@@ -32,149 +32,149 @@ MAIN_PERMEATE_SCENE.Permeate_main_layer = cc.Layer.extend({
         this._add_team_array = [];
         var _json = [
             {
-                id: '000001',
-                name: '管理区',
+                block_id: '000001',
+                block_name: '管理区',
                 server: [
                     {
-                        id: 's00001'
+                        server_id: 's00001'
                     },
                     {
-                        id: 's00002'
+                        server_id: 's00002'
                     },
                     {
-                        id: 's00003'
+                        server_id: 's00003'
                     },
                     {
-                        id: 's00004'
+                        server_id: 's00004'
                     },
                     {
-                        id: 's00005'
+                        server_id: 's00005'
                     },
                     {
-                        id: 's00006'
+                        server_id: 's00006'
                     }
                 ]
             },
             {
-                id: '000111',
-                name: '管理区',
+                block_id: '000111',
+                block_name: '管理区',
                 server: [
                     {
-                        id: 's00001'
+                        server_id: 's00001'
                     },
                     {
-                        id: 's00002'
+                        server_id: 's00002'
                     },
                     {
-                        id: 's00003'
+                        server_id: 's00003'
                     },
                     {
-                        id: 's00004'
+                        server_id: 's00004'
                     },
                     {
-                        id: 's00005'
+                        server_id: 's00005'
                     },
                     // {
-                    //     id: 's00006'
+                    //     server_id: 's00006'
                     // }
                 ]
             },
-            {
-                id: '000003',
-                name: '管理区',
-                server: [
-                    {
-                        id: 's00001'
-                    },
-                    {
-                        id: 's00001'
-                    },
-                    // {
-                    //     id: 's00001'
-                    // },
-                    // {
-                    //     id: 's00001'
-                    // },
-                    // {
-                    //     id: 's00001'
-                    // },
-                    // {
-                    //     id: 's00001'
-                    // }
-                ]
-            },
-            {
-                id: '000004',
-                name: '管理区',
-                server: [
-                    {
-                        id: 's00001'
-                    },
-                    {
-                        id: 's00001'
-                    },
-                    {
-                        id: 's00001'
-                    },
-                    {
-                        id: 's00001'
-                    },
-                    // {
-                    //     id: 's00001'
-                    // },
-                    // {
-                    //     id: 's00001'
-                    // }
-                ]
-            },
-            {
-                id: '000005',
-                name: '管理区',
-                server: [
-                    {
-                        id: 's00001'
-                    },
-                    {
-                        id: 's00001'
-                    },
-                    {
-                        id: 's00001'
-                    },
-                    {
-                        id: 's00001'
-                    },
-                    // {
-                    //     id: 's00001'
-                    // },
-                    // {
-                    //     id: 's00001'
-                    // }
-                ]
-            },
-            {
-                id: '000006',
-                name: '管理区',
-                server: [
-                    {
-                        id: 's00001'
-                    },
-                    {
-                        id: 's00001'
-                    },
-                    {
-                        id: 's00001'
-                    },
-                    {
-                        id: 's00001'
-                    },
-                    // {
-                    //     id: 's00001'
-                    // },
-                    // {
-                    //     id: 's00001'
-                    // }
-                ]
-            }
+            // {
+            //     block_id: '000003',
+            //     block_name: '管理区',
+            //     server: [
+            //         {
+            //             server_id: 's00001'
+            //         },
+            //         {
+            //             server_id: 's00001'
+            //         },
+            //         // {
+            //         //     server_id: 's00001'
+            //         // },
+            //         // {
+            //         //     server_id: 's00001'
+            //         // },
+            //         // {
+            //         //     server_id: 's00001'
+            //         // },
+            //         // {
+            //         //     server_id: 's00001'
+            //         // }
+            //     ]
+            // },
+            // {
+            //     block_id: '000004',
+            //     block_name: '管理区',
+            //     server: [
+            //         {
+            //             server_id: 's00001'
+            //         },
+            //         {
+            //             server_id: 's00001'
+            //         },
+            //         {
+            //             server_id: 's00001'
+            //         },
+            //         {
+            //             server_id: 's00001'
+            //         },
+            //         // {
+            //         //     server_id: 's00001'
+            //         // },
+            //         // {
+            //         //     server_id: 's00001'
+            //         // }
+            //     ]
+            // },
+            // {
+            //     block_id: '000005',
+            //     block_name: '管理区',
+            //     server: [
+            //         {
+            //             server_id: 's00001'
+            //         },
+            //         {
+            //             server_id: 's00001'
+            //         },
+            //         {
+            //             server_id: 's00001'
+            //         },
+            //         {
+            //             server_id: 's00001'
+            //         },
+            //         // {
+            //         //     server_id: 's00001'
+            //         // },
+            //         // {
+            //         //     server_id: 's00001'
+            //         // }
+            //     ]
+            // },
+            // {
+            //     block_id: '000006',
+            //     block_name: '管理区',
+            //     server: [
+            //         {
+            //             server_id: 's00001'
+            //         },
+            //         {
+            //             server_id: 's00001'
+            //         },
+            //         {
+            //             server_id: 's00001'
+            //         },
+            //         {
+            //             server_id: 's00001'
+            //         },
+            //         // {
+            //         //     server_id: 's00001'
+            //         // },
+            //         // {
+            //         //     server_id: 's00001'
+            //         // }
+            //     ]
+            // }
         ];
         MAIN_PERMEATE_SCENE._EFFECTS_MAIN_LAYER = this;
         this._winSize = cc.director.getWinSize();
@@ -243,13 +243,13 @@ MAIN_PERMEATE_SCENE.Permeate_main_layer = cc.Layer.extend({
      */
     saveNewBlockRequest: function (block_data) {
         if (this._block_array.length < MAIN_PERMEATE_SCENE["_opactions"]["_block_show_num_max"]) {
-            if (GLOBAL_FUNC_SIMPLEEDU.findObjFromArray(block_data, "id", this._block_array, "_block_id") !== -1 && GLOBAL_FUNC_SIMPLEEDU.findObjFromArray(block_data, "id", this._add_block_array, "id") !== -1) {
-                // cc.log('block' + block_data.id + ' 已存在！！');
+            if (GLOBAL_FUNC_SIMPLEEDU.findObjFromArray(block_data, "block_id", this._block_array, "_block_id") !== -1 && GLOBAL_FUNC_SIMPLEEDU.findObjFromArray(block_data, "block_id", this._add_block_array, "id") !== -1) {
+                cc.log('block' + block_data.block_id + ' 已存在！！');
                 return;
             }
             this._add_block_array.unshift(block_data);
             //如果没有 动画中的大区 或 动画中的team 则开始新增大区
-            if (!this._is_action_block && this._is_action_team === 0) {
+            if (!this._is_action_block && this._is_action_team <= 0) {
                 this.alertTeamInfo();
             } else {
                 this.schedule(this.updateAddBlock, 2.0);
@@ -319,12 +319,12 @@ MAIN_PERMEATE_SCENE.Permeate_main_layer = cc.Layer.extend({
             _bg_dialog_bottom_left = null,
             _bg_dialog_bottom_right = null,
             _sp_dialog_congratulations = null,
-            _team = this._team_array[GLOBAL_FUNC_SIMPLEEDU.findObjFromArray(this._add_block_array[0].team, "id", this._team_array, "_team_id")];
+            _team = this._team_array[GLOBAL_FUNC_SIMPLEEDU.findObjFromArray(this._add_block_array[0].team, "block_id", this._team_array, "_team_id")];
 
         if (_team === undefined) {
             cc.log('队伍从未入场');
             //在队伍入场缓存中查找该ID的队伍请求
-            _team = this._team_array[GLOBAL_FUNC_SIMPLEEDU.findObjFromArray(this._add_block_array[0].team, "id", this._add_team_array, "_team_id")];
+            _team = this._team_array[GLOBAL_FUNC_SIMPLEEDU.findObjFromArray(this._add_block_array[0].team, "block_id", this._add_team_array, "_team_id")];
         }
 
         if (_team === undefined) {
@@ -514,10 +514,10 @@ MAIN_PERMEATE_SCENE.Permeate_main_layer = cc.Layer.extend({
             _height_distance = null,
             _team = null;
 
-        _result_team_is_new = GLOBAL_FUNC_SIMPLEEDU.findObjFromArray(_obj, "id", this._team_array, "_team_id");
+
+        _result_team_is_new = GLOBAL_FUNC_SIMPLEEDU.findObjFromArray(_obj, "group_id", this._team_array, "_team_id");
         _block_index = GLOBAL_FUNC_SIMPLEEDU.findObjFromArray(_obj, "attack_block_id", this._block_array, "_block_id");
         _result_server_has_action_team = this.getServerActionTeamNum(_obj.attack_server_id);
-
         if (_block_index < 0) {
             cc.log("不存在ID " + _obj.attack_block_id + '的大区');
             this._add_team_array.unshift(_obj);
@@ -534,7 +534,7 @@ MAIN_PERMEATE_SCENE.Permeate_main_layer = cc.Layer.extend({
             _team.attack_block_id = _obj.attack_block_id;
             _team.attack_server_id = _obj.attack_server_id;
         } else {
-            // cc.log('队伍已存在    ' + _result_team_is_new);
+            cc.log('队伍已存在    ' + _result_team_is_new);
 
             //如果当前server上已经存在两个动画中的team时则暂缓响应
             if (_result_server_has_action_team.length === 2) {
@@ -564,7 +564,6 @@ MAIN_PERMEATE_SCENE.Permeate_main_layer = cc.Layer.extend({
 
                 _height_distance = _server_team.getPosition().y - _team.y;
                 if (_height_distance < 40) {
-                    cc.log('_result_server_has_action_team = ' + _result_server_has_action_team.length);
                     _team.y += 20;
                     _team.setLocalZOrder(9);
                 } else {
@@ -644,7 +643,7 @@ MAIN_PERMEATE_SCENE.Permeate_main_layer = cc.Layer.extend({
 
         if (_result_server_has_action_team.length > 0) {
             var _height_distance = _result_server_has_action_team.pop().getPosition().y - _line_end_pos.y;
-            if (_height_distance < 40 && _height_distance > 28) {
+            if (_distance < 300 && _height_distance < 40 && _height_distance > 28) {
                 _line_end_pos.y += 20;
                 team.setLocalZOrder(9);
             } else {
@@ -676,9 +675,11 @@ MAIN_PERMEATE_SCENE.Permeate_main_layer = cc.Layer.extend({
             return;
         }
 
+        // cc.log('this._add_block_array.length = ' + this._add_block_array.length)
+        // cc.log('this._is_action_team = ' + this._is_action_team)
+        // cc.log('this._is_action_block = ' + this._is_action_block)
         //处理 新增 block
-        if (this._add_block_array.length > 0 && this._is_action_team === 0 && !this._is_action_block) {
-            // this.addNewBlock();
+        if (this._add_block_array.length > 0 && this._is_action_team <= 0 && !this._is_action_block) {
             this.alertTeamInfo();
         }
     },

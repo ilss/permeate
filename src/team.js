@@ -57,8 +57,7 @@ var Team_class = cc.Node.extend({
 
         if (typeof faceurl === 'string' && (/(.png|.gif|.jpe?g)$/gi).test(faceurl)) {
             cc.loader.loadImg(faceurl, { isCrossOrigin: false }, function (err, img) {
-                var _sp = null,
-                    _size = null;
+                var _size = null;
                 if (err) {
                     cc.log("图片加载失败 " + err);
                     addDefaultIcon(node);

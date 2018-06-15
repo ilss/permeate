@@ -52,6 +52,9 @@
         },
         distanceToActionTime: function (pos1, pos2, move_speed) {
             return cc.pDistance(pos1, pos2) / move_speed;
+        },
+        isArray: function (obj) {
+            return Object.prototype.toString.call(obj) === '[object Array]';
         }
     }
 }(window));

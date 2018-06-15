@@ -176,7 +176,7 @@ var Block_class = cc.Node.extend({
 
     ctor: function (obj, direction) {
         this._super();
-        this._block_id = obj["id"];
+        this._block_id = obj["block_id"];
         this._server_obj_array = [];
 
         var _sp = new cc.Sprite("#permeate_block_bg.png");
@@ -207,11 +207,11 @@ var Block_class = cc.Node.extend({
             _sp = new cc.Sprite(_this._block_server.icon[0]);
             _sp.setPosition(pos);
             _this.addChild(_sp, 2);
-            _sp.server_id = obj["server"][index]["id"];
+            _sp.server_id = obj["server"][index]["server_id"];
             _this._server_obj_array.push(_sp);
         });
 
-        _txt_name = new cc.LabelTTF(obj.id, 10);
+        _txt_name = new cc.LabelTTF(obj["block_id"], 10);
         _txt_name.setFontFillColor(cc.color(255, 187, 0));
         _txt_name.setPosition(_obj_server_direction.txt_name.pos);
         _txt_name.setRotation(_obj_server_direction.txt_name.rotation);
