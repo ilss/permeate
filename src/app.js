@@ -30,159 +30,14 @@ MAIN_PERMEATE_SCENE.Permeate_main_layer = cc.Layer.extend({
         this._team_array = [];
         this._add_block_array = [];
         this._add_team_array = [];
-        var _json = [
-            {
-                block_id: '000001',
-                block_name: '管理区',
-                server: [
-                    {
-                        server_id: 's00001'
-                    },
-                    {
-                        server_id: 's00002'
-                    },
-                    {
-                        server_id: 's00003'
-                    },
-                    {
-                        server_id: 's00004'
-                    },
-                    {
-                        server_id: 's00005'
-                    },
-                    {
-                        server_id: 's00006'
-                    }
-                ]
-            },
-            {
-                block_id: '000111',
-                block_name: '管理区',
-                server: [
-                    {
-                        server_id: 's00001'
-                    },
-                    {
-                        server_id: 's00002'
-                    },
-                    {
-                        server_id: 's00003'
-                    },
-                    {
-                        server_id: 's00004'
-                    },
-                    {
-                        server_id: 's00005'
-                    },
-                    // {
-                    //     server_id: 's00006'
-                    // }
-                ]
-            },
-            // {
-            //     block_id: '000003',
-            //     block_name: '管理区',
-            //     server: [
-            //         {
-            //             server_id: 's00001'
-            //         },
-            //         {
-            //             server_id: 's00001'
-            //         },
-            //         // {
-            //         //     server_id: 's00001'
-            //         // },
-            //         // {
-            //         //     server_id: 's00001'
-            //         // },
-            //         // {
-            //         //     server_id: 's00001'
-            //         // },
-            //         // {
-            //         //     server_id: 's00001'
-            //         // }
-            //     ]
-            // },
-            // {
-            //     block_id: '000004',
-            //     block_name: '管理区',
-            //     server: [
-            //         {
-            //             server_id: 's00001'
-            //         },
-            //         {
-            //             server_id: 's00001'
-            //         },
-            //         {
-            //             server_id: 's00001'
-            //         },
-            //         {
-            //             server_id: 's00001'
-            //         },
-            //         // {
-            //         //     server_id: 's00001'
-            //         // },
-            //         // {
-            //         //     server_id: 's00001'
-            //         // }
-            //     ]
-            // },
-            // {
-            //     block_id: '000005',
-            //     block_name: '管理区',
-            //     server: [
-            //         {
-            //             server_id: 's00001'
-            //         },
-            //         {
-            //             server_id: 's00001'
-            //         },
-            //         {
-            //             server_id: 's00001'
-            //         },
-            //         {
-            //             server_id: 's00001'
-            //         },
-            //         // {
-            //         //     server_id: 's00001'
-            //         // },
-            //         // {
-            //         //     server_id: 's00001'
-            //         // }
-            //     ]
-            // },
-            // {
-            //     block_id: '000006',
-            //     block_name: '管理区',
-            //     server: [
-            //         {
-            //             server_id: 's00001'
-            //         },
-            //         {
-            //             server_id: 's00001'
-            //         },
-            //         {
-            //             server_id: 's00001'
-            //         },
-            //         {
-            //             server_id: 's00001'
-            //         },
-            //         // {
-            //         //     server_id: 's00001'
-            //         // },
-            //         // {
-            //         //     server_id: 's00001'
-            //         // }
-            //     ]
-            // }
-        ];
+
         MAIN_PERMEATE_SCENE._EFFECTS_MAIN_LAYER = this;
         this._winSize = cc.director.getWinSize();
 
         cc.spriteFrameCache.addSpriteFrames(MAIN_PERMEATE_SCENE.res.all_img_plist);
-        this.addBg();
-        this.initBlock(_json);
-        this.drawLine(_json.length);
+
+        // this.initBlock(_json);
+
         this.schedule(this.updateAddTeam, 3.0);
 
         // var _bg_color = new cc.LayerColor(cc.color(0, 0, 0), this._winSize.width, this._winSize.height);
@@ -211,6 +66,7 @@ MAIN_PERMEATE_SCENE.Permeate_main_layer = cc.Layer.extend({
         this.addChild(this._layer_line_yellow, 1);
     },
     initBlock: function (obj) {
+        this.addBg();
         if (!this._is_action_block) {
             var _this = this;
             this._is_action_block = true;
@@ -221,6 +77,7 @@ MAIN_PERMEATE_SCENE.Permeate_main_layer = cc.Layer.extend({
             var _pos_obj = MAIN_PERMEATE_SCENE.block_server_num[_len];
             this.addBlock(obj[_index], _pos_obj, _index);
         }
+        this.drawLine(obj.length);
     },
     addBlock: function (obj, pos_obj, index) {
         var _block = new Block_class(obj, index + 1);
@@ -235,6 +92,7 @@ MAIN_PERMEATE_SCENE.Permeate_main_layer = cc.Layer.extend({
         _block.runAction(cc.fadeIn(MAIN_PERMEATE_SCENE["_opactions"]["_add_block_fadeout_action_time"]));
 
         this._block_array.push(_block);
+        cc.log(this._block_array)
     },
     /**
      * @desc 缓存新增大区请求
@@ -243,14 +101,17 @@ MAIN_PERMEATE_SCENE.Permeate_main_layer = cc.Layer.extend({
      */
     saveNewBlockRequest: function (block_data) {
         if (this._block_array.length < MAIN_PERMEATE_SCENE["_opactions"]["_block_show_num_max"]) {
+            // cc.log('block_data.block_id = '+block_data.block_id);
             if (GLOBAL_FUNC_SIMPLEEDU.findObjFromArray(block_data, "block_id", this._block_array, "_block_id") !== -1 && GLOBAL_FUNC_SIMPLEEDU.findObjFromArray(block_data, "block_id", this._add_block_array, "id") !== -1) {
                 cc.log('block' + block_data.block_id + ' 已存在！！');
                 return;
             }
+
             this._add_block_array.unshift(block_data);
             //如果没有 动画中的大区 或 动画中的team 则开始新增大区
             if (!this._is_action_block && this._is_action_team <= 0) {
-                this.alertTeamInfo();
+                // this.alertTeamInfo();
+                this.updateAddBlock()
             } else {
                 this.schedule(this.updateAddBlock, 2.0);
             }
@@ -259,11 +120,21 @@ MAIN_PERMEATE_SCENE.Permeate_main_layer = cc.Layer.extend({
     addNewBlock: function () {
         var _this = this,
             _block_data = this._add_block_array.pop(),
-            _index = 0,
             _len_block_array = this._block_array.length,
             _old_block = null,
             _old_block_old_pos = null,
             _new_pos = null;
+        cc.log(this._is_action_block);
+        if (!this._is_action_block) {
+            this._is_action_block = true;
+            setTimeout(function () {
+                _this._is_action_block = false;
+            }, 3000);
+        }
+        if (GLOBAL_FUNC_SIMPLEEDU.findObjFromArray(_block_data, "block_id", this._block_array, "_block_id") !== -1 ) {
+            cc.log('block' + _block_data.block_id + ' 已存在！！');
+            return;
+        }
         //重置现有区的坐标和缩放
         //场景缩放
         this.runAction(cc.scaleTo(MAIN_PERMEATE_SCENE["_opactions"]["_add_block_fadeout_action_time"], MAIN_PERMEATE_SCENE.block_server_num[_len_block_array + 1]["block_scale"]));
@@ -293,13 +164,19 @@ MAIN_PERMEATE_SCENE.Permeate_main_layer = cc.Layer.extend({
             _this.drawLine(_this._block_array.length);
         }, MAIN_PERMEATE_SCENE["_opactions"]["_add_block_fadeout_action_time"] * 1000);
     },
-    alertTeamInfo: function () {
-        if (this._add_block_array.length < 1) {
+    alertTeamInfo: function (team_data) {
+        // if (this._add_block_array.length < 1) {
+        //     return;
+        // }
+        var _this = this;
+        if (this._is_action_block) {
+            setTimeout(function () {
+                _this.alertTeamInfo(team_data);
+            }, 3000);
             return;
         }
 
-        var _this = this,
-            _size = null,
+        var _size = null,
             _sp_team_icon_all = null,
             _sp_team_icon = null,
             _sp_team_icon_mask = null,
@@ -318,21 +195,21 @@ MAIN_PERMEATE_SCENE.Permeate_main_layer = cc.Layer.extend({
             _clipper_dialog_bottom_right = null,
             _bg_dialog_bottom_left = null,
             _bg_dialog_bottom_right = null,
-            _sp_dialog_congratulations = null,
-            _team = this._team_array[GLOBAL_FUNC_SIMPLEEDU.findObjFromArray(this._add_block_array[0].team, "block_id", this._team_array, "_team_id")];
+            _sp_dialog_congratulations = null;
+            // _team = this._team_array[GLOBAL_FUNC_SIMPLEEDU.findObjFromArray(this._add_block_array[0].team, "block_id", this._team_array, "_team_id")];
 
-        if (_team === undefined) {
-            cc.log('队伍从未入场');
-            //在队伍入场缓存中查找该ID的队伍请求
-            _team = this._team_array[GLOBAL_FUNC_SIMPLEEDU.findObjFromArray(this._add_block_array[0].team, "block_id", this._add_team_array, "_team_id")];
-        }
+        // if (_team === undefined) {
+        //     cc.log('队伍从未入场');
+        //     //在队伍入场缓存中查找该ID的队伍请求
+        //     _team = this._team_array[GLOBAL_FUNC_SIMPLEEDU.findObjFromArray(this._add_block_array[0].team, "block_id", this._add_team_array, "_team_id")];
+        // }
 
-        if (_team === undefined) {
-            cc.log('没有此队伍数据');
-            //清除此条无效请求
-            this._add_block_array.pop();
-            return;
-        }
+        // if (_team === undefined) {
+        //     cc.log('没有此队伍数据');
+        //     //清除此条无效请求
+        //     this._add_block_array.pop();
+        //     return;
+        // }
 
         if (!this._is_action_block) {
             this._is_action_block = true;
@@ -343,18 +220,22 @@ MAIN_PERMEATE_SCENE.Permeate_main_layer = cc.Layer.extend({
 
         this._layer_add_block_dialog = new cc.Layer();
         this._layer_add_block_dialog.setCascadeOpacityEnabled(true);
-        this._layer_add_block_dialog.setScale(1.25 / MAIN_PERMEATE_SCENE.block_server_num[this._block_array.length]["block_scale"]);
+        var _scale = this._block_array.length>0?MAIN_PERMEATE_SCENE.block_server_num[this._block_array.length]["block_scale"]:1;
+        this._layer_add_block_dialog.setScale(1.25 / _scale);
 
         //处理team头像
         _sp_team_icon_all = new cc.Sprite();
         _sp_team_icon_all.setCascadeOpacityEnabled(true);
-        _sp_team_icon = new cc.Sprite(_team._icon_img.getSpriteFrame());
+        // _sp_team_icon = new cc.Sprite(_team._icon_img.getSpriteFrame());
+        _sp_team_icon = new  cc.Sprite();
+        _sp_team_icon.setCascadeOpacityEnabled(true);
+        this.loadUrlImage(team_data.group_icon, _sp_team_icon);
         _clip = new cc.Sprite(MAIN_PERMEATE_SCENE.res.clipping_team_icon_dialog);
         _clipper = new cc.ClippingNode(_clip);
         _clipper.setCascadeOpacityEnabled(true);
         _clipper.alphaThreshold = 0;
-        _size = _sp_team_icon.getContentSize();
-        _sp_team_icon.setScale(106 / _size.width, 119 / _size.height);
+        // _size = _sp_team_icon.getContentSize();
+        // _sp_team_icon.setScale(106 / _size.width, 119 / _size.height);
         _clipper.addChild(_sp_team_icon);
         _sp_team_icon_all.addChild(_clipper, 1);
 
@@ -397,7 +278,7 @@ MAIN_PERMEATE_SCENE.Permeate_main_layer = cc.Layer.extend({
         _bg_dialog.runAction(cc.sequence(cc.delayTime(MAIN_PERMEATE_SCENE.opations_team_succeed_dialog.action_times), cc.fadeIn(MAIN_PERMEATE_SCENE.opations_team_succeed_dialog.action_times)));
 
         //team 名称
-        _team_name_ttf = new cc.LabelTTF(_team._team_name, "Arial", 60);
+        _team_name_ttf = new cc.LabelTTF(team_data.group_name, "Arial", 60);
         _team_name_ttf.setFontFillColor(cc.color(255, 206, 0));
         _team_name_ttf.x = this._winSize.width / 2;
         _team_name_ttf.y = this._winSize.height / 2 + 50 + 30;
@@ -405,7 +286,7 @@ MAIN_PERMEATE_SCENE.Permeate_main_layer = cc.Layer.extend({
         this._layer_add_block_dialog.addChild(_team_name_ttf, 2);
         _team_name_ttf.runAction(cc.sequence(cc.delayTime(MAIN_PERMEATE_SCENE.opations_team_succeed_dialog.action_times * 3), cc.spawn(cc.fadeIn(MAIN_PERMEATE_SCENE.opations_team_succeed_dialog.action_times), cc.moveBy(MAIN_PERMEATE_SCENE.opations_team_succeed_dialog.action_times, cc.p(0, -30)))));
 
-        _succeed_ttf = new cc.LabelTTF('恭喜渗透成功  开启本赛段新区域', "Arial", 30);
+        _succeed_ttf = new cc.LabelTTF(team_data.title.length>0?team_data.title:'恭喜渗透成功', "Arial", 30);
         _succeed_ttf.setFontFillColor(cc.color(245, 158, 0));
         _succeed_ttf.x = this._winSize.width / 2;
         _succeed_ttf.y = this._winSize.height / 2 - 60;
@@ -483,7 +364,7 @@ MAIN_PERMEATE_SCENE.Permeate_main_layer = cc.Layer.extend({
         this._layer_add_block_dialog.runAction(cc.sequence(cc.delayTime(3), cc.fadeOut(MAIN_PERMEATE_SCENE.opations_team_succeed_dialog.action_times), cc.delayTime(MAIN_PERMEATE_SCENE.opations_team_succeed_dialog.action_times), cc.callFunc(function () {
             _this._layer_add_block_dialog.removeFromParent();
             _this._layer_add_block_dialog = null;
-            _this.addNewBlock();
+            // _this.addNewBlock();
         })));
     },
     /**
@@ -497,6 +378,34 @@ MAIN_PERMEATE_SCENE.Permeate_main_layer = cc.Layer.extend({
         // } else {
         //     this.addTeam();
         // }
+    },
+    loadUrlImage: function (faceurl, node) {
+        // && (/^https?:\/\/\.+(.png|.gif|.jpe?g)$/g).test(url)
+        var _this = this;
+        var addDefaultIcon = function (node) {
+            _this._icon_img = new cc.Sprite(_this._team_icon_def[window["MAIN_PERMEATE_SCENE"].randomNum(_this._team_icon_def.length - 1)]);
+            _this._icon_img.setPosition(17, 17);
+            node.addChild(_this._icon_img, -1);
+        };
+
+        if (typeof faceurl === 'string' && (/(.png|.gif|.jpe?g)$/gi).test(faceurl)) {
+            cc.loader.loadImg(faceurl, {isCrossOrigin: false}, function (err, img) {
+                var _size = null;
+                if (err) {
+                    cc.log("图片加载失败 " + err);
+                    addDefaultIcon(node);
+                }
+                else {
+                    _this._icon_img = new cc.Sprite(img);
+                     _size = _this._icon_img.getContentSize();
+                    _this._icon_img.setScale(106 / _size.width, 119 / _size.height);
+                    node.addChild(_this._icon_img);
+                }
+            });
+        } else {
+            cc.log("图片url错误 ");
+            addDefaultIcon(node);
+        }
     },
     /**
      * @desc 队伍入场
@@ -513,7 +422,6 @@ MAIN_PERMEATE_SCENE.Permeate_main_layer = cc.Layer.extend({
             _action = null,
             _height_distance = null,
             _team = null;
-
 
         _result_team_is_new = GLOBAL_FUNC_SIMPLEEDU.findObjFromArray(_obj, "group_id", this._team_array, "_team_id");
         _block_index = GLOBAL_FUNC_SIMPLEEDU.findObjFromArray(_obj, "attack_block_id", this._block_array, "_block_id");
@@ -674,14 +582,14 @@ MAIN_PERMEATE_SCENE.Permeate_main_layer = cc.Layer.extend({
             this._add_block_array.splice(0, this._add_block_array.length);
             return;
         }
-
+        this.addNewBlock();
         // cc.log('this._add_block_array.length = ' + this._add_block_array.length)
         // cc.log('this._is_action_team = ' + this._is_action_team)
         // cc.log('this._is_action_block = ' + this._is_action_block)
         //处理 新增 block
-        if (this._add_block_array.length > 0 && this._is_action_team <= 0 && !this._is_action_block) {
-            this.alertTeamInfo();
-        }
+        // if (this._add_block_array.length > 0 && this._is_action_team <= 0 && !this._is_action_block) {
+        //     this.alertTeamInfo();
+        // }
     },
     updateAddTeam: function () {
         //如果有新增block请求则暂停处理新增team优先处理新增block请求
