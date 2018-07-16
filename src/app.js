@@ -424,7 +424,6 @@ MAIN_PERMEATE_SCENE.Permeate_main_layer = cc.Layer.extend({
             _team = null;
 
         _result_team_is_new = GLOBAL_FUNC_SIMPLEEDU.findObjFromArray(_obj, "group_id", this._team_array, "_team_id");
-        cc.log('group_id='+_obj.group_id);
         _block_index = GLOBAL_FUNC_SIMPLEEDU.findObjFromArray(_obj, "attack_block_id", this._block_array, "_block_id");
         _result_server_has_action_team = this.getServerActionTeamNum(_obj.attack_server_id);
         if (_block_index < 0) {
@@ -433,7 +432,7 @@ MAIN_PERMEATE_SCENE.Permeate_main_layer = cc.Layer.extend({
             return;
         }
 
-        if (_result_team_is_new===-1) {
+        if (_result_team_is_new===-1 && !GLOBAL_FUNC_SIMPLEEDU.objHasSomeProperty(_obj,['target_block_id','target_server_id'])) {
             cc.log('新队伍');
             _team = new Team_class(_obj);
             _team.setPosition(cc.pAdd(MAIN_PERMEATE_SCENE.basic_pos_array.entry, cc.p(0, 30)));
@@ -443,15 +442,25 @@ MAIN_PERMEATE_SCENE.Permeate_main_layer = cc.Layer.extend({
             _team.attack_block_id = _obj.attack_block_id;
             _team.attack_server_id = _obj.attack_server_id;
         } else {
-            cc.log('队伍已存在    ' + _result_team_is_new);
-
             //如果当前server上已经存在两个动画中的team时则暂缓响应
             if (_result_server_has_action_team.length === 2) {
+                cc.log('当前server上已经存在两个动画中的team时则暂缓响应')
                 this._add_team_array.unshift(_obj);
                 return;
             }
 
-            _team = this._team_array[_result_team_is_new];
+            // 中途恢复数据 ，客户端数组内没队伍信息，但服务器端队伍已经在场中
+            if(_result_team_is_new===-1&&GLOBAL_FUNC_SIMPLEEDU.objHasSomeProperty(_obj,['target_block_id','target_server_id'])){
+                cc.log('中途恢复的队伍 ' + _result_team_is_new);
+                _team = new Team_class(_obj);
+                this.addChild(_team, 10);
+                this._team_array.push(_team);
+                _team.attack_block_id = _obj.target_block_id;
+                _team.attack_server_id = _obj.target_server_id;
+            }else{
+                cc.log('队伍已存在    ' + _result_team_is_new);
+                _team = this._team_array[_result_team_is_new];
+            }
             _result_server_has_action_team = this.getServerActionTeamNum(_team.attack_server_id);
 
             //如果队伍正在动画中则稍后再处理
