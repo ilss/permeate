@@ -229,8 +229,18 @@ var Block_class = cc.Node.extend({
         var _action = cc.sequence(cc.fadeOut(.3), cc.fadeIn(.3)).repeat(4);
         this._server_obj_array[_index].runAction(_action);
     },
-    getServerPos: function (obj) {
-        var _index = GLOBAL_FUNC_SIMPLEEDU.findObjFromArray(obj, "attack_server_id", this._server_obj_array, "server_id");
+    /**
+     * @desc  获取 某个server 的坐标
+     * @param {object}   队伍对象
+     * @param {boolean}    true则为起点   其他为默认的终点
+     */
+    getServerPos: function (obj, type) {
+        if(!type){
+            var _index = GLOBAL_FUNC_SIMPLEEDU.findObjFromArray(obj, "attack_server_id", this._server_obj_array, "server_id");
+        }else{
+            var _index = GLOBAL_FUNC_SIMPLEEDU.findObjFromArray(obj, "target_server_id", this._server_obj_array, "server_id");
+        }
+        cc.log('_index = '+_index);
         // return this._server_obj_array[_index].getParent().convertToWorldSpace(this._server_obj_array[_index].getPosition());
         return this._server_obj_array[_index].getPosition();
     }

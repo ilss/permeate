@@ -31,9 +31,9 @@ var Team_class = cc.Node.extend({
         this._super();
         this.is_lock = false;
         this.setCascadeOpacityEnabled(true);
-        this._team_id = obj.id || '000' + Math.round(Math.random() * 1000);
+        this._team_id = obj.group_id || '000' + Math.round(Math.random() * 1000);
         this._team_name = obj.name || '';
-        this._team_icon = obj.icon || this._team_icon_def[window["MAIN_PERMEATE_SCENE"].randomNum(this._team_icon_def.length - 1)];
+        this._team_icon = obj.group_icon || this._team_icon_def[window["MAIN_PERMEATE_SCENE"].randomNum(this._team_icon_def.length - 1)];
 
         var _action = cc.sequence(cc.fadeIn(this._options.action_time_interchanger_small), cc.scaleTo(this._options.action_time_interchanger_small, 1, 1));
         this._icon = new cc.Sprite(MAIN_PERMEATE_SCENE.res.mask_team_icon);

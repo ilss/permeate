@@ -424,6 +424,7 @@ MAIN_PERMEATE_SCENE.Permeate_main_layer = cc.Layer.extend({
             _team = null;
 
         _result_team_is_new = GLOBAL_FUNC_SIMPLEEDU.findObjFromArray(_obj, "group_id", this._team_array, "_team_id");
+        cc.log('group_id='+_obj.group_id);
         _block_index = GLOBAL_FUNC_SIMPLEEDU.findObjFromArray(_obj, "attack_block_id", this._block_array, "_block_id");
         _result_server_has_action_team = this.getServerActionTeamNum(_obj.attack_server_id);
         if (_block_index < 0) {
@@ -432,7 +433,7 @@ MAIN_PERMEATE_SCENE.Permeate_main_layer = cc.Layer.extend({
             return;
         }
 
-        if (_result_team_is_new === -1) {
+        if (_result_team_is_new===-1) {
             cc.log('新队伍');
             _team = new Team_class(_obj);
             _team.setPosition(cc.pAdd(MAIN_PERMEATE_SCENE.basic_pos_array.entry, cc.p(0, 30)));

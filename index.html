@@ -99,17 +99,18 @@
   </div>
   <!-- <script src="res/loading.js"></script> -->
   <script src="frameworks/cocos2d-html5/CCBoot.js"></script>
-  <script cocos src="main.js"></script>
+  <script src="main.js"></script>
   <script>
 
     // MAIN_PERMEATE_SCENE.PERMEATE_INIT_BLOCK(add_block_array);
 
     var attack_server_data = [
-      { group_id: 't00001', group_name: 't00001', group_icon: '', attack_block_id: 2, attack_server_id: 1 },
-      { group_id: 't00002', group_name: 't00002', group_icon: '', attack_block_id: 1, attack_server_id: 2 },
-      { group_id: 't00003', group_name: 't00003', group_icon: '', attack_block_id: 2, attack_server_id: 3 },
-      { group_id: 't00001', group_name: 't00001', group_icon: '', attack_block_id: 1, attack_server_id: 4 },
-      { group_id: 't00002', group_name: 't00002', group_icon: '', attack_block_id: 1, attack_server_id: 2, attack_completed: true, coin: 25 },
+      { group_id: 1, group_name: 't00001', group_icon: '', attack_block_id: 1, attack_server_id: 1 },
+        { group_id: 1, group_name: 't00001', group_icon: '', target_block_id: 1, target_server_id: 1 , attack_block_id: 2, attack_server_id: 1 },
+        { group_id: 2, group_name: 't00002', group_icon: '', attack_block_id: 1, attack_server_id: 2 },
+      // { group_id: 't00003', group_name: 't00003', group_icon: '', attack_block_id: 2, attack_server_id: 3 },
+      // { group_id: 't00001', group_name: 't00001', group_icon: '', attack_block_id: 1, attack_server_id: 4 },
+      { group_id: 2, group_name: 't00002', group_icon: '', target_block_id: 1, target_server_id: 2 , attack_block_id: 1, attack_server_id: 4, attack_completed: true, coin: 25 },
     ];
 
     var index_attack_server_data = 0,
@@ -210,14 +211,14 @@
       MAIN_PERMEATE_SCENE.PERMEATE_INIT_BLOCK(json);
     }
 
-    setTimeout(function () {
-        var json={
-            group_name: 't00002',
-            group_icon: 'res/team/34234.jpg',
-            title: '成功击破'
-        };
-        MAIN_PERMEATE_SCENE.PERMEATE_TEAM_SUCCEED(json);
-    },3000)
+    // setTimeout(function () {
+    //     var json={
+    //         group_name: 't00002',
+    //         group_icon: 'res/team/34234.jpg',
+    //         title: '成功击破'
+    //     };
+    //     MAIN_PERMEATE_SCENE.PERMEATE_TEAM_SUCCEED(json);
+    // },3000)
   </script>
 
 </body>
