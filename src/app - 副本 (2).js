@@ -489,9 +489,9 @@ MAIN_PERMEATE_SCENE.Permeate_main_layer = cc.Layer.extend({
             }
 
             var _this = this;
-            _team.runAction(cc.sequence(_action, cc.delayTime(.3), cc.callFunc(function () {
-                _this.teamMoveToServer(_team, _obj, true);
-            })));
+            // _team.runAction(cc.sequence(_action, cc.delayTime(.3), cc.callFunc(function () {
+            //     _this.teamMoveToServer(_team, _obj, true);
+            // })));
         }
     },
     /**

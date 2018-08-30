@@ -101,6 +101,111 @@
   
   <script src="game.min.js"></script>
   <script>
+      // ******************** 录像 mock 数据 ************
+
+      var _init_block = [
+          {"block_id":111,"block_name":"1-DMZ区",
+              "server":[{"server_id":1},{"server_id":2},{"server_id":3},{"server_id":4},{"server_id":5},{"server_id":6}]}
+      ];
+
+      // setTimeout(function () {
+      //     // console.log( 'MAIN_PERMEATE_SCENE._EFFECTS_MAIN_LAYER1 = ' + MAIN_PERMEATE_SCENE._EFFECTS_MAIN_LAYER );
+      //     MAIN_PERMEATE_SCENE.PERMEATE_INIT_BLOCK(_init_block);
+      //
+      //     var _team = [{ group_id: 't00001', group_name: '赵信团队', group_icon: '/audience/image/img/accom2/team/team0.png', attack_block_id: 111, attack_server_id: 1 , attack_completed: true, coin: 25},
+      //         { group_id: 't00002', group_name: '刘柱团队', group_icon: '/audience/image/img/accom2/team/team1.png', attack_block_id: 111, attack_server_id: 2 }];
+      //
+      //     MAIN_PERMEATE_SCENE.TEAM_ATTACK_SERVER(_team);
+      // },1000);
+
+      var attack_server_data = [
+          // { group_id: 't00001', group_name: '赵信团队', group_icon: '/audience/image/img/accom2/team/team0.png', attack_block_id: 111, attack_server_id: 1 },
+          // { group_id: 't00002', group_name: '刘柱团队', group_icon: '', attack_block_id: 111, attack_server_id: 2 },
+          // { group_id: 't00003', group_name: '雷静团队', group_icon: '/audience/image/img/accom2/team/team2.png', attack_block_id: 222, attack_server_id: 3 },
+          // { group_id: 't00001', group_name: '赵信团队', group_icon: '/audience/image/img/accom2/team/team3.png', attack_block_id: 222, attack_server_id: 4 },
+          // { group_id: 't00002', group_name: '刘柱团队', group_icon: '/audience/image/img/accom2/team/team1.png', attack_block_id: 333, attack_server_id: 5 },
+          // { group_id: 't00003', group_name: '雷静团队', group_icon: '/audience/image/img/accom2/team/team2.png', attack_block_id: 333, attack_server_id: 5 },
+          // { group_id: 't00001', group_name: '赵信团队', group_icon: '/audience/image/img/accom2/team/team0.png', attack_block_id: 333, attack_server_id: 4 },
+          // { group_id: 't00002', group_name: '刘柱团队', group_icon: '/audience/image/img/accom2/team/team1.png', attack_block_id: 444, attack_server_id: 3 },
+          // { group_id: 't00003', group_name: '雷静团队', group_icon: '/audience/image/img/accom2/team/team2.png', attack_block_id: 444, attack_server_id: 2 },
+          { group_id: 't00001', group_name: '赵信团队', group_icon: '', attack_block_id: 555, attack_server_id: 2 },
+          { group_id: 't00003', group_name: '雷静团队', group_icon: '', attack_block_id: 444, attack_server_id: 1 },
+          { group_id: 't00001', group_name: '赵信团队', group_icon: '', attack_block_id: 555, attack_server_id: 1 },
+          { group_id: 't00002', group_name: '刘柱团队', group_icon: '', attack_block_id: 666, attack_server_id: 3 },
+          { group_id: 't00002', group_name: '刘柱团队', group_icon: '', attack_block_id: 666, attack_server_id: 4, attack_completed: true, coin: 25 },
+      ];
+
+      // setTimeout(function () {
+      //     _init_block = {"block_id":222,"block_name":"2-DMZ区",
+      //         "server":[{"server_id":1},{"server_id":2},{"server_id":3},{"server_id":4},{"server_id":5},{"server_id":6}]};
+      //     MAIN_PERMEATE_SCENE.PERMEATE_ADD_BLOCK(_init_block);
+      //
+      //     var _team = [{ group_id: 't00003', group_name: '雷静团队', group_icon: '/audience/image/img/accom2/team/team2.png', attack_block_id: 222, attack_server_id: 3 },
+      //         { group_id: 't00001', group_name: '赵信团队', group_icon: '/audience/image/img/accom2/team/team3.png', attack_block_id: 222, attack_server_id: 4 }];
+      //
+      //     MAIN_PERMEATE_SCENE.TEAM_ATTACK_SERVER(_team);
+      // },1000);
+
+
+      // setTimeout(function () {
+      //     _init_block = {"block_id":333,"block_name":"3-DMZ区",
+      //         "server":[{"server_id":1},{"server_id":2},{"server_id":3},{"server_id":4},{"server_id":5},{"server_id":6}]};
+      //     MAIN_PERMEATE_SCENE.PERMEATE_ADD_BLOCK(_init_block);
+      //
+      //     var _team = [{ group_id: 't00002', group_name: '刘柱团队', group_icon: '/audience/image/img/accom2/team/team1.png', attack_block_id: 333, attack_server_id: 5, attack_completed: true, coin: 25 },
+      //         { group_id: 't00003', group_name: '雷静团队', group_icon: '/audience/image/img/accom2/team/team2.png', attack_block_id: 333, attack_server_id: 5 },
+      //         { group_id: 't00001', group_name: '赵信团队', group_icon: '/audience/image/img/accom2/team/team0.png', attack_block_id: 333, attack_server_id: 4 }];
+      //
+      //     MAIN_PERMEATE_SCENE.TEAM_ATTACK_SERVER(_team);
+      // },10000);
+
+
+      // setTimeout(function () {
+      //     _init_block = {"block_id":444,"block_name":"4-DMZ区",
+      //         "server":[{"server_id":1},{"server_id":2},{"server_id":3},{"server_id":4},{"server_id":5},{"server_id":6}]};
+      //     MAIN_PERMEATE_SCENE.PERMEATE_ADD_BLOCK(_init_block);
+      //     var _team = [ { group_id: 't00002', group_name: '刘柱团队', group_icon: '/audience/image/img/accom2/team/team1.png', attack_block_id: 444, attack_server_id: 3 },
+      //         { group_id: 't00003', group_name: '雷静团队', group_icon: '/audience/image/img/accom2/team/team2.png', attack_block_id: 444, attack_server_id: 2 }];
+      //
+      //
+      //     MAIN_PERMEATE_SCENE.TEAM_ATTACK_SERVER(_team);
+      // },18000);
+
+
+      // setTimeout(function () {
+      //     var json={
+      //         group_name: 't00002',
+      //         group_icon: '/audience/image/img/accom2/team/team2.png',
+      //         title: '恭喜他们渗透成功'
+      //     };
+      //     MAIN_PERMEATE_SCENE.PERMEATE_TEAM_SUCCEED(json)
+      // },20000);
+
+
+      // setTimeout(function () {
+      //     _init_block = {"block_id":555,"block_name":"5-DMZ区",
+      //         "server":[{"server_id":1},{"server_id":2},{"server_id":3},{"server_id":4},{"server_id":5},{"server_id":6}]};
+      //     MAIN_PERMEATE_SCENE.PERMEATE_ADD_BLOCK(_init_block);
+      //
+      //     _init_block = {"block_id":666,"block_name":"6-DMZ区",
+      //         "server":[{"server_id":1},{"server_id":2},{"server_id":3},{"server_id":4},{"server_id":5},{"server_id":6}]};
+      //     MAIN_PERMEATE_SCENE.PERMEATE_ADD_BLOCK(_init_block);
+      //     var _team = [ { group_id: 't00001', group_name: '赵信团队', group_icon: '/audience/image/img/accom2/team/team0.png', attack_block_id: 555, attack_server_id: 2 },
+      //         { group_id: 't00003', group_name: '雷静团队', group_icon: '/audience/image/img/accom2/team/team2.png', attack_block_id: 555, attack_server_id: 1 },
+      //         { group_id: 't00001', group_name: '赵信团队', group_icon: '/audience/image/img/accom2/team/team0.png', attack_block_id: 666, attack_server_id: 1 },
+      //         { group_id: 't00002', group_name: '刘柱团队', group_icon: '/audience/image/img/accom2/team/team2.png', attack_block_id: 666, attack_server_id: 4, attack_completed: true, coin: 25 }];
+      //
+      //
+      //     MAIN_PERMEATE_SCENE.TEAM_ATTACK_SERVER(_team);
+      // },38000);
+
+
+
+      // ******************** 录像 mock 数据 ************
+
+
+
+
 
     // MAIN_PERMEATE_SCENE.PERMEATE_INIT_BLOCK(add_block_array);
 
@@ -145,14 +250,13 @@
             ]
         };
         MAIN_PERMEATE_SCENE.PERMEATE_ADD_BLOCK(json);
-      // var _data = attack_server_data[index_attack_server_data];
       MAIN_PERMEATE_SCENE.TEAM_ATTACK_SERVER(attack_server_data);
       // index_attack_server_data = index_attack_server_data < attack_server_data.length - 1 ? index_attack_server_data + 1 : 0;
     }
 
     add_btn.onclick = function () {
         // var _data = attack_server_data[index_attack_server_data];
-        var json = {
+        var json1 = {
             "block_id": 2,
             "block_name": "2-DMZ区",
             "server": [
@@ -176,7 +280,32 @@
                 }
             ]
         };
-        MAIN_PERMEATE_SCENE.PERMEATE_ADD_BLOCK(json);
+        var json2 = {
+            "block_id": 3,
+            "block_name": "3-DMZ区",
+            "server": [
+                {
+                    "server_id": 1
+                },
+                {
+                    "server_id": 2
+                },
+                {
+                    "server_id": 3
+                },
+                {
+                    "server_id": 4
+                },
+                {
+                    "server_id": 5
+                },
+                {
+                    "server_id": 6
+                }
+            ]
+        };
+        MAIN_PERMEATE_SCENE.PERMEATE_ADD_BLOCK(json1);
+        MAIN_PERMEATE_SCENE.PERMEATE_ADD_BLOCK(json2);
         // index_attack_server_data = index_attack_server_data < attack_server_data.length - 1 ? index_attack_server_data + 1 : 0;
     }
 

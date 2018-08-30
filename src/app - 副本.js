@@ -37,8 +37,8 @@ MAIN_PERMEATE_SCENE.Permeate_main_layer = cc.Layer.extend({
         cc.spriteFrameCache.addSpriteFrames(MAIN_PERMEATE_SCENE.res.all_img_plist);
 
         // this.initBlock(_json);
-
-        this.schedule(this.updateAddTeam, 3.0);
+        setInterval(this.updateAddTeam, 3000);
+        // this.schedule(this.updateAddTeam, 3.0);
 
         // var _bg_color = new cc.LayerColor(cc.color(0, 0, 0), this._winSize.width, this._winSize.height);
         // this.addChild(_bg_color);

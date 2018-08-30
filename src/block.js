@@ -211,11 +211,11 @@ var Block_class = cc.Node.extend({
             _this._server_obj_array.push(_sp);
         });
 
-        _txt_name = new cc.LabelTTF(obj["block_id"], 10);
-        _txt_name.setFontFillColor(cc.color(255, 187, 0));
-        _txt_name.setPosition(_obj_server_direction.txt_name.pos);
-        _txt_name.setRotation(_obj_server_direction.txt_name.rotation);
-        this.addChild(_txt_name, 1);
+        // _txt_name = new cc.LabelTTF(obj["block_id"], 10);
+        // _txt_name.setFontFillColor(cc.color(255, 187, 0));
+        // _txt_name.setPosition(_obj_server_direction.txt_name.pos);
+        // _txt_name.setRotation(_obj_server_direction.txt_name.rotation);
+        // this.addChild(_txt_name, 1);
 
         var _sp_interchanger_small = new cc.Sprite("#interchanger_small.png");
         _sp_interchanger_small.setPosition(_obj_server_direction.interchanger_pos);
