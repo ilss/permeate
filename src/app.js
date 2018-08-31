@@ -99,7 +99,7 @@ MAIN_PERMEATE_SCENE.Permeate_main_layer = cc.Layer.extend({
         if (this._block_array.length < MAIN_PERMEATE_SCENE["_opactions"]["_block_show_num_max"]) {
             // cc.log('block_data.block_id = '+block_data.block_id);
             if (GLOBAL_FUNC_SIMPLEEDU.findObjFromArray(block_data, "block_id", this._block_array, "_block_id") !== -1 && GLOBAL_FUNC_SIMPLEEDU.findObjFromArray(block_data, "block_id", this._add_block_array, "id") !== -1) {
-                cc.log('block' + block_data.block_id + ' 已存在！！');
+                // cc.log('block' + block_data.block_id + ' 已存在！！');
                 return;
             }
 
@@ -389,7 +389,7 @@ MAIN_PERMEATE_SCENE.Permeate_main_layer = cc.Layer.extend({
             cc.loader.loadImg(faceurl, {isCrossOrigin: false}, function (err, img) {
                 var _size = null;
                 if (err) {
-                    cc.log("图片加载失败 " + err);
+                    cc.log("图片加载失败 " + faceurl);
                     addDefaultIcon(node);
                 }
                 else {
@@ -430,7 +430,7 @@ MAIN_PERMEATE_SCENE.Permeate_main_layer = cc.Layer.extend({
         }
         this._is_action_team++;
         if (_result_team_is_new===-1 && !GLOBAL_FUNC_SIMPLEEDU.objHasSomeProperty(_obj,['target_block_id','target_server_id'])) {
-            cc.log('新队伍');
+            // cc.log('新队伍');
             _team = new Team_class(_obj);
             _team.setPosition(cc.pAdd(MAIN_PERMEATE_SCENE.basic_pos_array.entry, cc.p(0, 30)));
             this.addChild(_team, 10);
@@ -441,7 +441,7 @@ MAIN_PERMEATE_SCENE.Permeate_main_layer = cc.Layer.extend({
         } else {
             //如果当前server上已经存在两个动画中的team时则暂缓响应
             if (_result_server_has_action_team.length === 2) {
-                cc.log('当前server上已经存在两个动画中的team时则暂缓响应')
+                cc.log('当前server上已经存在两个动画中的team时则暂缓响应');
                 this._add_team_array.unshift(_obj);
                 return;
             }
